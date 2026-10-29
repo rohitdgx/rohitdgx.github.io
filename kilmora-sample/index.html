@@ -1,126 +1,372 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><title>Kilmora Ghar Sample</title>
-<meta name="robots" content="noindex"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;500;700&display=swap"><style>
-/* Layout: single column guest page, ridge-line hero, rooms as a rate table, booking bar pinned at bottom */
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kilmora Ghar · Sample homestay site</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1b0f2e">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap">
+<style>
 :root{
-  --bg:#f2f4f1; --surface:#ffffff; --ink:#1d2a2a; --muted:#5b6b68;
-  --deodar:#2e4a3c; --ridge:#3d5a6b; --marigold:#d9961f; --line:#d6ddd8;
-  --display:"Yatra One","Mukta",Georgia,serif; --body:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --night:#1b0f2e; --plum:#3b1554; --buransh:#e8345a; --saffron:#ff9a1f; --gold:#ffd166;
+  --glacier:#a8e1ff; --pine:#0c4a3c; --mint:#6ff0c0; --cream:#fff6ea; --paper:#ffffff;
+  --ink:#1c1426; --muted:#6b6075; --line:#ecdcc9;
+  --font:"Manrope","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#121816; --surface:#1a2220; --ink:#e6ece8; --muted:#9fb0aa;
-  --deodar:#86b39a; --ridge:#8fb1c4; --marigold:#f0b44a; --line:#2c3835; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#121816; --surface:#1a2220; --ink:#e6ece8; --muted:#9fb0aa;
-  --deodar:#86b39a; --ridge:#8fb1c4; --marigold:#f0b44a; --line:#2c3835; color-scheme:dark}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
-.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.banner{background:var(--marigold);color:#1d1606;font-weight:700;text-align:center;padding-block:8px;font-size:14px}
-.banner .wrap{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.banner a{color:#1d1606}
-header{padding-block:28px 8px}
-h1,h2{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
-h1{font-size:clamp(34px,7vw,56px);line-height:1.1;color:var(--deodar)}
-h2{font-size:28px;color:var(--deodar);margin-bottom:12px}
-.hi{color:var(--muted);font-size:18px}
-.lead{max-width:60ch;margin:12px 0 0}
-.ridge{display:block;width:100%;height:auto;max-width:100%;margin-top:20px;border-radius:6px}
-section{padding-block:28px;border-top:1px solid var(--line)}
-.facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;color:var(--muted);font-size:15px}
-.facts b{color:var(--ink)}
-.tablebox{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;background:var(--surface)}
-th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
-td.r{text-align:right;white-space:nowrap}
-.note{font-size:14px;color:var(--muted)}
-.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.ph{aspect-ratio:4/3;max-width:100%;border-radius:6px;border:1px dashed var(--line);display:flex;align-items:flex-end;padding:8px;font-size:13px;color:var(--muted);background:linear-gradient(170deg,color-mix(in srgb,var(--ridge) 25%,var(--surface)),var(--surface) 70%)}
-ul.clean{padding-left:20px;margin:0;display:grid;gap:6px}
-.pay{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.pay div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
-.qr{width:96px;height:96px;border:2px dashed var(--muted);border-radius:6px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:var(--muted);margin-bottom:8px}
-.bookbar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px))}
-.bookbar .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.btn{display:inline-block;background:var(--deodar);color:var(--bg);text-decoration:none;font-weight:700;padding:12px 20px;border-radius:999px;border:0;font:inherit;font-weight:700;cursor:pointer}
-.btn:focus-visible,a:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
-footer{padding-block:24px 40px;font-size:14px;color:var(--muted)}
-</style></head><body>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+[hidden]{display:none!important}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;line-height:1.08;letter-spacing:-.025em;text-wrap:balance}
+p{margin:0}
+.hi{font-family:"Noto Sans Devanagari",var(--font)}
+a{color:inherit}
+button,input,select{font:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
-<div class="banner"><div class="wrap"><span>SAMPLE SITE. Not a real homestay. Made by Pahadi Direct to show owners what their site could look like.</span></div></div>
+/* sample ticker */
+.ticker{background:var(--gold);color:#2a1a00;font-size:13.5px;font-weight:700;overflow:hidden;white-space:nowrap}
+.ticker .run{display:inline-flex;gap:40px;padding:7px 0;animation:tick 32s linear infinite}
+.ticker a{color:#2a1a00}
+@keyframes tick{to{transform:translateX(-50%)}}
 
-<header class="wrap">
-  <h1>Kilmora Ghar</h1>
-  <div class="hi">किलमोड़ा घर · Family homestay, Garhwal hills</div>
-  <p class="lead">Three rooms in a stone-and-wood village house, 2,100 m up. Home-cooked Garhwali food, a sunrise view of the snow peaks, and a host family who knows every trail nearby.</p>
-  <svg class="ridge" viewBox="0 0 800 220" role="img" aria-label="Illustration of mountain ridges at sunrise">
-    <rect width="800" height="220" fill="var(--surface)"/>
-    <circle cx="610" cy="78" r="34" fill="var(--marigold)" opacity=".85"/>
-    <path d="M0 150 L90 90 L160 120 L250 60 L330 110 L420 50 L520 105 L600 70 L700 115 L800 80 L800 220 L0 220Z" fill="var(--ridge)" opacity=".45"/>
-    <path d="M0 175 L120 125 L210 155 L300 115 L400 150 L500 120 L610 160 L720 130 L800 150 L800 220 L0 220Z" fill="var(--ridge)" opacity=".75"/>
-    <path d="M0 200 L80 170 L160 190 L260 160 L360 195 L470 168 L560 196 L680 172 L800 192 L800 220 L0 220Z" fill="var(--deodar)"/>
-  </svg>
-  <div class="facts">
-    <span><b>Check-in</b> 12:00</span><span><b>Check-out</b> 10:00</span>
-    <span><b>Rooms</b> 3</span><span><b>Meals</b> breakfast + dinner included</span>
-    <span><b>Last 300 m</b> on foot (we carry bags)</span>
+/* nav */
+nav.top{position:sticky;top:0;z-index:20;background:rgba(27,15,46,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+nav.top .wrap{display:flex;align-items:center;gap:14px;padding-block:10px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:18px;margin-right:auto}
+.logo i{width:30px;height:30px;border-radius:9px;background:conic-gradient(from 200deg,var(--buransh),var(--saffron),var(--gold),var(--buransh));display:grid;place-items:center}
+.logo i:after{content:"";width:12px;height:9px;background:#fff;clip-path:polygon(50% 0,100% 100%,0 100%)}
+nav.top .links{display:flex;gap:18px;font-size:15px;font-weight:600}
+nav.top .links a{text-decoration:none;opacity:.8}
+nav.top .links a:hover{opacity:1}
+@media (max-width:820px){nav.top .links{display:none}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:800;text-decoration:none;cursor:pointer;transition:transform .15s}
+.pill:hover{transform:translateY(-2px)}
+.pill.hot{background:linear-gradient(120deg,var(--buransh),var(--saffron));color:#fff;box-shadow:0 10px 30px -10px rgba(232,52,90,.8)}
+.pill.light{background:#fff;color:var(--ink)}
+.pill.line{background:transparent;color:inherit;border:2px solid currentColor}
+.pill.sm{padding:8px 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;color:#fff;overflow:hidden;background:linear-gradient(180deg,#140a24 0%,var(--plum) 38%,#b0305c 66%,var(--saffron) 92%)}
+.hero .sky{position:absolute;inset:0;pointer-events:none}
+.hero .sky svg{position:absolute;left:0;width:100%}
+.hero .sky .stars{top:0;height:240px}
+.hero .hills{position:relative;display:block;width:100%;height:clamp(200px,30vw,400px);margin-top:-30px;pointer-events:none}
+.layer{will-change:transform}
+.sun{animation:rise 3.2s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{transform:translateY(140px);opacity:.2}to{transform:none;opacity:1}}
+.star{animation:tw 3s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.15}to{opacity:.9}}
+.cloud{animation:drift 60s linear infinite}
+@keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(1600px)}}
+.hero-in{position:relative;z-index:2;padding-block:56px 20px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:start}
+@media (max-width:900px){.hero-in{grid-template-columns:1fr}}
+.kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:999px}
+.kicker b{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(111,240,192,.25)}
+.hero h1{font-size:clamp(48px,9vw,104px);font-weight:800;margin-top:18px}
+.hero h1 span{background:linear-gradient(90deg,var(--gold),#fff 60%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .devn{font-size:clamp(20px,3vw,28px);font-weight:600;color:var(--gold);margin-top:6px}
+.hero .lead{text-shadow:0 1px 12px rgba(20,5,40,.6);font-size:19px;max-width:52ch;margin-top:16px;color:rgba(255,255,255,.88)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-size:14px;font-weight:600;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.18);padding:6px 12px;border-radius:999px}
+
+/* booking card */
+.book{background:rgba(255,255,255,.96);color:var(--ink);border-radius:24px;padding:22px;display:grid;gap:14px;box-shadow:0 30px 80px -30px rgba(20,5,40,.8);position:relative}
+.book:before{content:"";position:absolute;inset:-2px;border-radius:26px;background:linear-gradient(135deg,var(--buransh),var(--saffron),var(--gold),var(--mint));z-index:-1}
+.book h3{font-size:22px}
+.book .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.book label{display:grid;gap:4px;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.book input,.book select{width:100%;min-width:0;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--ink);font-weight:600;text-transform:none;letter-spacing:0}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:10px;background:#fff3e2;border-radius:14px;padding:12px 14px}
+.total b{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.total small{color:var(--muted);font-size:13px}
+.wa{background:#1fa855;color:#fff}
+.wa svg{width:20px;height:20px}
+.preview{background:#e6ffda;border-radius:14px 14px 14px 4px;padding:12px 14px;font-size:14.5px;white-space:pre-wrap;border:1px solid #c2efad}
+.small{font-size:13px;color:var(--muted)}
+
+/* sections */
+section{padding-block:84px}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--buransh)}
+.sec-h{display:grid;gap:8px;margin-bottom:34px}
+.sec-h h2{font-size:clamp(34px,5vw,56px);font-weight:800}
+.sec-h .hi{color:var(--muted);font-weight:600}
+
+/* rooms */
+.season{display:inline-flex;background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+.season button{border:0;background:transparent;border-radius:999px;padding:8px 16px;font-weight:700;cursor:pointer;color:var(--muted)}
+.season button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.rooms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+@media (max-width:900px){.rooms{grid-template-columns:1fr}}
+.room{border-radius:26px;overflow:hidden;background:var(--paper);box-shadow:0 20px 50px -30px rgba(40,10,60,.45);display:grid;transition:transform .2s}
+.room:hover{transform:translateY(-6px) rotate(-.4deg)}
+.room .art{height:180px;position:relative;display:grid;place-items:center}
+.room .art svg{width:100%;height:100%;position:absolute;inset:0}
+.room .tag{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);color:var(--ink);font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+.room .body{padding:20px;display:grid;gap:10px}
+.room h3{font-size:24px}
+.room .meta{display:flex;flex-wrap:wrap;gap:6px}
+.room .meta span{font-size:13px;font-weight:600;background:var(--cream);border-radius:999px;padding:3px 10px}
+.price{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
+.price small{font-size:14px;font-weight:600;color:var(--muted)}
+.r-deodar .art{background:linear-gradient(160deg,#0c4a3c,#1f8a6a)}
+.r-buransh .art{background:linear-gradient(160deg,#a3123a,#ff6b5e)}
+.r-loft .art{background:linear-gradient(160deg,#c45f00,#ffc145)}
+.note-row{margin-top:18px;font-size:14px;color:var(--muted)}
+
+/* day timeline */
+.day{background:var(--pine);color:#eafff6;position:relative;overflow:hidden}
+.day:before{content:"";position:absolute;width:700px;height:700px;right:-250px;top:-300px;border-radius:50%;background:radial-gradient(circle,rgba(111,240,192,.25),transparent 65%)}
+.day .eyebrow{color:var(--mint)}
+.day .sec-h .hi{color:#a9d9c6}
+.tl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;position:relative}
+@media (max-width:900px){.tl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tl div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:16px;display:grid;gap:6px;align-content:start}
+.tl time{font-size:13px;font-weight:800;color:var(--gold)}
+.tl b{font-size:17px;line-height:1.25}
+.tl span{font-size:14px;color:#bfe6d7}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:200px 200px;gap:14px}
+.gal div{border-radius:22px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:14px;color:#fff;font-weight:700;font-size:14px}
+.gal div:first-child{grid-row:span 2}
+.gal div span{background:rgba(0,0,0,.35);backdrop-filter:blur(6px);padding:6px 12px;border-radius:999px}
+.g1{background:radial-gradient(circle at 70% 30%,#ffd166 0 8%,transparent 9%),linear-gradient(180deg,#3b1554,#e8345a 70%,#ff9a1f)}
+.g2{background:linear-gradient(135deg,#0c4a3c,#6ff0c0)}
+.g3{background:linear-gradient(135deg,#ff9a1f,#ffd166)}
+.g4{background:linear-gradient(135deg,#1b0f2e,#5b5bd6)}
+.g5{background:linear-gradient(135deg,#e8345a,#ff9a8a)}
+@media (max-width:760px){.gal{grid-template-columns:1fr 1fr;grid-template-rows:220px 150px 150px}.gal div:first-child{grid-column:span 2;grid-row:auto}}
+
+/* nearby trail */
+.trail{background:#fff;border-radius:28px;padding:26px;box-shadow:0 20px 50px -35px rgba(40,10,60,.5)}
+.trail ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative}
+.trail ol:before{content:"";position:absolute;left:4%;right:4%;top:22px;border-top:3px dashed var(--line)}
+@media (max-width:760px){.trail ol{grid-template-columns:1fr}.trail ol:before{left:21px;right:auto;top:10px;bottom:10px;border-top:0;border-left:3px dashed var(--line)}}
+.trail li{position:relative;display:grid;gap:4px;justify-items:start}
+.trail .dot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:13px;border:4px solid #fff;box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
+.trail b{font-size:17px}
+.trail span{font-size:14px;color:var(--muted)}
+
+/* reviews placeholder + book steps */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:24px;padding:24px;display:grid;gap:10px;align-content:start}
+.ghost{border:2px dashed #d9c4ad;background:transparent}
+.steps{display:grid;gap:12px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step i{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--buransh),var(--saffron))}
+.qr{width:110px;height:110px;border-radius:14px;border:2px dashed var(--muted);display:grid;place-items:center;text-align:center;font-size:12px;color:var(--muted);padding:8px}
+
+/* sell block */
+.sell{background:linear-gradient(120deg,var(--buransh),var(--saffron));color:#fff;border-radius:32px;padding:clamp(24px,5vw,56px);display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:center}
+@media (max-width:760px){.sell{grid-template-columns:1fr}}
+.sell h2{font-size:clamp(30px,4.5vw,48px);font-weight:800}
+.sell p{color:rgba(255,255,255,.92);margin-top:10px;max-width:50ch}
+.sell .big{font-size:56px;font-weight:800;line-height:1}
+.sell .big small{font-size:16px;font-weight:600}
+
+footer{padding-block:30px 110px;font-size:14px;color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));background:rgba(27,15,46,.92);backdrop-filter:blur(10px);color:#fff;transform:translateY(110%);transition:transform .3s}
+.bar.on{transform:none}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar b{display:block;font-size:15px}
+.bar span{font-size:13px;opacity:.75}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="ticker" role="note"><div class="run" aria-hidden="false">
+  <span>SAMPLE SITE · Kilmora Ghar is not a real homestay · Built by Pahadi Direct to show what your site could look like · <a href="../pahadi-direct/">Get one for your homestay</a></span>
+  <span aria-hidden="true">SAMPLE SITE · Kilmora Ghar is not a real homestay · Built by Pahadi Direct to show what your site could look like · <a href="../pahadi-direct/" tabindex="-1">Get one for your homestay</a></span>
+</div></div>
+
+<nav class="top"><div class="wrap">
+  <a class="logo" href="#top"><i aria-hidden="true"></i>Kilmora Ghar</a>
+  <div class="links"><a href="#rooms">Rooms</a><a href="#day">A day here</a><a href="#photos">Photos</a><a href="#nearby">Nearby</a><a href="#how">How to book</a></div>
+  <a class="pill hot sm" href="#book">Check dates</a>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="sky" aria-hidden="true">
+    <svg class="stars" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMin slice"><g fill="#fff">
+        <circle class="star" cx="120" cy="80" r="1.6"/><circle class="star" cx="300" cy="140" r="1.2" style="animation-delay:.6s"/><circle class="star" cx="520" cy="60" r="1.8" style="animation-delay:1.2s"/><circle class="star" cx="880" cy="110" r="1.3" style="animation-delay:.3s"/><circle class="star" cx="1090" cy="50" r="1.7" style="animation-delay:1.8s"/><circle class="star" cx="1320" cy="130" r="1.2" style="animation-delay:.9s"/><circle class="star" cx="720" cy="170" r="1" style="animation-delay:2.1s"/>
+      </g></svg>
+
   </div>
+  <div class="wrap hero-in">
+    <div>
+      <span class="kicker"><b></b>Garhwal hills · 2,100 m</span>
+      <h1><span>Kilmora Ghar</span></h1>
+      <div class="devn hi">किलमोड़ा घर · पहाड़ी होमस्टे</div>
+      <p class="lead">Three rooms in a stone-and-wood village house. Home-cooked Garhwali food, sunrise over the snow peaks from your bed, and a host family who knows every trail nearby.</p>
+      <div class="chips"><span class="chip">Breakfast + dinner included</span><span class="chip">Check-in 12:00</span><span class="chip">Check-out 10:00</span><span class="chip">Last 300 m on foot, we carry bags</span></div>
+    </div>
+    <form class="book" id="book" autocomplete="off">
+      <h3>Check dates and book</h3>
+      <div class="two">
+        <label>Check-in<input type="date" id="dIn" required></label>
+        <label>Check-out<input type="date" id="dOut" required></label>
+      </div>
+      <div class="two">
+        <label>Room<select id="room"><option value="deodar">Deodar room</option><option value="buransh" selected>Buransh room</option><option value="loft">Family loft</option></select></label>
+        <label>Guests<select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
+      </div>
+      <div class="total"><div><small id="nightsTxt">2 nights</small></div><div style="text-align:right"><b id="totalTxt">₹5,800</b><br><small>meals included</small></div></div>
+      <button class="pill wa" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.2.5.1.6 0l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.3z"/></svg>Book on WhatsApp</button>
+      <div class="preview" id="preview" hidden></div>
+      <p class="small" id="sampleNote" hidden>Sample site, so nothing is sent. On your real site this button opens WhatsApp with this message ready.</p>
+    </form>
+  </div>
+  <svg class="hills" viewBox="0 240 1440 520" preserveAspectRatio="xMidYMin slice"><defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffe59a" stop-opacity=".95"/><stop offset=".35" stop-color="#ffb347" stop-opacity=".45"/><stop offset="1" stop-color="#ff9a1f" stop-opacity="0"/></radialGradient>
+        <linearGradient id="far" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4f9e"/><stop offset="1" stop-color="#4b2370"/></linearGradient>
+        <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a1e63"/><stop offset="1" stop-color="#2c1043"/></linearGradient>
+        <linearGradient id="near" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22103a"/><stop offset="1" stop-color="#150a26"/></linearGradient>
+      </defs>
+      <g class="sun"><circle cx="1040" cy="350" r="110" fill="url(#glow)"/><circle cx="1040" cy="350" r="70" fill="#ffe08a"/></g>
+      <g class="cloud" opacity=".35" fill="#ffd6e0"><ellipse cx="200" cy="300" rx="120" ry="14"/><ellipse cx="260" cy="288" rx="70" ry="12"/></g>
+      <g class="layer" data-speed=".08">
+        <path fill="url(#far)" d="M0 470 L120 400 L210 430 L330 330 L430 400 L560 300 L650 360 L760 280 L880 370 L990 320 L1090 390 L1220 300 L1340 380 L1440 340 L1440 760 L0 760Z"/>
+        <path fill="#fff" opacity=".9" d="M330 330 L360 352 L345 350 L330 362 L312 348 L300 352Z M560 300 L594 326 L576 322 L560 336 L542 322 L528 327Z M760 280 L792 306 L776 302 L760 316 L744 303 L730 306Z M1220 300 L1252 326 L1236 322 L1220 334 L1204 322 L1190 326Z"/>
+      </g>
+      <g class="layer" data-speed=".16"><path fill="url(#mid)" d="M0 540 L140 470 L260 510 L400 440 L520 500 L660 430 L790 495 L930 445 L1060 505 L1200 450 L1330 500 L1440 470 L1440 760 L0 760Z"/></g>
+      <g class="layer" data-speed=".26">
+        <path fill="url(#near)" d="M0 620 L160 560 L300 600 L460 545 L620 610 L780 560 L950 615 L1110 565 L1280 610 L1440 575 L1440 760 L0 760Z"/>
+        <g fill="#0e0619">
+          <path d="M120 600 l16 -54 l16 54Z M150 604 l12 -40 l12 40Z M1180 600 l18 -60 l18 60Z M1214 606 l13 -44 l13 44Z M640 618 l14 -46 l14 46Z"/>
+        </g>
+        <g transform="translate(860 580)"><rect x="0" y="0" width="64" height="34" fill="#2a1240"/><path d="M-8 2 L32 -22 L72 2Z" fill="#3d1a5c"/><rect x="10" y="10" width="12" height="10" fill="#ffd166"/><rect x="40" y="10" width="12" height="10" fill="#ffd166" opacity=".8"/></g>
+      </g>
+      <path fill="#150a26" d="M0 700 Q360 660 720 690 T1440 680 L1440 760 L0 760Z"/>
+    </svg>
 </header>
 
-<main class="wrap">
-<section>
-  <h2>Rooms and rates</h2>
-  <div class="tablebox">
-  <table>
-    <thead><tr><th>Room</th><th>Sleeps</th><th>Oct–Mar</th><th>Apr–Jun peak</th></tr></thead>
-    <tbody>
-      <tr><td>Deodar room<br><span class="note">Valley view, attached bath, geyser</span></td><td>2</td><td class="r">₹2,400</td><td class="r">₹3,200</td></tr>
-      <tr><td>Buransh room<br><span class="note">Snow-peak view, balcony</span></td><td>3</td><td class="r">₹2,900</td><td class="r">₹3,800</td></tr>
-      <tr><td>Family loft<br><span class="note">Wooden attic, 2 beds</span></td><td>4</td><td class="r">₹3,600</td><td class="r">₹4,600</td></tr>
-    </tbody>
-  </table>
+<main>
+<section id="rooms"><div class="wrap">
+  <div class="sec-h"><span class="eyebrow">Rooms and rates</span><h2>Pick your view.</h2><p class="hi">कमरे और किराया</p></div>
+  <div class="season" role="group" aria-label="Season"><button type="button" data-s="low" aria-pressed="true">Jul – Mar</button><button type="button" data-s="peak" aria-pressed="false">Apr – Jun peak</button></div>
+  <div class="rooms">
+    <article class="room r-deodar"><div class="art"><svg viewBox="0 0 300 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 130 L60 80 L110 110 L170 60 L230 105 L300 70 L300 180 L0 180Z" fill="#0a3a2f"/><path d="M40 180 l20 -70 l20 70Z M80 180 l16 -54 l16 54Z M210 180 l22 -80 l22 80Z" fill="#06261f"/></svg><span class="tag">Valley view</span></div>
+      <div class="body"><h3>Deodar room</h3><div class="meta"><span>Sleeps 2</span><span>Attached bath</span><span>Geyser</span></div><div class="price" data-low="2400" data-peak="3200">₹2,400 <small>/ night</small></div><button class="pill line sm pick" data-room="deodar" type="button">Book this room</button></div></article>
+    <article class="room r-buransh"><div class="art"><svg viewBox="0 0 300 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><circle cx="220" cy="60" r="26" fill="#ffd166"/><path d="M0 140 L70 70 L130 115 L200 50 L260 100 L300 80 L300 180 L0 180Z" fill="#7a0c2a"/><path d="M200 50 l14 12 l-14 -2 l-14 4Z M70 70 l12 11 l-12 -1 l-12 3Z" fill="#fff"/></svg><span class="tag">Snow-peak view</span></div>
+      <div class="body"><h3>Buransh room</h3><div class="meta"><span>Sleeps 3</span><span>Balcony</span><span>Sunrise side</span></div><div class="price" data-low="2900" data-peak="3800">₹2,900 <small>/ night</small></div><button class="pill line sm pick" data-room="buransh" type="button">Book this room</button></div></article>
+    <article class="room r-loft"><div class="art"><svg viewBox="0 0 300 180" aria-hidden="true"><path d="M60 180 L60 90 L150 30 L240 90 L240 180Z" fill="#8a3f00"/><path d="M40 98 L150 22 L260 98" fill="none" stroke="#5a2900" stroke-width="10"/><rect x="128" y="96" width="44" height="40" fill="#ffd166"/><path d="M150 96 v40 M128 116 h44" stroke="#8a3f00" stroke-width="4"/></svg><span class="tag">Wooden attic</span></div>
+      <div class="body"><h3>Family loft</h3><div class="meta"><span>Sleeps 4</span><span>2 beds</span><span>Kids love it</span></div><div class="price" data-low="3600" data-peak="4600">₹3,600 <small>/ night</small></div><button class="pill line sm pick" data-room="loft" type="button">Book this room</button></div></article>
   </div>
-  <p class="note">Per night, two meals included. Book direct and pay us the same rate the apps show, minus 8%. Sample prices only.</p>
-</section>
+  <p class="note-row">Per room per night, two meals included. Book direct and pay 8% less than the booking apps. Sample prices.</p>
+</div></section>
 
-<section>
-  <h2>Photos</h2>
-  <div class="photos">
-    <div class="ph">Owner's photo: house from the trail</div>
-    <div class="ph">Owner's photo: Buransh room</div>
-    <div class="ph">Owner's photo: dinner thali</div>
-    <div class="ph">Owner's photo: sunrise from balcony</div>
+<section class="day" id="day"><div class="wrap" style="position:relative">
+  <div class="sec-h"><span class="eyebrow">A day at Kilmora</span><h2>Slow mornings. Big views.</h2><p class="hi">किलमोड़ा में एक दिन</p></div>
+  <div class="tl">
+    <div><time>6:15</time><b>Sunrise chai</b><span>On the balcony, peaks turning pink.</span></div>
+    <div><time>8:30</time><b>Garhwali breakfast</b><span>Mandua roti, ghee, pahadi raita.</span></div>
+    <div><time>10:00</time><b>Ridge walk</b><span>45 minutes, easy, with a local guide.</span></div>
+    <div><time>13:30</time><b>Village lunch</b><span>Ask a day ahead. Pay on the spot.</span></div>
+    <div><time>17:00</time><b>Temple bells</b><span>Evening aarti, 10 minutes' walk.</span></div>
+    <div><time>20:00</time><b>Bonfire dinner</b><span>Kafuli, jhangora kheer, stars.</span></div>
   </div>
-</section>
+</div></section>
 
-<section>
-  <h2>What's nearby</h2>
-  <ul class="clean">
-    <li>Village temple, 10 minutes' walk</li>
-    <li>Ridge-top viewpoint, 45-minute easy hike</li>
-    <li>Nearest market and ATM, 6 km (patchy signal at the house, BSNL works best)</li>
-    <li>We can book a local taxi from the bus stand</li>
-  </ul>
-</section>
-
-<section>
-  <h2>How to book</h2>
-  <div class="pay">
-    <div><b>1. Message us on WhatsApp</b><br>Send dates and number of guests. We reply with availability, usually within a few hours.</div>
-    <div><b>2. Pay 30% advance by UPI</b><div class="qr">Owner's UPI QR goes here</div>UPI ID: <span>kilmora@upi (sample)</span></div>
-    <div><b>3. Pay the rest at check-in</b><br>Cash or UPI. Free cancellation up to 7 days before arrival.</div>
+<section id="photos"><div class="wrap">
+  <div class="sec-h"><span class="eyebrow">Photos</span><h2>See it before you come.</h2><p class="hi">तस्वीरें</p></div>
+  <div class="gal">
+    <div class="g1"><span>Owner's photo: sunrise from the balcony</span></div>
+    <div class="g2"><span>Owner's photo: house from the trail</span></div>
+    <div class="g3"><span>Owner's photo: dinner thali</span></div>
+    <div class="g4"><span>Owner's photo: night sky</span></div>
+    <div class="g5"><span>Owner's photo: Buransh room</span></div>
   </div>
-</section>
+</div></section>
+
+<section id="nearby" style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><span class="eyebrow">Nearby</span><h2>Everything is a short walk.</h2><p class="hi">आसपास</p></div>
+  <div class="trail"><ol>
+    <li><span class="dot" style="background:var(--buransh)">10m</span><b>Village temple</b><span>10 minutes' walk</span></li>
+    <li><span class="dot" style="background:var(--saffron)">45m</span><b>Ridge viewpoint</b><span>Easy 45-minute hike</span></li>
+    <li><span class="dot" style="background:var(--pine)">6km</span><b>Market and ATM</b><span>Signal is patchy at the house; BSNL works best</span></li>
+    <li><span class="dot" style="background:var(--plum)">Taxi</span><b>Pickup from bus stand</b><span>We book a local taxi for you</span></li>
+  </ol></div>
+</div></section>
+
+<section id="how" style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><span class="eyebrow">How to book</span><h2>Three steps. No apps.</h2><p class="hi">बुकिंग कैसे करें</p></div>
+  <div class="split">
+    <div class="card"><div class="steps">
+      <div class="step"><i>1</i><div><b>Send your dates on WhatsApp</b><p class="small">Use the form above. We reply with availability, usually within a few hours.</p></div></div>
+      <div class="step"><i>2</i><div><b>Pay 30% advance by UPI</b><p class="small">Scan the QR or use our UPI ID. Your room is confirmed on WhatsApp.</p></div></div>
+      <div class="step"><i>3</i><div><b>Pay the rest at check-in</b><p class="small">Cash or UPI. Free cancellation up to 7 days before arrival.</p></div></div>
+    </div></div>
+    <div class="card" style="grid-template-columns:auto 1fr;align-items:center;gap:18px"><div class="qr">Owner's UPI QR goes here</div><div><b>UPI ID</b><p>kilmora@upi <span class="small">(sample)</span></p><p class="small" style="margin-top:8px">Guests pay you directly. No middleman holds your money.</p></div></div>
+    <div class="card ghost" style="grid-column:1/-1"><b>Your Google reviews show here</b><p class="small">On your real site we add a link to your Google Maps reviews, so guests can read what past guests said.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="sell">
+    <div><h2>Run a homestay? Get a site like this.</h2><p>Your rooms, your photos, your WhatsApp and UPI. Hindi and English. Guests book you directly, so you keep the 15-20% the apps take. Pay only after you approve the site.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><a class="pill light" href="../pahadi-direct/#contact">Get a free sample of yours</a><a class="pill line" href="../pahadi-direct/">See how it works</a></div></div>
+    <div><div class="big">₹2,999 <small>one time</small></div><p>No commission. No monthly fee needed.</p></div>
+  </div>
+</div></section>
 </main>
 
-<div class="bookbar"><div class="wrap">
-  <div><b>Book on WhatsApp</b><br><span class="note">+91 00000 00000 (sample number)</span></div>
-  <button class="btn" id="bookBtn" type="button">Check dates</button>
-</div></div>
-<p class="wrap note" id="bookMsg" hidden>This is a sample page, so the button does nothing. On a real site it opens WhatsApp with your dates filled in.</p>
+<footer class="wrap">Sample page by Pahadi Direct. Kilmora Ghar is fictional; rooms, prices, timings and contact details are placeholders.</footer>
 
-<footer class="wrap">Sample page by Pahadi Direct. Kilmora Ghar is fictional; rooms, prices and contact details are placeholders.</footer>
+<div class="bar" id="bar"><div class="wrap"><div><b>Kilmora Ghar</b><span>from ₹2,400 a night · meals included</span></div><a class="pill hot sm" href="#book">Check dates</a></div></div>
 
 <script>
-document.getElementById('bookBtn').addEventListener('click',function(){document.getElementById('bookMsg').hidden=false;});
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var RATES={deodar:{name:"Deodar room",low:2400,peak:3200,max:2},buransh:{name:"Buransh room",low:2900,peak:3800,max:3},loft:{name:"Family loft",low:3600,peak:4600,max:4}};
+  var inr=new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
+  function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+  function parse(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+  var t=new Date();t.setHours(0,0,0,0);
+  var a=new Date(t);a.setDate(a.getDate()+14);var b=new Date(a);b.setDate(b.getDate()+2);
+  $("dIn").value=iso(a);$("dOut").value=iso(b);$("dIn").min=iso(t);$("dOut").min=iso(t);
+  var fmt=function(d){return d.toLocaleDateString("en-IN",{day:"numeric",month:"short"});};
+  function quote(){
+    var r=RATES[$("room").value],i=parse($("dIn").value||iso(a)),o=parse($("dOut").value||iso(b));
+    var n=Math.round((o-i)/864e5),sum=0;
+    for(var k=0;k<n;k++){var d=new Date(i);d.setDate(d.getDate()+k);var m=d.getMonth();sum+=(m>=3&&m<=5)?r.peak:r.low;}
+    $("nightsTxt").textContent=n>0?(n+(n===1?" night":" nights")+" · "+r.name):"Pick a check-out after check-in";
+    $("totalTxt").textContent=n>0?inr.format(sum):"–";
+    return {r:r,i:i,o:o,n:n,sum:sum};
+  }
+  ["dIn","dOut","room","guests"].forEach(function(id){$(id).addEventListener("input",quote);$(id).addEventListener("change",quote);});
+  quote();
+  $("book").addEventListener("submit",function(e){
+    e.preventDefault();var q=quote();if(q.n<=0)return;
+    var g=+$("guests").value;
+    var msg="Namaste! I'd like to stay at Kilmora Ghar.\nCheck-in: "+fmt(q.i)+"\nCheck-out: "+fmt(q.o)+" ("+q.n+(q.n===1?" night":" nights")+")\nRoom: "+q.r.name+"\nGuests: "+g+"\nQuoted on your site: "+inr.format(q.sum)+"\nIs it available?";
+    if(g>q.r.max)msg+="\n(We are "+g+"; is an extra mattress possible?)";
+    $("preview").textContent=msg;$("preview").hidden=false;$("sampleNote").hidden=false;
+  });
+  [].forEach.call(document.querySelectorAll(".pick"),function(btn){btn.addEventListener("click",function(){$("room").value=btn.getAttribute("data-room");quote();$("book").scrollIntoView({behavior:"smooth",block:"center"});});});
+  [].forEach.call(document.querySelectorAll(".season button"),function(btn){btn.addEventListener("click",function(){
+    var s=btn.getAttribute("data-s");
+    [].forEach.call(document.querySelectorAll(".season button"),function(x){x.setAttribute("aria-pressed",x===btn?"true":"false");});
+    [].forEach.call(document.querySelectorAll(".price[data-low]"),function(p){p.firstChild.nodeValue=inr.format(+p.getAttribute("data-"+s))+" ";});
+  });});
+  var layers=[].slice.call(document.querySelectorAll(".layer")),reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,bar=$("bar"),ticking=false;
+  function onScroll(){
+    var y=window.scrollY||0;
+    if(!reduce)layers.forEach(function(l){l.style.transform="translateY("+(y*parseFloat(l.getAttribute("data-speed")))+"px)";});
+    var hb=document.querySelector(".hero").offsetHeight;bar.classList.toggle("on",y>hb-120);
+    ticking=false;
+  }
+  window.addEventListener("scroll",function(){if(!ticking){ticking=true;requestAnimationFrame(onScroll);}},{passive:true});
+  onScroll();
+})();
 </script>
-</body></html>
+</body>
+</html>
