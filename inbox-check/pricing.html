@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pricing | Fix Emails Going to Spam from $9 | Inbox Check</title>
+<meta name="description" content="Free email deliverability check. Fix SPF, DKIM and DMARC for $9 one time, on a call for $19, or 5 domains for $35. No subscription.">
+<link rel="canonical" href="https://rohitdgx.github.io/inbox-check/pricing.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pricing | Fix Emails Going to Spam from $9 | Inbox Check">
+<meta property="og:description" content="Free email deliverability check. Fix SPF, DKIM and DMARC for $9 one time, on a call for $19, or 5 domains for $35. No subscription.">
+<meta property="og:url" content="https://rohitdgx.github.io/inbox-check/pricing.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<nav class="top wrap"><a class="brand" href="index.html">Inbox<span>.</span>Check</a><div class="links"><a href="index.html">Check</a><a href="how-it-works.html">How it works</a><a href="pricing.html" aria-current="page">Pricing</a><a href="guides.html">Guides</a><a href="../">More tools</a></div></nav>
+<header class="hero wrap">
+  <h1>Simple prices. Pay once.</h1>
+  <p class="sub">The check is free forever. If you'd rather not touch DNS settings, we do the fixing with you.</p>
+</header>
+<main class="wrap">
+  <section class="block" aria-label="Plans">
+    <div class="plans">
+      <div class="panel plan"><h3>Free check</h3><div class="price">$0</div><ul class="ticks"><li>Full report for any domain</li><li>Records to copy for your provider</li><li>Shareable link and IT report</li><li>All guides</li></ul><a class="btn ghost" href="index.html">Run the check</a></div>
+      <div class="panel plan best"><span class="ribbon">Most popular</span><h3>We fix it</h3><div class="price">$9 <small>one time</small></div><p class="small">₹499 in India</p><ul class="ticks"><li>SPF, DKIM and DMARC written for your provider and DNS host</li><li>Step-by-step help by email</li><li>Re-check after 48 hours</li><li>Before-and-after report</li></ul><a class="btn acc" href="#order" data-plan="We fix it ($9)">Choose</a></div>
+      <div class="panel plan"><h3>Fix on a call</h3><div class="price">$19 <small>one time</small></div><p class="small">₹999 in India</p><ul class="ticks"><li>Everything in "We fix it"</li><li>20-minute screen-share call</li><li>We add the records with you, live</li></ul><a class="btn ghost" href="#order" data-plan="Fix on a call ($19)">Choose</a></div>
+      <div class="panel plan"><h3>Agency</h3><div class="price">$35 <small>5 domains</small></div><p class="small">₹1,999 in India</p><ul class="ticks"><li>"We fix it" for up to 5 domains</li><li>One combined report</li><li>Extra domains $6 each</li></ul><a class="btn ghost" href="#order" data-plan="Agency 5 domains ($35)">Choose</a></div>
+    </div>
+    <p class="small">No subscriptions. You keep full control of your DNS; we never ask for your passwords.</p>
+  </section>
+
+  <section class="block" id="order" aria-labelledby="or">
+    <h2 id="or">Order</h2>
+    <p class="sub">Fill this in and send it from your email. We reply within one working day with the next steps and how to pay.</p>
+    <form class="order panel" id="orderForm">
+      <label class="f">Plan<select id="o-plan"><option>We fix it ($9)</option><option>Fix on a call ($19)</option><option>Agency 5 domains ($35)</option><option>Just a question</option></select></label>
+      <label class="f">Your domain(s)<input class="t" id="o-dom" required placeholder="yourcompany.com"></label>
+      <label class="f">Email provider<select id="o-prov"><option>Not sure</option><option>Google Workspace</option><option>Microsoft 365</option><option>Zoho Mail</option><option>GoDaddy</option><option>Hostinger</option><option>Titan</option><option>Other</option></select></label>
+      <label class="f">Where your DNS is managed<select id="o-dns"><option>Not sure</option><option>GoDaddy</option><option>Cloudflare</option><option>Namecheap</option><option>Hostinger</option><option>Google Domains / Squarespace</option><option>Other</option></select></label>
+      <label class="f full">Anything else? (newsletters, tools that send email for you)<textarea id="o-note" placeholder="We send invoices from Zoho Books and a newsletter from Mailchimp."></textarea></label>
+      <div class="full row"><button class="btn acc" type="submit">Write my order email</button><span class="small">Nothing is sent until you press send.</span></div>
+    </form>
+    <div id="out" hidden class="panel">
+      <div class="msg" id="msg"></div>
+      <div class="row"><a class="btn acc" id="mailBtn" href="#">Open in my email app</a><button class="btn ghost" id="copyBtn" type="button">Copy the order</button><span class="small" id="note"></span></div>
+      <p class="small">Send to: <b>editorvideo252@gmail.com</b></p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="pay">
+    <h2 id="pay">How payment works</h2>
+    <div class="grid3">
+      <div class="panel step"><span class="n">1</span><h3>Send your order</h3><p>By email using the form above.</p></div>
+      <div class="panel step"><span class="n">2</span><h3>We confirm and send how to pay</h3><p>You pay only after we've looked at your domain and confirmed what needs fixing.</p></div>
+      <div class="panel step"><span class="n">3</span><h3>We fix and re-check</h3><p>Records and steps within one working day, re-check after 48 hours.</p></div>
+    </div>
+    <p class="small" id="payNote">Questions about paying? Email editorvideo252@gmail.com.</p>
+  </section>
+
+  <section class="block" aria-labelledby="fq">
+    <h2 id="fq">Questions</h2>
+    <div class="grid2">
+      <div class="panel"><h3>Do you need my DNS password?</h3><p class="small">No. You add the records yourself with our steps, or on the $19 call you share your screen and click while we guide you.</p></div>
+      <div class="panel"><h3>What if it still says "Needs a look"?</h3><p class="small">We re-check after 48 hours. If anything we set up isn't green, we fix it free.</p></div>
+      <div class="panel"><h3>Will this stop all spam-folder problems?</h3><p class="small">It fixes the identity part, which is the most common cause. Content and sending habits still matter; we'll tell you if we see a problem there.</p></div>
+      <div class="panel"><h3>Do you work with any provider?</h3><p class="small">Yes. Google Workspace, Microsoft 365, Zoho, GoDaddy, Hostinger, Titan, Proton, Fastmail and others.</p></div>
+    </div>
+  </section>
+</main>
+<footer class="wrap"><span>Inbox Check by DGX Media · free email deliverability check</span><span><a href="index.html">Check</a> · <a href="how-it-works.html">How it works</a> · <a href="pricing.html">Pricing</a> · <a href="guides.html">Guides</a> · <a href="../scripts/">YouTube scripts</a></span></footer>
+<script>
+(function(){
+  var EMAIL="editorvideo252@gmail.com";
+  var $=function(id){return document.getElementById(id);};
+  [].forEach.call(document.querySelectorAll("[data-plan]"),function(a){a.addEventListener("click",function(){$("o-plan").value=a.getAttribute("data-plan");});});
+  $("orderForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var plan=$("o-plan").value, dom=$("o-dom").value.trim();
+    var body="Hi,\n\nI'd like: "+plan+"\nDomain(s): "+dom+"\nEmail provider: "+$("o-prov").value+"\nDNS managed at: "+$("o-dns").value+"\nNotes: "+($("o-note").value.trim()||"none")+"\n\nThanks";
+    var subj="Inbox fix order: "+plan+" ("+dom+")";
+    $("msg").textContent="Subject: "+subj+"\n\n"+body;
+    $("mailBtn").href="mailto:"+EMAIL+"?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
+    $("out").hidden=false;$("out").scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+  $("copyBtn").addEventListener("click",function(){
+    var t=$("msg").textContent, ok=function(){$("note").textContent="Copied. Paste it into an email to "+EMAIL+".";};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,function(){$("note").textContent="Select the text above and copy it.";});else $("note").textContent="Select the text above and copy it.";
+  });
+})();
+</script>
+</body></html>

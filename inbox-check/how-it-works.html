@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How Inbox Check Works | Example Email Deliverability Report</title>
+<meta name="description" content="See exactly how Inbox Check reads your MX, SPF, DKIM and DMARC records, how the score adds up, and an annotated example report.">
+<link rel="canonical" href="https://rohitdgx.github.io/inbox-check/how-it-works.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How Inbox Check Works | Example Email Deliverability Report">
+<meta property="og:description" content="See exactly how Inbox Check reads your MX, SPF, DKIM and DMARC records, how the score adds up, and an annotated example report.">
+<meta property="og:url" content="https://rohitdgx.github.io/inbox-check/how-it-works.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<nav class="top wrap"><a class="brand" href="index.html">Inbox<span>.</span>Check</a><div class="links"><a href="index.html">Check</a><a href="how-it-works.html" aria-current="page">How it works</a><a href="pricing.html">Pricing</a><a href="guides.html">Guides</a><a href="../">More tools</a></div></nav>
+<header class="hero wrap">
+  <h1>How Inbox Check works</h1>
+  <p class="sub">Every email you send carries your domain's name. Before Gmail or Outlook decides inbox or spam, it looks up a few public records to see if the email is really from you. We read the same records and tell you what they see.</p>
+</header>
+<main class="wrap">
+  <section class="block" aria-labelledby="s">
+    <h2 id="s">The 4 steps</h2>
+    <div class="grid2">
+      <div class="panel step"><span class="n">Step 1</span><h3>You type a domain</h3><p>Type <code class="mono">yourcompany.com</code> or any email address on it. We clean it up, so <code class="mono">https://www.yourcompany.com/contact</code> works too.</p></div>
+      <div class="panel step"><span class="n">Step 2</span><h3>We look up public DNS records</h3><p>Your browser asks Google Public DNS (Cloudflare if Google is slow) for the MX, SPF, DKIM and DMARC records, plus MTA-STS and BIMI. These records are public by design; anyone's mail server reads them. Nothing is stored.</p></div>
+      <div class="panel step"><span class="n">Step 3</span><h3>We score and explain</h3><p>Each record is checked against the rules Gmail, Yahoo and Microsoft publish: is it there, is there only one, does it include your email provider, does the policy actually protect you.</p></div>
+      <div class="panel step"><span class="n">Step 4</span><h3>You fix it, or we do</h3><p>Copy the records into your DNS yourself using the report, or <a href="pricing.html">order the $9 fix</a> and we walk you through it and re-check after 48 hours.</p></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="ex">
+    <h2 id="ex">What a report looks like</h2>
+    <p class="sub">Below is an example for a made-up bakery that uses Google Workspace. The numbers on the right explain each part.</p>
+    <div class="annot">
+      <div class="panel">
+        <span class="example-flag">Example report · made-up domain</span>
+        <div class="summary">
+          <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" fill="none" stroke="#2e241c" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="#ff7a6b" stroke-width="12" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="185.4" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="30" font-weight="700" fill="#f6f1ea">41</text></svg>
+          <div class="verdict"><span class="small">Results for sunrise-bakery.example · mail by Google Workspace <span class="pin">1</span></span><span class="big">Gmail and Outlook have reasons to distrust your mail</span><p class="small">1 thing to fix, 2 to look at.</p></div>
+        </div>
+        <div class="card warn"><div class="head"><h3>Who may send as you (SPF) <span class="pin">2</span></h3><span class="tag warn">Needs a look</span></div><div class="rec">v=spf1 include:sendgrid.net ?all</div><ul class="plain"><li>Your SPF ends in ?all, so it protects nothing.</li><li>Your mail runs on Google Workspace but SPF doesn't include it.</li></ul><div class="rec">v=spf1 include:sendgrid.net include:_spf.google.com ~all</div></div>
+        <div class="card warn"><div class="head"><h3>Email signature (DKIM) <span class="pin">3</span></h3><span class="tag warn">Needs a look</span></div><p class="small">No key found at google._domainkey. Switch on DKIM in the Google Admin console.</p></div>
+        <div class="card bad"><div class="head"><h3>What to do with fakes (DMARC) <span class="pin">4</span></h3><span class="tag bad">Fix this</span></div><p class="small">No DMARC record. Add this at _dmarc:</p><div class="rec">v=DMARC1; p=none; rua=mailto:dmarc@sunrise-bakery.example; adkim=r; aspf=r; pct=100</div></div>
+      </div>
+      <div class="notes">
+        <div><span class="pin">1</span><p><b>Provider and score.</b> We read the MX records to see who runs the inbox, so every fix is written for that provider. The score adds up the four checks below.</p></div>
+        <div><span class="pin">2</span><p><b>SPF.</b> Two problems here: the record ends in <code class="mono">?all</code>, which tells receivers "no opinion", and it forgets Google Workspace, so the bakery's own emails can fail. The report hands over a corrected record to paste.</p></div>
+        <div><span class="pin">3</span><p><b>DKIM.</b> We try the usual key names for the provider. Google uses <code class="mono">google</code>. Nothing there means signing is probably off.</p></div>
+        <div><span class="pin">4</span><p><b>DMARC.</b> Missing, so Gmail may reject this bakery's newsletters and anyone can fake its address. Start with <code class="mono">p=none</code>, watch reports for 2-4 weeks, then tighten.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="sc">
+    <h2 id="sc">How the score adds up</h2>
+    <div class="tablewrap"><table class="score">
+      <thead><tr><th>Check</th><th>Points</th><th>Full points when</th><th>Partial when</th></tr></thead>
+      <tbody>
+        <tr><td>MX</td><td>15</td><td>Your domain can receive mail</td><td>–</td></tr>
+        <tr><td>SPF</td><td>30</td><td>One record, ends in ~all or -all, includes your provider, under 10 lookups</td><td>?all, missing provider, 9-10 lookups</td></tr>
+        <tr><td>DKIM</td><td>25</td><td>A live key found for your provider</td><td>No key on common names (may still exist under a custom name)</td></tr>
+        <tr><td>DMARC</td><td>30</td><td>p=quarantine or p=reject with a report address</td><td>p=none, pct under 100, or no report address</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">MTA-STS and BIMI are shown as extras and don't change the score.</p>
+  </section>
+
+  <section class="block" aria-labelledby="lim">
+    <h2 id="lim">What it can't tell you</h2>
+    <div class="grid2">
+      <div class="panel"><h3>Content and habits</h3><p class="small">A perfect setup doesn't save spammy content, bought lists, or a 1% complaint rate. Records prove who you are; behaviour decides the rest.</p></div>
+      <div class="panel"><h3>Custom DKIM names</h3><p class="small">Some tools sign with a key name we can't guess. If DKIM shows "Needs a look" but you know it's on, check your provider's DKIM page.</p></div>
+    </div>
+  </section>
+  <section class="block"><div class="panel cta"><h2>Check your domain now. It's free.</h2><p>Takes 10 seconds. No sign-up. If something's broken, we can fix it for $9.</p><div class="row"><a class="btn acc" href="index.html">Run the free check</a><a class="btn ghost" href="pricing.html">See prices</a></div></div></section>
+</main>
+<footer class="wrap"><span>Inbox Check by DGX Media · free email deliverability check</span><span><a href="index.html">Check</a> · <a href="how-it-works.html">How it works</a> · <a href="pricing.html">Pricing</a> · <a href="guides.html">Guides</a> · <a href="../scripts/">YouTube scripts</a></span></footer>
+
+</body></html>

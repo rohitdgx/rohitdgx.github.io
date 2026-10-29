@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DMARC Setup Guide: Start at p=none, Move to Reject Safely | Inbox Check</title>
+<meta name="description" content="How to add a DMARC record, read the reports, and move from p=none to quarantine and reject without blocking your own emails.">
+<link rel="canonical" href="https://rohitdgx.github.io/inbox-check/guide-dmarc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DMARC Setup Guide: Start at p=none, Move to Reject Safely | Inbox Check">
+<meta property="og:description" content="How to add a DMARC record, read the reports, and move from p=none to quarantine and reject without blocking your own emails.">
+<meta property="og:url" content="https://rohitdgx.github.io/inbox-check/guide-dmarc.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<nav class="top wrap"><a class="brand" href="index.html">Inbox<span>.</span>Check</a><div class="links"><a href="index.html">Check</a><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="guides.html" aria-current="page">Guides</a><a href="../">More tools</a></div></nav>
+<main class="wrap">
+  <article class="guide">
+    <p class="crumbs"><a href="guides.html">Guides</a> / DMARC: block fakes safely</p>
+    <h1>DMARC: block fakes safely</h1>
+    <p class="sub">DMARC tells receivers what to do with email that claims to be from you but fails SPF and DKIM. It also sends you reports showing who is sending as your domain.</p>
+    <h2>Your first DMARC record</h2>
+<div class="rec">v=DMARC1; p=none; rua=mailto:dmarc@yourcompany.com; adkim=r; aspf=r; pct=100</div>
+<p>Add it as a TXT record with Name/Host <code>_dmarc</code>. Use an inbox you check for <code>rua</code>; reports arrive as daily zipped files from Google, Microsoft, Yahoo and others.</p>
+<h2>What each part means</h2>
+<ul><li><code>p=none</code>: watch only. Nothing is blocked, you just get reports.</li><li><code>p=quarantine</code>: emails that fail go to spam.</li><li><code>p=reject</code>: emails that fail are refused.</li><li><code>rua=</code>: where daily reports go.</li><li><code>pct=</code>: what share of failing mail the policy applies to. Keep it at 100 once you're past testing.</li><li><code>adkim=r; aspf=r</code>: relaxed alignment, which allows subdomains like <code>mail.yourcompany.com</code>.</li></ul>
+<h2>The safe rollout</h2>
+<ol><li><b>Weeks 1-4:</b> <code>p=none</code>. Read the reports and list every service sending as you (newsletter tool, invoicing, helpdesk).</li><li>Add each legitimate service to SPF and switch on DKIM for it.</li><li><b>Next:</b> <code>p=quarantine</code>. Watch for complaints that real emails went to spam.</li><li><b>Finally:</b> <code>p=reject</code> once reports show only your own services passing.</li></ol>
+<div class="callout"><p>Jumping straight to <code>p=reject</code> is the most common mistake. It can silently block your own newsletters or invoices if one tool wasn't set up yet.</p></div>
+<h2>Only one DMARC record</h2>
+<p>Two TXT records at <code>_dmarc</code> make receivers ignore both. Edit the existing one instead of adding another.</p>
+    <div class="panel cta"><h3>Check yours in 10 seconds</h3><p class="small">Inbox Check reads your live records and tells you exactly what to change.</p><div class="row"><a class="btn acc" href="index.html">Run the free check</a><a class="btn ghost" href="pricing.html">Or let us fix it for $9</a></div></div>
+  </article>
+</main>
+<footer class="wrap"><span>Inbox Check by DGX Media · free email deliverability check</span><span><a href="index.html">Check</a> · <a href="how-it-works.html">How it works</a> · <a href="pricing.html">Pricing</a> · <a href="guides.html">Guides</a> · <a href="../scripts/">YouTube scripts</a></span></footer>
+
+</body></html>

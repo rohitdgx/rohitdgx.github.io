@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SPF Record Guide: Set Up SPF for Google Workspace, Microsoft 365, Zoho | Inbox Check</title>
+<meta name="description" content="How to create one correct SPF record for your domain, with includes for Google Workspace, Microsoft 365, Zoho, GoDaddy, Hostinger and Titan.">
+<link rel="canonical" href="https://rohitdgx.github.io/inbox-check/guide-spf.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SPF Record Guide: Set Up SPF for Google Workspace, Microsoft 365, Zoho | Inbox Check">
+<meta property="og:description" content="How to create one correct SPF record for your domain, with includes for Google Workspace, Microsoft 365, Zoho, GoDaddy, Hostinger and Titan.">
+<meta property="og:url" content="https://rohitdgx.github.io/inbox-check/guide-spf.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<nav class="top wrap"><a class="brand" href="index.html">Inbox<span>.</span>Check</a><div class="links"><a href="index.html">Check</a><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="guides.html" aria-current="page">Guides</a><a href="../">More tools</a></div></nav>
+<main class="wrap">
+  <article class="guide">
+    <p class="crumbs"><a href="guides.html">Guides</a> / SPF: say who may send as you</p>
+    <h1>SPF: say who may send as you</h1>
+    <p class="sub">SPF is a single line in your DNS that lists the services allowed to send email for your domain. Receivers check it on every email.</p>
+    <h2>What a good SPF record looks like</h2>
+<div class="rec">v=spf1 include:_spf.google.com ~all</div>
+<p>It starts with <code>v=spf1</code>, lists who may send (here, Google Workspace), and ends with <code>~all</code>, meaning "anything else is suspicious".</p>
+<h2>The include for your email provider</h2>
+<ul><li>Google Workspace: <code>include:_spf.google.com</code></li><li>Microsoft 365: <code>include:spf.protection.outlook.com</code></li><li>Zoho Mail: <code>include:zoho.com</code> (India accounts: <code>include:zoho.in</code>, EU: <code>include:zoho.eu</code>)</li><li>GoDaddy email: <code>include:secureserver.net</code></li><li>Hostinger: <code>include:_spf.mail.hostinger.com</code></li><li>Titan: <code>include:spf.titan.email</code></li></ul>
+<p>Also add any tool that sends as your domain, such as SendGrid (<code>include:sendgrid.net</code>) or Mailgun (<code>include:mailgun.org</code>). Inbox Check has tick boxes for the common ones.</p>
+<h2>Three rules that break SPF</h2>
+<ol><li><b>Only one SPF record.</b> Two records starting with <code>v=spf1</code> make both invalid. Merge them into one line.</li><li><b>10 DNS lookups maximum.</b> Each <code>include</code>, <code>a</code>, <code>mx</code> or <code>redirect</code> costs lookups, and includes inside includes count too. Remove tools you no longer use.</li><li><b>Never end with <code>+all</code>.</b> It lets anyone send as you. Use <code>~all</code> while you test, <code>-all</code> once you're sure.</li></ol>
+<h2>How to add it</h2>
+<ol><li>Open your DNS host (GoDaddy, Cloudflare, Namecheap, Hostinger…) and find DNS records for your domain.</li><li>Look for an existing TXT record starting with <code>v=spf1</code>. Edit it, or add one if none exists.</li><li>Type: TXT. Name/Host: <code>@</code>. Value: your SPF line.</li><li>Save, wait 15-60 minutes, then run Inbox Check again.</li></ol>
+    <div class="panel cta"><h3>Check yours in 10 seconds</h3><p class="small">Inbox Check reads your live records and tells you exactly what to change.</p><div class="row"><a class="btn acc" href="index.html">Run the free check</a><a class="btn ghost" href="pricing.html">Or let us fix it for $9</a></div></div>
+  </article>
+</main>
+<footer class="wrap"><span>Inbox Check by DGX Media · free email deliverability check</span><span><a href="index.html">Check</a> · <a href="how-it-works.html">How it works</a> · <a href="pricing.html">Pricing</a> · <a href="guides.html">Guides</a> · <a href="../scripts/">YouTube scripts</a></span></footer>
+
+</body></html>

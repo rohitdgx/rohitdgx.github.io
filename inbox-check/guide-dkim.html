@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How to Turn On DKIM in Google Workspace, Microsoft 365 and Zoho | Inbox Check</title>
+<meta name="description" content="Step-by-step DKIM setup for Google Workspace, Microsoft 365 and Zoho Mail: where the setting is, which records to add, and how to check it worked.">
+<link rel="canonical" href="https://rohitdgx.github.io/inbox-check/guide-dkim.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How to Turn On DKIM in Google Workspace, Microsoft 365 and Zoho | Inbox Check">
+<meta property="og:description" content="Step-by-step DKIM setup for Google Workspace, Microsoft 365 and Zoho Mail: where the setting is, which records to add, and how to check it worked.">
+<meta property="og:url" content="https://rohitdgx.github.io/inbox-check/guide-dkim.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<nav class="top wrap"><a class="brand" href="index.html">Inbox<span>.</span>Check</a><div class="links"><a href="index.html">Check</a><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="guides.html" aria-current="page">Guides</a><a href="../">More tools</a></div></nav>
+<main class="wrap">
+  <article class="guide">
+    <p class="crumbs"><a href="guides.html">Guides</a> / DKIM: sign every email</p>
+    <h1>DKIM: sign every email</h1>
+    <p class="sub">DKIM adds a hidden signature to each email. Receivers check it against a public key in your DNS to confirm the email really came from you and wasn't changed.</p>
+    <h2>How it works in one minute</h2>
+<p>Your email provider holds a private key and signs every message. You publish the matching public key in DNS under a name like <code>google._domainkey.yourcompany.com</code>. The part before <code>._domainkey</code> is called the selector.</p>
+<h2>Google Workspace</h2>
+<ol><li>Open the Google Admin console, then Apps, Google Workspace, Gmail, Authenticate email.</li><li>Pick your domain and click Generate new record (2048-bit if your DNS host allows it).</li><li>Add the TXT record it shows at <code>google._domainkey</code> in your DNS.</li><li>Wait about an hour, then click Start authentication.</li></ol>
+<h2>Microsoft 365</h2>
+<ol><li>Open the Microsoft Defender portal, then Email &amp; collaboration, Policies, Email authentication settings, DKIM.</li><li>Pick your domain. Microsoft shows two CNAME records, <code>selector1._domainkey</code> and <code>selector2._domainkey</code>.</li><li>Add both CNAMEs at your DNS host exactly as shown.</li><li>Back in Defender, switch DKIM signing on.</li></ol>
+<h2>Zoho Mail</h2>
+<ol><li>Open the Zoho Mail Admin Console, then Domains, your domain, Email configuration, DKIM.</li><li>Add a selector (for example <code>zmail</code>) and copy the TXT record.</li><li>Add it in your DNS, then click Verify in Zoho.</li></ol>
+<h2>Other providers</h2>
+<p>Look for "DKIM", "email authentication" or "domain verification" in your email admin panel. GoDaddy plans built on Microsoft 365 use the Microsoft steps. Hostinger, Proton and Fastmail show their DKIM records on the domain settings page.</p>
+<div class="callout"><p>If Inbox Check says it couldn't find DKIM but you know it's on, your provider may use a custom selector name. Check the provider's DKIM page to confirm it says "active".</p></div>
+    <div class="panel cta"><h3>Check yours in 10 seconds</h3><p class="small">Inbox Check reads your live records and tells you exactly what to change.</p><div class="row"><a class="btn acc" href="index.html">Run the free check</a><a class="btn ghost" href="pricing.html">Or let us fix it for $9</a></div></div>
+  </article>
+</main>
+<footer class="wrap"><span>Inbox Check by DGX Media · free email deliverability check</span><span><a href="index.html">Check</a> · <a href="how-it-works.html">How it works</a> · <a href="pricing.html">Pricing</a> · <a href="guides.html">Guides</a> · <a href="../scripts/">YouTube scripts</a></span></footer>
+
+</body></html>

@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gmail, Yahoo and Outlook Sender Rules Explained | Inbox Check</title>
+<meta name="description" content="What Gmail, Yahoo and Microsoft Outlook require from email senders: SPF, DKIM, DMARC, unsubscribe and spam rate rules in plain English.">
+<link rel="canonical" href="https://rohitdgx.github.io/inbox-check/guide-gmail-rules.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gmail, Yahoo and Outlook Sender Rules Explained | Inbox Check">
+<meta property="og:description" content="What Gmail, Yahoo and Microsoft Outlook require from email senders: SPF, DKIM, DMARC, unsubscribe and spam rate rules in plain English.">
+<meta property="og:url" content="https://rohitdgx.github.io/inbox-check/guide-gmail-rules.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<nav class="top wrap"><a class="brand" href="index.html">Inbox<span>.</span>Check</a><div class="links"><a href="index.html">Check</a><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="guides.html" aria-current="page">Guides</a><a href="../">More tools</a></div></nav>
+<main class="wrap">
+  <article class="guide">
+    <p class="crumbs"><a href="guides.html">Guides</a> / Gmail, Yahoo and Outlook sender rules</p>
+    <h1>Gmail, Yahoo and Outlook sender rules</h1>
+    <p class="sub">The three biggest inbox providers now check the same few things before they accept your email. Here's what applies to you.</p>
+    <h2>Rules for every sender</h2>
+<p>Even if you send a handful of emails a day, Gmail and Yahoo expect:</p>
+<ul><li><b>SPF or DKIM</b> set up for your domain (both is better).</li><li>Mail sent over a secure (TLS) connection. Normal providers do this already.</li><li>A spam complaint rate below 0.3%, ideally under 0.1%.</li><li>Valid DNS for your sending servers. Google Workspace, Microsoft 365 and Zoho handle this for you.</li></ul>
+<h2>Extra rules for bulk senders</h2>
+<p>Google counts you as a bulk sender once you send about 5,000 messages a day to personal Gmail addresses. Yahoo uses a similar line, and Microsoft applies its rules to senders above 5,000 a day to Outlook.com and Hotmail. Bulk senders need:</p>
+<ul><li><b>Both SPF and DKIM</b>, passing.</li><li><b>A DMARC record</b>, at least <code>p=none</code>, aligned with your From address.</li><li><b>One-click unsubscribe</b> in marketing emails, and unsubscribes processed within 2 days.</li><li>Spam complaints under 0.3%.</li></ul>
+<h2>What changed recently</h2>
+<p>Google and Yahoo announced these rules for February 2024 and phased them in. In November 2025 Gmail moved from warnings to rejecting non-compliant bulk mail outright. Microsoft started applying the same requirements to high-volume senders to its consumer inboxes in 2025.</p>
+<div class="callout"><p><b>Small sender?</b> You may not hit 5,000 a day, but SPF, DKIM and DMARC still decide whether your invoices and replies land in the inbox. Setting them up takes under an hour.</p></div>
+<h2>Your checklist</h2>
+<ol><li>One SPF record that includes your email provider. <a href="guide-spf.html">SPF guide</a></li><li>DKIM switched on at your provider. <a href="guide-dkim.html">DKIM guide</a></li><li>A DMARC record, starting at p=none. <a href="guide-dmarc.html">DMARC guide</a></li><li>An unsubscribe link in every marketing email.</li></ol>
+    <div class="panel cta"><h3>Check yours in 10 seconds</h3><p class="small">Inbox Check reads your live records and tells you exactly what to change.</p><div class="row"><a class="btn acc" href="index.html">Run the free check</a><a class="btn ghost" href="pricing.html">Or let us fix it for $9</a></div></div>
+  </article>
+</main>
+<footer class="wrap"><span>Inbox Check by DGX Media · free email deliverability check</span><span><a href="index.html">Check</a> · <a href="how-it-works.html">How it works</a> · <a href="pricing.html">Pricing</a> · <a href="guides.html">Guides</a> · <a href="../scripts/">YouTube scripts</a></span></footer>
+
+</body></html>
