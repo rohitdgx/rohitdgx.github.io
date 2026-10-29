@@ -1,0 +1,323 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><title>Pahadi Direct</title><meta name="description" content="Direct-booking websites for Uttarakhand homestays. WhatsApp booking, UPI payment, no commission. Pay after you approve the site."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;500;700&display=swap"><style>
+/* Layout: sticky top nav, hash-routed views, calculator as the hero's working proof */
+:root{
+  --bg:#eef2ef; --surface:#ffffff; --ink:#1b2626; --muted:#566663;
+  --deodar:#2b4739; --ridge:#3b5869; --marigold:#d38f17; --line:#d2dbd5; --good:#2f7a4b;
+  --display:"Yatra One","Mukta",Georgia,serif; --body:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101614; --surface:#18211e; --ink:#e4ebe7; --muted:#9aaca5;
+  --deodar:#8bbd9f; --ridge:#8fb2c6; --marigold:#f0b247; --line:#2a3633; --good:#7fd19d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101614; --surface:#18211e; --ink:#e4ebe7; --muted:#9aaca5;
+  --deodar:#8bbd9f; --ridge:#8fb2c6; --marigold:#f0b247; --line:#2a3633; --good:#7fd19d; color-scheme:dark}
+html[data-lang="hi"] [lang="en"]{display:none}
+html:not([data-lang="hi"]) [lang="hi"]{display:none}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{font-family:var(--display);font-size:22px;color:var(--deodar);text-decoration:none;margin-right:auto}
+.links{display:flex;gap:4px 14px;flex-wrap:wrap}
+.links a{color:var(--ink);text-decoration:none;font-size:15px;padding:4px 0;border-bottom:2px solid transparent}
+.links a[aria-current="page"]{border-color:var(--marigold);font-weight:700}
+.lang{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 12px;font:inherit;font-size:14px;cursor:pointer}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;color:var(--deodar)}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.12}
+h2{font-size:clamp(24px,4vw,32px);line-height:1.2}
+h3{font-size:21px}
+p{margin:0;max-width:65ch}
+.view{display:grid;gap:28px;padding-block:32px 56px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start}
+.hero>*{min-width:0}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+.sub{font-size:19px;color:var(--muted);margin-top:12px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-block;background:var(--deodar);color:var(--bg);text-decoration:none;font:inherit;font-weight:700;padding:11px 20px;border-radius:999px;border:0;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--deodar);border:2px solid var(--deodar)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px}
+.calc label{display:grid;gap:4px;font-size:15px;color:var(--muted)}
+.calc input{font:inherit;font-variant-numeric:tabular-nums;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media (max-width:420px){.row{grid-template-columns:1fr}}
+.out{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:6px;font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-size:30px;color:var(--marigold);line-height:1.1}
+.small{font-size:14px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.steps>div{display:grid;gap:6px;align-content:start}
+.num{font-family:var(--display);color:var(--marigold);font-size:22px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:10px;align-content:start}
+.plan.pick{border:2px solid var(--deodar)}
+.price{font-family:var(--display);font-size:34px;color:var(--ink);font-variant-numeric:tabular-nums}
+ul.ticks{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+ul.ticks li{padding-left:22px;position:relative}
+ul.ticks li::before{content:"";position:absolute;left:2px;top:.55em;width:10px;height:6px;border-left:2px solid var(--good);border-bottom:2px solid var(--good);transform:rotate(-45deg)}
+.band{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:10px}
+.faq details{border-bottom:1px solid var(--line);padding-block:12px}
+.faq summary{cursor:pointer;font-weight:700}
+.faq details p{margin-top:8px}
+form{display:grid;gap:12px;max-width:560px}
+form label{display:grid;gap:4px;font-size:15px;color:var(--muted)}
+form input,form textarea{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.msgbox{background:var(--bg);border:1px dashed var(--line);border-radius:6px;padding:12px;white-space:pre-wrap;font-size:15px}
+.legal{display:grid;gap:14px;max-width:70ch}
+.legal h3{margin-top:8px}
+footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;gap:8px 16px;flex-wrap:wrap}
+footer a{color:var(--muted)}
+.cite{font-size:13px;color:var(--muted)}
+</style></head><body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#home">Pahadi Direct</a>
+  <div class="links">
+    <a href="#home"><span lang="en">Home</span><span lang="hi">होम</span></a>
+    <a href="#service"><span lang="en">What you get</span><span lang="hi">क्या मिलेगा</span></a>
+    <a href="#pricing"><span lang="en">Pricing</span><span lang="hi">कीमत</span></a>
+    <a href="#faq"><span lang="en">FAQ</span><span lang="hi">सवाल</span></a>
+    <a href="#about"><span lang="en">About</span><span lang="hi">हमारे बारे में</span></a>
+    <a href="#contact"><span lang="en">Contact</span><span lang="hi">संपर्क</span></a>
+  </div>
+  <button class="lang" id="langBtn" type="button">हिंदी</button>
+</div></nav>
+
+<main class="wrap">
+
+<section class="view" id="v-home">
+  <div class="hero">
+    <div>
+      <h1><span lang="en">Your homestay's own booking website, with no commission.</span><span lang="hi">आपके होमस्टे की अपनी बुकिंग वेबसाइट, बिना कमीशन के।</span></h1>
+      <p class="sub"><span lang="en">Guests find you, message you on WhatsApp, and pay you by UPI. You keep the 15-20% that booking apps take.</span><span lang="hi">मेहमान आपको ढूंढें, WhatsApp पर मैसेज करें, और UPI से सीधे आपको पैसे दें। बुकिंग ऐप्स जो 15-20% लेते हैं, वो आपके पास रहेगा।</span></p>
+      <div class="ctas">
+        <a class="btn" href="#contact"><span lang="en">Get a free sample of your site</span><span lang="hi">अपनी साइट का मुफ़्त नमूना पाएं</span></a>
+        <a class="btn ghost" href="../kilmora-sample/" target="_blank" rel="noopener"><span lang="en">See a sample site</span><span lang="hi">नमूना साइट देखें</span></a>
+      </div>
+      <p class="small" style="margin-top:14px"><span lang="en">Pay only after you approve the finished site.</span><span lang="hi">साइट पसंद आने के बाद ही पैसे दें।</span></p>
+    </div>
+    <div class="calc" aria-live="polite">
+      <h3><span lang="en">What do the apps cost you?</span><span lang="hi">ऐप्स आपसे कितना लेते हैं?</span></h3>
+      <div class="row">
+        <label for="rate"><span lang="en">Room rate (₹/night)</span><span lang="hi">कमरे का रेट (₹/रात)</span><input id="rate" type="number" min="0" inputmode="numeric" value="3000"></label>
+        <label for="nights"><span lang="en">App nights / month</span><span lang="hi">ऐप से रातें / महीना</span><input id="nights" type="number" min="0" inputmode="numeric" value="40"></label>
+        <label for="pct"><span lang="en">Commission %</span><span lang="hi">कमीशन %</span><input id="pct" type="number" min="0" max="40" inputmode="decimal" value="18"></label>
+      </div>
+      <div class="out">
+        <span class="small"><span lang="en">You pay the apps about</span><span lang="hi">आप ऐप्स को लगभग देते हैं</span></span>
+        <span class="big" id="lost">₹21,600</span>
+        <span class="small"><span lang="en">per month. If 1 in 3 of those guests books you directly instead, you keep</span><span lang="hi">हर महीने। अगर इनमें से 3 में 1 मेहमान सीधे बुक करे, तो आपकी बचत</span> <b id="kept">₹7,200</b>.</span>
+        <span class="small" id="payback"></span>
+      </div>
+      <p class="cite"><span lang="en">Example numbers. Booking.com and MakeMyTrip commonly charge 15-20%; your contract may differ.</span><span lang="hi">ये उदाहरण हैं। Booking.com और MakeMyTrip आमतौर पर 15-20% लेते हैं; आपका रेट अलग हो सकता है।</span></p>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div><span class="num">1</span><h3><span lang="en">Send photos by email</span><span lang="hi">ईमेल से फ़ोटो भेजें</span></h3><p><span lang="en">Send your rooms, food, view, rates and rules. That's all we need.</span><span lang="hi">कमरे, खाना, नज़ारा, रेट और नियम भेजें। बस इतना चाहिए।</span></p></div>
+    <div><span class="num">2</span><h3><span lang="en">We build it in 2-3 days</span><span lang="hi">2-3 दिन में साइट तैयार</span></h3><p><span lang="en">Hindi and English, works on any phone, with a WhatsApp book button and your UPI QR.</span><span lang="hi">हिंदी और अंग्रेज़ी में, हर फ़ोन पर चले, WhatsApp बुकिंग बटन और आपका UPI QR के साथ।</span></p></div>
+    <div><span class="num">3</span><h3><span lang="en">You check it, then pay</span><span lang="hi">देखें, फिर पैसे दें</span></h3><p><span lang="en">Ask for changes until you're happy. Pay by UPI after you approve.</span><span lang="hi">जब तक पसंद न आए, बदलाव करवाएं। पसंद आने पर UPI से पैसे दें।</span></p></div>
+  </div>
+</section>
+
+<section class="view" id="v-service" hidden>
+  <h1><span lang="en">What you get</span><span lang="hi">आपको क्या मिलेगा</span></h1>
+  <div class="band">
+    <h3><span lang="en">Your website</span><span lang="hi">आपकी वेबसाइट</span></h3>
+    <ul class="ticks">
+      <li><span lang="en">One clean page guests can read on a phone with weak signal</span><span lang="hi">एक साफ़ पेज, जो कमज़ोर नेटवर्क में भी फ़ोन पर खुले</span></li>
+      <li><span lang="en">Rooms, rates by season, meals, house rules, how to reach you</span><span lang="hi">कमरे, सीज़न के हिसाब से रेट, खाना, नियम, कैसे पहुंचें</span></li>
+      <li><span lang="en">"Book on WhatsApp" button that fills in the guest's dates</span><span lang="hi">"WhatsApp पर बुक करें" बटन, जिसमें तारीखें अपने आप भर जाती हैं</span></li>
+      <li><span lang="en">Your UPI QR and advance-payment rules</span><span lang="hi">आपका UPI QR और एडवांस के नियम</span></li>
+      <li><span lang="en">Hindi and English</span><span lang="hi">हिंदी और अंग्रेज़ी</span></li>
+    </ul>
+  </div>
+  <div class="band">
+    <h3><span lang="en">Your Google listing</span><span lang="hi">आपकी Google लिस्टिंग</span></h3>
+    <p><span lang="en">We check your Google Maps listing and send you a short list of fixes: website link, photos, phone number, hours, and replies to unanswered reviews.</span><span lang="hi">हम आपकी Google Maps लिस्टिंग देखकर छोटी सी लिस्ट भेजेंगे कि क्या ठीक करना है: वेबसाइट लिंक, फ़ोटो, फ़ोन नंबर, समय, और बिना जवाब वाले रिव्यू।</span></p>
+  </div>
+  <div class="band">
+    <h3><span lang="en">What we don't do</span><span lang="hi">हम क्या नहीं करते</span></h3>
+    <p><span lang="en">We don't take bookings for you, hold your money, or charge per booking. Guests pay you directly. We also can't promise a number of bookings; that depends on your place, your reviews and the season.</span><span lang="hi">हम आपकी जगह बुकिंग नहीं लेते, पैसे नहीं रखते, और हर बुकिंग पर कुछ नहीं लेते। मेहमान सीधे आपको पैसे देते हैं। हम कितनी बुकिंग आएंगी इसका वादा नहीं कर सकते; ये आपकी जगह, रिव्यू और सीज़न पर निर्भर है।</span></p>
+  </div>
+</section>
+
+<section class="view" id="v-pricing" hidden>
+  <h1><span lang="en">Pricing</span><span lang="hi">कीमत</span></h1>
+  <p><span lang="en">These are launch prices. You pay once, with no booking fees, and only after you approve the site.</span><span lang="hi">ये शुरुआती कीमतें हैं। एक बार भुगतान, बुकिंग पर कोई फ़ीस नहीं, और वो भी साइट पसंद आने के बाद।</span></p>
+  <div class="plans">
+    <div class="plan">
+      <h3><span lang="en">Basic</span><span lang="hi">बेसिक</span></h3>
+      <div class="price">₹2,999</div>
+      <ul class="ticks">
+        <li><span lang="en">One-page site, up to 12 photos</span><span lang="hi">एक पेज की साइट, 12 फ़ोटो तक</span></li>
+        <li><span lang="en">WhatsApp book button + UPI QR</span><span lang="hi">WhatsApp बटन + UPI QR</span></li>
+        <li><span lang="en">Hindi + English</span><span lang="hi">हिंदी + अंग्रेज़ी</span></li>
+        <li><span lang="en">2 rounds of changes</span><span lang="hi">2 बार बदलाव</span></li>
+      </ul>
+    </div>
+    <div class="plan pick">
+      <h3><span lang="en">Plus</span><span lang="hi">प्लस</span></h3>
+      <div class="price">₹5,999</div>
+      <ul class="ticks">
+        <li><span lang="en">Everything in Basic</span><span lang="hi">बेसिक का सब कुछ</span></li>
+        <li><span lang="en">Season rate table, nearby places, how-to-reach map link</span><span lang="hi">सीज़न रेट टेबल, आसपास की जगहें, रास्ते का मैप लिंक</span></li>
+        <li><span lang="en">Google listing check with fix list</span><span lang="hi">Google लिस्टिंग की जांच और सुधार की लिस्ट</span></li>
+        <li><span lang="en">Free updates for 3 months</span><span lang="hi">3 महीने मुफ़्त अपडेट</span></li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3><span lang="en">Care</span><span lang="hi">केयर</span></h3>
+      <div class="price">₹399<span class="small"> /<span lang="en">month</span><span lang="hi">महीना</span></span></div>
+      <ul class="ticks">
+        <li><span lang="en">Rate and photo changes any time</span><span lang="hi">कभी भी रेट और फ़ोटो बदलें</span></li>
+        <li><span lang="en">Seasonal offers added</span><span lang="hi">सीज़न ऑफ़र जोड़ना</span></li>
+        <li><span lang="en">Cancel any month</span><span lang="hi">कभी भी बंद करें</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="small"><span lang="en">Hosting is free on a standard web address. A custom name like yourhomestay.in is optional; you buy it directly from a domain company and we connect it.</span><span lang="hi">होस्टिंग मुफ़्त है। yourhomestay.in जैसा अपना नाम चाहें तो आप सीधे डोमेन कंपनी से खरीदें, हम जोड़ देंगे।</span></p>
+</section>
+
+<section class="view faq" id="v-faq" hidden>
+  <h1><span lang="en">Questions owners ask</span><span lang="hi">मालिक जो पूछते हैं</span></h1>
+  <div>
+    <details><summary><span lang="en">Should I leave MakeMyTrip and Booking.com?</span><span lang="hi">क्या मुझे MakeMyTrip और Booking.com छोड़ देना चाहिए?</span></summary><p><span lang="en">No. Keep them for new guests. Your site is for repeat guests, referrals, Instagram visitors, and anyone who finds you on Google and would rather book you directly.</span><span lang="hi">नहीं। नए मेहमानों के लिए उन्हें रखें। आपकी साइट पुराने मेहमानों, जान-पहचान वालों, Instagram और Google से आने वालों के लिए है जो सीधे बुक करना चाहते हैं।</span></p></details>
+    <details><summary><span lang="en">I don't know computers. Can I still use it?</span><span lang="hi">मुझे कंप्यूटर नहीं आता। क्या फिर भी चलेगा?</span></summary><p><span lang="en">Yes. Bookings come to your WhatsApp like normal messages. To change a rate, send us a message.</span><span lang="hi">हाँ। बुकिंग आपके WhatsApp पर आम मैसेज की तरह आती है। रेट बदलना हो तो हमें मैसेज कर दें।</span></p></details>
+    <details><summary><span lang="en">Why pay after approval? What's the catch?</span><span lang="hi">पसंद आने के बाद भुगतान क्यों?</span></summary><p><span lang="en">We're a new service, so you shouldn't have to trust us before you see the work. If you don't like the site, you don't pay.</span><span lang="hi">हम नई सेवा हैं, इसलिए काम देखे बिना भरोसा करने की ज़रूरत नहीं। पसंद न आए तो पैसे न दें।</span></p></details>
+    <details><summary><span lang="en">Do you take any money from my bookings?</span><span lang="hi">क्या आप मेरी बुकिंग से कुछ लेते हैं?</span></summary><p><span lang="en">No. Guests pay you directly by UPI or cash.</span><span lang="hi">नहीं। मेहमान सीधे UPI या कैश से आपको देते हैं।</span></p></details>
+    <details><summary><span lang="en">How will guests find my site?</span><span lang="hi">मेहमान मेरी साइट कैसे ढूंढेंगे?</span></summary><p><span lang="en">Mainly through your Google Maps listing, your Instagram bio, and the link you send people who call. A website alone won't bring crowds; it turns people who already found you into direct bookings.</span><span lang="hi">ज़्यादातर Google Maps लिस्टिंग, Instagram बायो, और जो लोग फ़ोन करते हैं उन्हें भेजे गए लिंक से। सिर्फ़ वेबसाइट से भीड़ नहीं आती; ये उन लोगों को सीधी बुकिंग में बदलती है जो आपको पहले से ढूंढ चुके हैं।</span></p></details>
+    <details><summary><span lang="en">What if my internet is weak?</span><span lang="hi">मेरा इंटरनेट कमज़ोर है तो?</span></summary><p><span lang="en">The site is light and loads on slow mobile data. You only need WhatsApp to receive bookings.</span><span lang="hi">साइट हल्की है और धीमे नेटवर्क पर भी खुलती है। बुकिंग के लिए बस WhatsApp चाहिए।</span></p></details>
+  </div>
+</section>
+
+<section class="view" id="v-about" hidden>
+  <h1><span lang="en">About Pahadi Direct</span><span lang="hi">Pahadi Direct के बारे में</span></h1>
+  <p><span lang="en">Pahadi Direct is a new, small service started in 2026 for homestays in the Uttarakhand hills. We build simple websites so families running homestays can take more bookings directly and pay less commission.</span><span lang="hi">Pahadi Direct 2026 में शुरू हुई एक नई, छोटी सेवा है, उत्तराखंड के पहाड़ी होमस्टे के लिए। हम सरल वेबसाइट बनाते हैं ताकि होमस्टे चलाने वाले परिवार ज़्यादा सीधी बुकिंग लें और कम कमीशन दें।</span></p>
+  <p><span lang="en">We don't have past clients to show you yet. That's why you see the finished site before you pay anything.</span><span lang="hi">अभी हमारे पास दिखाने के लिए पुराने ग्राहक नहीं हैं। इसलिए आप पैसे देने से पहले पूरी साइट देखते हैं।</span></p>
+</section>
+
+<section class="view" id="v-contact" hidden>
+  <h1><span lang="en">Get a free sample of your site</span><span lang="hi">अपनी साइट का मुफ़्त नमूना पाएं</span></h1>
+  <p><span lang="en">Fill this in. It writes an email for you to send us.</span><span lang="hi">ये भरें। ये आपके लिए ईमेल तैयार कर देगा।</span></p>
+  <form id="enq">
+    <label for="f-name"><span lang="en">Homestay name</span><span lang="hi">होमस्टे का नाम</span><input id="f-name" required></label>
+    <label for="f-place"><span lang="en">Village / area</span><span lang="hi">गांव / जगह</span><input id="f-place" required></label>
+    <label for="f-rooms"><span lang="en">Number of rooms</span><span lang="hi">कमरों की संख्या</span><input id="f-rooms" type="number" min="1" inputmode="numeric"></label>
+    <label for="f-note"><span lang="en">Anything else (Google Maps link, Instagram)</span><span lang="hi">और कुछ (Google Maps लिंक, Instagram)</span><textarea id="f-note" rows="3"></textarea></label>
+    <button class="btn" type="submit"><span lang="en">Write my message</span><span lang="hi">मेरा मैसेज बनाएं</span></button>
+  </form>
+  <div id="out" hidden>
+    <div class="msgbox" id="msgText"></div>
+    <div class="ctas">
+      <button class="btn ghost" id="copyBtn" type="button"><span lang="en">Copy message</span><span lang="hi">मैसेज कॉपी करें</span></button>
+    </div>
+    <p class="small" id="copyNote"></p>
+  </div>
+  <div class="band">
+    <h3><span lang="en">Email us</span><span lang="hi">हमें ईमेल करें</span></h3>
+    <p id="mailAddr"></p>
+  </div>
+</section>
+
+<section class="view legal" id="v-privacy" hidden>
+  <h1>Privacy policy</h1>
+  <p class="small">Last updated 28 October 2026. Draft; to be reviewed by a qualified professional.</p>
+  <p>This website does not use cookies, analytics or tracking. The enquiry form on the Contact page does not send or store anything; it only builds a message on your own device that you choose to send us by email.</p>
+  <h3>What we receive</h3>
+  <p>When you message us, we receive what you choose to send: your name, phone number, homestay details and photos. We use it only to build and maintain your website.</p>
+  <h3>What we publish</h3>
+  <p>Only what you approve for your homestay site, such as photos, rates and your business WhatsApp number.</p>
+  <h3>Your rights</h3>
+  <p>You can ask us to delete your details and take down your site at any time by messaging us. We follow India's Digital Personal Data Protection Act, 2023 as it applies to us.</p>
+</section>
+
+<section class="view legal" id="v-terms" hidden>
+  <h1>Terms of service</h1>
+  <p class="small">Last updated 28 October 2026. Draft; to be reviewed by a qualified professional.</p>
+  <p>We build a website for your homestay from the details and photos you send. You confirm you own or have permission to use those photos and that your rates and details are accurate.</p>
+  <p>You pay the agreed one-time price only after you approve the finished site. Care plan fees are paid monthly in advance and can be stopped any month.</p>
+  <p>Bookings, payments and guest disputes are between you and your guests. We are not a booking agent and do not handle guest money.</p>
+  <p>We don't guarantee any number of bookings or search ranking.</p>
+  <p>If the free hosting service changes its rules, we will move your site to another free option or tell you the options in advance.</p>
+</section>
+
+<section class="view legal" id="v-refund" hidden>
+  <h1>Refund policy</h1>
+  <p class="small">Last updated 28 October 2026. Draft; to be reviewed by a qualified professional.</p>
+  <p>One-time plans are paid after you approve the site, so there is nothing to refund before approval. If a problem we caused appears within 14 days of payment and we can't fix it, we refund the full amount.</p>
+  <p>Care plan: stop any month. We refund the current month if you cancel within 7 days of paying it.</p>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <span>Pahadi Direct, 2026</span>
+  <a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#refund">Refunds</a>
+</div></footer>
+
+<script>
+(function(){
+  // Fill in the business email once the owner picks one.
+  var CONFIG = { email: "editorvideo252@gmail.com" };
+
+  var views = ["home","service","pricing","faq","about","contact","privacy","terms","refund"];
+  function show(){
+    var h = (location.hash||"#home").slice(1);
+    if(views.indexOf(h)<0) h="home";
+    views.forEach(function(v){ document.getElementById("v-"+v).hidden = (v!==h); });
+    document.querySelectorAll(".links a").forEach(function(a){
+      if(a.getAttribute("href")==="#"+h) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange",show); show();
+
+  var root=document.documentElement, langBtn=document.getElementById("langBtn");
+  function setLang(l){ root.setAttribute("data-lang",l); root.lang=l; langBtn.textContent = l==="hi"?"English":"हिंदी"; try{localStorage.setItem("pd-lang",l);}catch(e){} }
+  var saved="en"; try{ saved=localStorage.getItem("pd-lang")||"en"; }catch(e){}
+  setLang(saved);
+  langBtn.addEventListener("click",function(){ setLang(root.getAttribute("data-lang")==="hi"?"en":"hi"); });
+
+  var inr = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
+  function num(id){ var v=parseFloat(document.getElementById(id).value); return isFinite(v)&&v>0?v:0; }
+  function calc(){
+    var lost = num("rate")*num("nights")*num("pct")/100;
+    var kept = lost/3;
+    document.getElementById("lost").textContent = inr.format(lost);
+    document.getElementById("kept").textContent = inr.format(kept);
+    var p=document.getElementById("payback");
+    if(kept>0){
+      var m = 2999/kept;
+      var en = m<=1 ? "That covers the ₹2,999 Basic site in under a month." : "That covers the ₹2,999 Basic site in about "+Math.ceil(m)+" months.";
+      var hi = m<=1 ? "इससे ₹2,999 की बेसिक साइट एक महीने से कम में वसूल।" : "इससे ₹2,999 की बेसिक साइट लगभग "+Math.ceil(m)+" महीने में वसूल।";
+      p.innerHTML = '<span lang="en"></span><span lang="hi"></span>';
+      p.children[0].textContent=en; p.children[1].textContent=hi;
+    } else p.textContent="";
+  }
+  ["rate","nights","pct"].forEach(function(id){ document.getElementById(id).addEventListener("input",calc); });
+  calc();
+
+  var mA = document.getElementById("mailAddr");
+  if(CONFIG.email){ mA.textContent = CONFIG.email; mA.className="mono"; }
+  else { mA.innerHTML='<span lang="en">Our email address will appear here soon.</span><span lang="hi">हमारा ईमेल जल्द यहाँ दिखेगा।</span>'; }
+
+  document.getElementById("enq").addEventListener("submit",function(e){
+    e.preventDefault();
+    var t = "Namaste, I'd like a free sample site for my homestay.\n"+
+      "Name: "+document.getElementById("f-name").value.trim()+"\n"+
+      "Area: "+document.getElementById("f-place").value.trim()+"\n"+
+      "Rooms: "+(document.getElementById("f-rooms").value||"-")+"\n"+
+      "Notes: "+(document.getElementById("f-note").value.trim()||"-");
+    document.getElementById("msgText").textContent=t;
+    document.getElementById("out").hidden=false;
+  });
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var t=document.getElementById("msgText").textContent, note=document.getElementById("copyNote");
+    function fallback(){ var r=document.createRange(); r.selectNodeContents(document.getElementById("msgText")); var s=getSelection(); s.removeAllRanges(); s.addRange(r); note.textContent="Message selected. Copy it and paste it into an email to us."; }
+    try{ navigator.clipboard.writeText(t).then(function(){ note.textContent="Copied. Paste it into an email to us."; },fallback); }catch(err){ fallback(); }
+  });
+})();
+</script>
+</body></html>
