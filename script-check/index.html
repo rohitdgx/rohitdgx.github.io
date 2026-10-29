@@ -112,9 +112,10 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;c
   </section>
 
   <section class="panel cta" id="hire" style="margin-bottom:40px">
-    <h2>Want the script written for you?</h2>
-    <p>We write researched, hook-first scripts for YouTube channels. Send your channel name and the topic of your next video, and we'll write the first script as a free sample. If you like it, we keep going on a per-video price.</p>
+    <h2>Want us to fix it, or write the next one?</h2>
+    <p>We fix the hook, pacing and long lines in this script for <b>$5</b>, delivered within 24 hours. New scripts start at $5 each, and monthly packs start at $29. Your first new script is free. <a href="../scripts/" style="color:inherit">See prices and samples</a>.</p>
     <form id="hireForm" style="display:grid;gap:10px;max-width:560px">
+      <label for="h-what" style="display:grid;gap:4px">What do you want?<select id="h-what"><option>Fix this script ($5)</option><option>Free sample script</option><option>Monthly pack (see prices)</option></select></label>
       <label for="h-ch" style="display:grid;gap:4px">Your channel name or link<input id="h-ch" required></label>
       <label for="h-topic" style="display:grid;gap:4px">Next video topic<input id="h-topic" required></label>
       <button class="btn" type="submit" style="justify-self:start">Write my request</button>
@@ -210,7 +211,7 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;c
   $("mail").textContent=CONFIG.email||"(email coming soon)";
   $("hireForm").addEventListener("submit",function(e){
     e.preventDefault();
-    var m="Hi, I'd like a free sample script.\nChannel: "+$("h-ch").value.trim()+"\nNext video: "+$("h-topic").value.trim()+(last.score?"\nMy current script scored "+last.score+"/100 on Script Retention Check.":"");
+    var w=$("h-what").value;var m="Hi, I'd like: "+w+"\nChannel: "+$("h-ch").value.trim()+"\nNext video: "+$("h-topic").value.trim()+(last.score?"\nMy current script scored "+last.score+"/100 on Script Retention Check.":"")+(/Fix/.test(w)?"\n\nI'll paste my script below this line:\n":"");
     $("hireMsg").textContent=m;$("hireOut").hidden=false;
   });
   $("hireCopy").addEventListener("click",function(){copy($("hireMsg").textContent,$("hireNote"));});
