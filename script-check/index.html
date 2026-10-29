@@ -1,0 +1,213 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><title>Script Retention Check</title><meta name="description" content="Free YouTube script checker. Paste your script and see speaking time, hook length, long sentences, filler words and the spots where viewers are likely to leave."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>
+/* Layout: one working tool, editor left and report right, stacked on phones. Single dark look by design. */
+:root{
+  --bg:#0b0806; --panel:#16110d; --panel-2:#1f1812; --ink:#f6f1ea; --muted:#a69a8e; --line:#2e241c;
+  --accent:#f26a1b; --accent-soft:#3a1c0b; --warn:#f5a524; --bad:#ff7a6b; --good:#5fd38d;
+  --btn-bg:#ffffff; --btn-ink:#0b0806;
+  --display:"Bricolage Grotesque","Public Sans",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  background-image:radial-gradient(900px 600px at -10% -15%, rgba(242,106,27,.5), rgba(232,89,12,.15) 45%, transparent 70%);background-repeat:no-repeat;background-attachment:fixed}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{padding-block:40px 20px;display:grid;gap:12px}
+.badge{justify-self:start;font-size:13px;border:1px solid var(--line);background:rgba(22,17,13,.7);border-radius:999px;padding:4px 12px;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;letter-spacing:-.015em;text-wrap:balance}
+h1{font-size:clamp(32px,5.5vw,56px);line-height:1.05}
+h2{font-size:20px}
+h3{font-size:16px}
+p{margin:0;max-width:66ch}
+.sub{color:var(--muted);font-size:18px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;padding-block:10px 40px;align-items:start}
+.grid>*{min-width:0}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.panel{background:rgba(22,17,13,.85);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px}
+textarea{width:100%;box-sizing:border-box;min-height:420px;font:inherit;font-size:15px;line-height:1.6;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;resize:vertical}
+select,input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 9px;max-width:100%}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+label{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.btn{font:inherit;font-weight:700;border-radius:999px;padding:9px 18px;border:1px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-ink);cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid}
+.stat b{font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+@media (max-width:420px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.score{display:flex;gap:14px;align-items:center}
+.ring{width:84px;height:84px;flex:none}
+.flags{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.flags li{border-left:3px solid var(--line);padding:6px 10px;background:var(--panel-2);border-radius:0 8px 8px 0;font-size:14px}
+.flags li.bad{border-color:var(--bad)}
+.flags li.warn{border-color:var(--warn)}
+.flags li.good{border-color:var(--good)}
+.flags q{color:var(--muted);quotes:"“" "”"}
+.small{font-size:13px;color:var(--muted)}
+.mono{font-family:var(--mono)}
+.cta{background:linear-gradient(160deg,rgba(242,106,27,.22),rgba(22,17,13,.9) 60%);border:1px solid var(--accent-soft)}
+.msg{white-space:pre-wrap;font-size:14px;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:10px}
+footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;color:var(--muted)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;padding-block:0 30px}
+.how>div{display:grid;gap:4px}
+</style></head><body>
+
+<header class="wrap">
+  <span class="badge">Free · works in your browser · nothing is uploaded</span>
+  <h1>Find where viewers will leave your video, before you film it.</h1>
+  <p class="sub">Paste your YouTube script. You get speaking time, how long your hook really takes, and the exact lines that slow the video down.</p>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <section class="panel" aria-label="Your script">
+      <div class="row">
+        <h2>Your script</h2>
+        <div class="row" style="gap:10px">
+          <label for="wpm">Talking speed
+            <select id="wpm"><option value="130">Calm (130 wpm)</option><option value="150" selected>Normal (150 wpm)</option><option value="170">Fast (170 wpm)</option></select>
+          </label>
+          <button class="btn ghost" id="sampleBtn" type="button">Load example</button>
+        </div>
+      </div>
+      <textarea id="script" spellcheck="true" placeholder="Paste your script here. Leave a blank line between sections."></textarea>
+      <p class="small">Tip: a blank line between sections lets the checker see each part of the video separately.</p>
+    </section>
+
+    <section class="panel" aria-live="polite" aria-label="Report">
+      <div class="score">
+        <svg class="ring" viewBox="0 0 84 84" role="img" aria-label="Retention score">
+          <circle cx="42" cy="42" r="36" fill="none" stroke="var(--line)" stroke-width="8"/>
+          <circle id="arc" cx="42" cy="42" r="36" fill="none" stroke="var(--accent)" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 999" transform="rotate(-90 42 42)"/>
+          <text id="scoreTxt" x="42" y="48" text-anchor="middle" fill="var(--ink)" font-family="Bricolage Grotesque, sans-serif" font-size="22" font-weight="700">–</text>
+        </svg>
+        <div><h2>Retention check</h2><p class="small" id="verdict">Paste a script to start.</p></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="sWords">0</b><span>words</span></div>
+        <div class="stat"><b id="sTime">0:00</b><span>speaking time</span></div>
+        <div class="stat"><b id="sHook">–</b><span>hook length</span></div>
+        <div class="stat"><b id="sLong">0</b><span>long sentences</span></div>
+        <div class="stat"><b id="sFill">0</b><span>filler words</span></div>
+        <div class="stat"><b id="sRead">–</b><span>reading ease</span></div>
+      </div>
+      <h3>What to fix</h3>
+      <ul class="flags" id="flags"><li>Your fixes will show here.</li></ul>
+      <div class="row"><button class="btn ghost" id="copyReport" type="button">Copy report</button><span class="small" id="copyNote"></span></div>
+    </section>
+  </div>
+
+  <section class="how">
+    <div><h3>Hook</h3><p class="small">The time before your first promise, question or stakes. Under 15 seconds keeps more people past the intro.</p></div>
+    <div><h3>Pacing</h3><p class="small">Sections over 90 seconds with no question, twist or "but" get flagged. Those are common drop spots.</p></div>
+    <div><h3>Sentences</h3><p class="small">Lines over 25 words are hard to say on camera and hard to follow. Split them.</p></div>
+    <div><h3>Fillers</h3><p class="small">"Basically", "actually", "just", "really" and friends add seconds without adding meaning.</p></div>
+  </section>
+
+  <section class="panel cta" id="hire" style="margin-bottom:40px">
+    <h2>Want the script written for you?</h2>
+    <p>We write researched, hook-first scripts for YouTube channels. Send your channel name and the topic of your next video, and we'll write the first script as a free sample. If you like it, we keep going on a per-video price.</p>
+    <form id="hireForm" style="display:grid;gap:10px;max-width:560px">
+      <label for="h-ch" style="display:grid;gap:4px">Your channel name or link<input id="h-ch" required></label>
+      <label for="h-topic" style="display:grid;gap:4px">Next video topic<input id="h-topic" required></label>
+      <button class="btn" type="submit" style="justify-self:start">Write my request</button>
+    </form>
+    <div id="hireOut" hidden style="display:grid;gap:8px">
+      <div class="msg" id="hireMsg"></div>
+      <div class="row" style="justify-content:flex-start"><button class="btn ghost" id="hireCopy" type="button">Copy request</button><span class="small" id="hireNote"></span></div>
+    </div>
+    <p class="small">Email it to: <span class="mono" id="mail"></span></p>
+  </section>
+</main>
+
+<footer class="wrap">Script Retention Check is free. Your script never leaves your browser. The score is a writing check based on common pacing rules, not a promise of views.</footer>
+
+<script>
+(function(){
+  var CONFIG={email:"editorvideo252@gmail.com"};
+  var $=function(id){return document.getElementById(id);};
+  var FILLERS=["basically","actually","literally","just","really","very","so yeah","you know","kind of","sort of","honestly","obviously","like i said","in order to","at the end of the day"];
+  var HOOKSIG=/\?|\byou\b|\byour\b|\d|\bwhy\b|\bhow\b|\bsecret\b|\bmistake\b|\bwithout\b|\bbut\b|\binstead\b|\bnever\b|\bstop\b/i;
+  var TURN=/\?|\bbut\b|\bhowever\b|\bexcept\b|\bturns out\b|\bhere'?s where\b|\bwait\b|\bnow\b/i;
+  var SAMPLE="Most people think the hard part of saving money is spending less. It isn't. It's the three bills you forgot you signed up for.\n\nIn this video I'll show you how I found 4,200 rupees a month I was paying for nothing, in about twenty minutes, using only my bank app.\n\nSo basically the first thing that you are going to want to do, and this is actually really important, is to open your bank app and look at every single transaction from the last ninety days and write down anything that repeats every month even if it is small because the small ones are the ones that really add up over time.\n\nI found a music app I hadn't opened since March. A cloud storage plan for a phone I sold. And a gym. You know which one hurt.\n\nBut here's where most people stop. Cancelling isn't enough, because half of these come back. So step two is turning off auto-renew at the source, not in the app.";
+  function words(t){return (t.match(/[A-Za-z\u0900-\u097F0-9’'-]+/g)||[]).length;}
+  function sentences(t){return t.replace(/\s+/g," ").split(/(?<=[.!?])\s+/).map(function(s){return s.trim();}).filter(function(s){return s.length;});}
+  function syllables(w){w=w.toLowerCase().replace(/[^a-z]/g,"");if(w.length<=3)return 1;w=w.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/,"").replace(/^y/,"");var m=w.match(/[aeiouy]{1,2}/g);return m?m.length:1;}
+  function fmt(sec){sec=Math.round(sec);return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0");}
+  function esc(s){return String(s);}
+  var last={};
+  function analyse(){
+    var t=$("script").value, wpm=Number($("wpm").value)||150, wps=wpm/60;
+    var W=words(t), S=sentences(t);
+    var flags=[], score=100;
+    $("sWords").textContent=W; $("sTime").textContent=fmt(W/wps);
+    if(!W){$("sHook").textContent="–";$("sLong").textContent="0";$("sFill").textContent="0";$("sRead").textContent="–";$("scoreTxt").textContent="–";$("arc").setAttribute("stroke-dasharray","0 999");$("verdict").textContent="Paste a script to start.";renderFlags([{k:"",t:"Your fixes will show here."}]);last={};return;}
+    // hook: words until first sentence that carries a hook signal
+    var hookWords=0, found=false;
+    for(var i=0;i<S.length&&i<8;i++){hookWords+=words(S[i]);if(HOOKSIG.test(S[i])){found=true;break;}}
+    var hookSec=hookWords/wps;
+    $("sHook").textContent=found?Math.round(hookSec)+"s":"none";
+    if(!found){score-=25;flags.push({k:"bad",t:"No clear hook in the first lines. Open with a promise, a question or what's at stake for the viewer."});}
+    else if(hookSec>15){score-=15;flags.push({k:"warn",t:"Your hook lands at "+Math.round(hookSec)+" seconds. Aim for under 15. Cut the warm-up before:",q:S[Math.min(i,S.length-1)]});}
+    else flags.push({k:"good",t:"Hook lands in "+Math.round(hookSec)+" seconds. Good."});
+    if(/^(hi|hey|hello|what'?s up|welcome)\b/i.test(t.trim())){score-=8;flags.push({k:"warn",t:"You open with a greeting. Start with the hook and say hello later, or not at all."});}
+    // long sentences
+    var longS=S.filter(function(s){return words(s)>25;});
+    $("sLong").textContent=longS.length;
+    longS.slice(0,4).forEach(function(s){flags.push({k:"warn",t:"Long sentence ("+words(s)+" words). Split it in two:",q:s.length>160?s.slice(0,160)+"…":s});});
+    score-=Math.min(20,longS.length*4);
+    // fillers
+    var low=" "+t.toLowerCase().replace(/[^a-z\u0900-\u097F' ]+/g," ")+" ", fc=0, hits={};
+    FILLERS.forEach(function(f){var re=new RegExp("\\b"+f.replace(/ /g,"\\s+")+"\\b","g");var n=(low.match(re)||[]).length;if(n){fc+=n;hits[f]=n;}});
+    $("sFill").textContent=fc;
+    var per100=fc/W*100;
+    if(per100>2){score-=Math.min(15,Math.round(per100*3));flags.push({k:"warn",t:"Filler words: "+Object.keys(hits).map(function(k){return "\""+k+"\" ×"+hits[k];}).join(", ")+". Cutting them saves about "+Math.round(fc*0.5/wps*2)+" seconds."});}
+    // sections pacing
+    var secs=t.split(/\n\s*\n/).map(function(x){return x.trim();}).filter(Boolean);
+    var slow=0;
+    secs.forEach(function(sec,idx){var sw=words(sec),st=sw/wps;if(st>90&&!TURN.test(sec)){slow++;flags.push({k:"bad",t:"Section "+(idx+1)+" runs "+fmt(st)+" with no question or turn. Add a question, a 'but', or a reveal to hold attention.",q:sec.slice(0,120)+(sec.length>120?"…":"")});}});
+    score-=Math.min(25,slow*10);
+    if(secs.length<2&&W>250)flags.push({k:"warn",t:"No section breaks found. Add a blank line between parts so you can check pacing per section."});
+    // reading ease (Flesch)
+    var syl=0;(t.match(/[A-Za-z']+/g)||[]).forEach(function(w){syl+=syllables(w);});
+    var fre=S.length?Math.round(206.835-1.015*(W/S.length)-84.6*(syl/Math.max(1,W))):0;
+    $("sRead").textContent=isFinite(fre)?Math.max(0,Math.min(100,fre)):"–";
+    if(fre<55){score-=8;flags.push({k:"warn",t:"Reading ease is "+fre+". Spoken scripts work best above 60. Use shorter words and sentences."});}
+    // length
+    var mins=W/wps/60;
+    if(mins>20)flags.push({k:"warn",t:"This runs about "+Math.round(mins)+" minutes. Check that every section earns its place."});
+    // cta
+    if(!/\bsubscribe\b|\blink\b|\bcomment\b|\bnext video\b/i.test(t)&&W>200)flags.push({k:"",t:"No call to action found. One clear ask near the end is enough."});
+    score=Math.max(5,Math.min(100,Math.round(score)));
+    var c=2*Math.PI*36;$("arc").setAttribute("stroke-dasharray",(c*score/100).toFixed(1)+" "+c.toFixed(1));
+    $("scoreTxt").textContent=score;
+    $("verdict").textContent=score>=85?"Tight script. Small fixes only.":score>=65?"Good base. Fix the flagged lines before filming.":"Viewers are likely to drop early. Start with the red items.";
+    if(flags.length===1&&flags[0].k==="good")flags.push({k:"good",t:"No long sentences, slow sections or heavy fillers found."});
+    renderFlags(flags);
+    last={score:score,W:W,time:fmt(W/wps),hook:$("sHook").textContent,flags:flags};
+  }
+  function renderFlags(arr){
+    var ul=$("flags");while(ul.firstChild)ul.removeChild(ul.firstChild);
+    arr.forEach(function(f){var li=document.createElement("li");if(f.k)li.className=f.k;li.appendChild(document.createTextNode(f.t));if(f.q){li.appendChild(document.createElement("br"));var q=document.createElement("q");q.textContent=f.q;li.appendChild(q);}ul.appendChild(li);});
+  }
+  var timer=null;
+  $("script").addEventListener("input",function(){clearTimeout(timer);timer=setTimeout(analyse,250);});
+  $("wpm").addEventListener("change",analyse);
+  $("sampleBtn").addEventListener("click",function(){$("script").value=SAMPLE;analyse();});
+  function copy(text,note){try{navigator.clipboard.writeText(text).then(function(){note.textContent="Copied.";},function(){note.textContent="Select the text and copy it.";});}catch(e){note.textContent="Select the text and copy it.";}}
+  $("copyReport").addEventListener("click",function(){
+    if(!last.W){$("copyNote").textContent="Paste a script first.";return;}
+    var r="Script Retention Check\nScore: "+last.score+"/100\nWords: "+last.W+" · Speaking time: "+last.time+" · Hook: "+last.hook+"\n\n"+last.flags.map(function(f){return "- "+f.t+(f.q?" \""+f.q+"\"":"");}).join("\n");
+    copy(r,$("copyNote"));
+  });
+  $("mail").textContent=CONFIG.email||"(email coming soon)";
+  $("hireForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var m="Hi, I'd like a free sample script.\nChannel: "+$("h-ch").value.trim()+"\nNext video: "+$("h-topic").value.trim()+(last.score?"\nMy current script scored "+last.score+"/100 on Script Retention Check.":"");
+    $("hireMsg").textContent=m;$("hireOut").hidden=false;
+  });
+  $("hireCopy").addEventListener("click",function(){copy($("hireMsg").textContent,$("hireNote"));});
+})();
+</script>
+</body></html>
