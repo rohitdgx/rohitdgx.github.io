@@ -1,0 +1,125 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><title>Kilmora Ghar Sample</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;500;700&display=swap"><style>
+/* Layout: single column guest page, ridge-line hero, rooms as a rate table, booking bar pinned at bottom */
+:root{
+  --bg:#f2f4f1; --surface:#ffffff; --ink:#1d2a2a; --muted:#5b6b68;
+  --deodar:#2e4a3c; --ridge:#3d5a6b; --marigold:#d9961f; --line:#d6ddd8;
+  --display:"Yatra One","Mukta",Georgia,serif; --body:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121816; --surface:#1a2220; --ink:#e6ece8; --muted:#9fb0aa;
+  --deodar:#86b39a; --ridge:#8fb1c4; --marigold:#f0b44a; --line:#2c3835; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121816; --surface:#1a2220; --ink:#e6ece8; --muted:#9fb0aa;
+  --deodar:#86b39a; --ridge:#8fb1c4; --marigold:#f0b44a; --line:#2c3835; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.banner{background:var(--marigold);color:#1d1606;font-weight:700;text-align:center;padding-block:8px;font-size:14px}
+.banner .wrap{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.banner a{color:#1d1606}
+header{padding-block:28px 8px}
+h1,h2{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,7vw,56px);line-height:1.1;color:var(--deodar)}
+h2{font-size:28px;color:var(--deodar);margin-bottom:12px}
+.hi{color:var(--muted);font-size:18px}
+.lead{max-width:60ch;margin:12px 0 0}
+.ridge{display:block;width:100%;height:auto;max-width:100%;margin-top:20px;border-radius:6px}
+section{padding-block:28px;border-top:1px solid var(--line)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;color:var(--muted);font-size:15px}
+.facts b{color:var(--ink)}
+.tablebox{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;background:var(--surface)}
+th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+td.r{text-align:right;white-space:nowrap}
+.note{font-size:14px;color:var(--muted)}
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.ph{aspect-ratio:4/3;max-width:100%;border-radius:6px;border:1px dashed var(--line);display:flex;align-items:flex-end;padding:8px;font-size:13px;color:var(--muted);background:linear-gradient(170deg,color-mix(in srgb,var(--ridge) 25%,var(--surface)),var(--surface) 70%)}
+ul.clean{padding-left:20px;margin:0;display:grid;gap:6px}
+.pay{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pay div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.qr{width:96px;height:96px;border:2px dashed var(--muted);border-radius:6px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:var(--muted);margin-bottom:8px}
+.bookbar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px))}
+.bookbar .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--deodar);color:var(--bg);text-decoration:none;font-weight:700;padding:12px 20px;border-radius:999px;border:0;font:inherit;font-weight:700;cursor:pointer}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+footer{padding-block:24px 40px;font-size:14px;color:var(--muted)}
+</style></head><body>
+
+<div class="banner"><div class="wrap"><span>SAMPLE SITE. Not a real homestay. Made by Pahadi Direct to show owners what their site could look like.</span></div></div>
+
+<header class="wrap">
+  <h1>Kilmora Ghar</h1>
+  <div class="hi">किलमोड़ा घर · Family homestay, Garhwal hills</div>
+  <p class="lead">Three rooms in a stone-and-wood village house, 2,100 m up. Home-cooked Garhwali food, a sunrise view of the snow peaks, and a host family who knows every trail nearby.</p>
+  <svg class="ridge" viewBox="0 0 800 220" role="img" aria-label="Illustration of mountain ridges at sunrise">
+    <rect width="800" height="220" fill="var(--surface)"/>
+    <circle cx="610" cy="78" r="34" fill="var(--marigold)" opacity=".85"/>
+    <path d="M0 150 L90 90 L160 120 L250 60 L330 110 L420 50 L520 105 L600 70 L700 115 L800 80 L800 220 L0 220Z" fill="var(--ridge)" opacity=".45"/>
+    <path d="M0 175 L120 125 L210 155 L300 115 L400 150 L500 120 L610 160 L720 130 L800 150 L800 220 L0 220Z" fill="var(--ridge)" opacity=".75"/>
+    <path d="M0 200 L80 170 L160 190 L260 160 L360 195 L470 168 L560 196 L680 172 L800 192 L800 220 L0 220Z" fill="var(--deodar)"/>
+  </svg>
+  <div class="facts">
+    <span><b>Check-in</b> 12:00</span><span><b>Check-out</b> 10:00</span>
+    <span><b>Rooms</b> 3</span><span><b>Meals</b> breakfast + dinner included</span>
+    <span><b>Last 300 m</b> on foot (we carry bags)</span>
+  </div>
+</header>
+
+<main class="wrap">
+<section>
+  <h2>Rooms and rates</h2>
+  <div class="tablebox">
+  <table>
+    <thead><tr><th>Room</th><th>Sleeps</th><th>Oct–Mar</th><th>Apr–Jun peak</th></tr></thead>
+    <tbody>
+      <tr><td>Deodar room<br><span class="note">Valley view, attached bath, geyser</span></td><td>2</td><td class="r">₹2,400</td><td class="r">₹3,200</td></tr>
+      <tr><td>Buransh room<br><span class="note">Snow-peak view, balcony</span></td><td>3</td><td class="r">₹2,900</td><td class="r">₹3,800</td></tr>
+      <tr><td>Family loft<br><span class="note">Wooden attic, 2 beds</span></td><td>4</td><td class="r">₹3,600</td><td class="r">₹4,600</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Per night, two meals included. Book direct and pay us the same rate the apps show, minus 8%. Sample prices only.</p>
+</section>
+
+<section>
+  <h2>Photos</h2>
+  <div class="photos">
+    <div class="ph">Owner's photo: house from the trail</div>
+    <div class="ph">Owner's photo: Buransh room</div>
+    <div class="ph">Owner's photo: dinner thali</div>
+    <div class="ph">Owner's photo: sunrise from balcony</div>
+  </div>
+</section>
+
+<section>
+  <h2>What's nearby</h2>
+  <ul class="clean">
+    <li>Village temple, 10 minutes' walk</li>
+    <li>Ridge-top viewpoint, 45-minute easy hike</li>
+    <li>Nearest market and ATM, 6 km (patchy signal at the house, BSNL works best)</li>
+    <li>We can book a local taxi from the bus stand</li>
+  </ul>
+</section>
+
+<section>
+  <h2>How to book</h2>
+  <div class="pay">
+    <div><b>1. Message us on WhatsApp</b><br>Send dates and number of guests. We reply with availability, usually within a few hours.</div>
+    <div><b>2. Pay 30% advance by UPI</b><div class="qr">Owner's UPI QR goes here</div>UPI ID: <span>kilmora@upi (sample)</span></div>
+    <div><b>3. Pay the rest at check-in</b><br>Cash or UPI. Free cancellation up to 7 days before arrival.</div>
+  </div>
+</section>
+</main>
+
+<div class="bookbar"><div class="wrap">
+  <div><b>Book on WhatsApp</b><br><span class="note">+91 00000 00000 (sample number)</span></div>
+  <button class="btn" id="bookBtn" type="button">Check dates</button>
+</div></div>
+<p class="wrap note" id="bookMsg" hidden>This is a sample page, so the button does nothing. On a real site it opens WhatsApp with your dates filled in.</p>
+
+<footer class="wrap">Sample page by Pahadi Direct. Kilmora Ghar is fictional; rooms, prices and contact details are placeholders.</footer>
+
+<script>
+document.getElementById('bookBtn').addEventListener('click',function(){document.getElementById('bookMsg').hidden=false;});
+</script>
+</body></html>
