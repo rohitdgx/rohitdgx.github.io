@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rohitdgx.github.io/sitemap.xml
