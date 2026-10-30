@@ -1,34 +1,170 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>DGX Media: free tools for ecommerce brands, agencies and creators</title>
-<meta name="description" content="Free Meta ads report builder, ad copy checker, email deliverability check and YouTube script checker. Ad creative packs and YouTube scripts from $19.">
+<meta name="description" content="Free Meta ads report builder, ad copy checker, email deliverability check and YouTube script checker. Ad creative packs and YouTube scripts from $5.">
 <link rel="canonical" href="https://rohitdgx.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DGX Media: free tools for ecommerce brands, agencies and creators">
-<meta property="og:description" content="Free Meta ads report builder, ad copy checker, email deliverability check and YouTube script checker. Ad creative packs and YouTube scripts from $19.">
+<meta property="og:description" content="Free Meta ads report builder, ad copy checker, email deliverability check and YouTube script checker. Ad creative packs and YouTube scripts from $5.">
 <meta property="og:url" content="https://rohitdgx.github.io/">
 <meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Public+Sans:wght@400;600&display=swap">
+<meta name="theme-color" content="#02070A">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-:root{--bg:#0b0806;--panel:#16110d;--ink:#f6f1ea;--muted:#a69a8e;--line:#2e241c;--accent:#f26a1b;color-scheme:dark}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Public Sans",system-ui,sans-serif;background-image:radial-gradient(800px 520px at -10% -15%,rgba(242,106,27,.5),transparent 70%);background-repeat:no-repeat;min-height:100vh}
-.wrap{max-width:900px;margin:0 auto;padding:56px max(16px,env(safe-area-inset-left,0px)) 40px}
-h1{font:700 clamp(30px,5vw,48px)/1.1 "Bricolage Grotesque",sans-serif;margin:0 0 12px}
-p{color:var(--muted);margin:0 0 28px;max-width:60ch}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-a.card{display:grid;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;color:inherit;text-decoration:none}
-a.card:hover{border-color:var(--accent)}
-a.card b{font:700 20px "Bricolage Grotesque",sans-serif}
-a.card span{color:var(--muted);font-size:15px}
-a.card i{font-style:normal;color:var(--accent);font-weight:600}
-</style></head><body><div class="wrap">
-<h1>DGX Media: tools and services for ecommerce brands, agencies and creators</h1>
-<p>Pick what you came for.</p>
-<div class="cards">
-<a class="card" href="ads-report/"><b>Meta Ads Report Builder</b><span>Free for agencies. Drop your Ads Manager export and get a client-ready report with CPA, ROAS and fatigue flags in seconds.</span><i>Build a report</i></a>
-<a class="card" href="ad-packs/"><b>DGX Ads creative packs</b><span>Fresh Meta ad concepts for ecommerce brands and agencies: hooks, primary text, headlines, UGC scripts. From $19. Free ad copy checker.</span><i>Check your ad copy</i></a>
-<a class="card" href="scripts/"><b>DGX Scripts</b><span>YouTube scripts from $5. Monthly packs for faceless channels from $29. First script free.</span><i>See prices</i></a>
-<a class="card" href="inbox-check/"><b>Inbox Check</b><span>Free email deliverability check. See why your emails land in spam and get the exact SPF, DKIM and DMARC records to fix it.</span><i>Check your domain</i></a>
-<a class="card" href="script-check/"><b>Script Retention Check</b><span>Free YouTube script checker. See when your hook lands and where viewers will leave.</span><i>Open the tool</i></a>
-<a class="card" href="pahadi-direct/"><b>Pahadi Direct</b><span>Direct-booking websites for Uttarakhand homestays. Keep the commission the apps take.</span><i>See the service</i></a>
-</div></div><script data-goatcounter="https://dgxmedia.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+:root{--bg:#02070A;--ink:#EAF3F9;--muted:#8CA3B5;--blue:#0097DE;--accent:#FD794D;--glass:rgba(255,255,255,.055);--glass-2:rgba(255,255,255,.09);--edge:rgba(255,255,255,.12);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
+
+/* nav */
+.nav{position:sticky;top:12px;z-index:10;margin-top:12px}
+.nav .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 18px;border-radius:999px;background:rgba(2,7,10,.55);border:1px solid var(--edge);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.logo{font-weight:800;letter-spacing:-.02em;text-decoration:none;font-size:17px}
+.logo i{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:20px;color:var(--blue)}
+.links{display:flex;gap:4px}
+.links a{text-decoration:none;font-size:14.5px;color:var(--muted);padding:8px 12px;border-radius:999px}
+.links a:hover{color:var(--ink);background:var(--glass)}
+@media (max-width:720px){.links{display:none}.wave{bottom:auto;top:560px;height:180px}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 22px;font:inherit;font-weight:800;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.btn.cta{background:var(--accent);color:#02070A;box-shadow:0 10px 30px -10px rgba(253,121,77,.65)}
+.btn.cta:hover{transform:translateY(-1px);box-shadow:0 14px 34px -10px rgba(253,121,77,.8)}
+.btn.glass{background:var(--glass);border-color:var(--edge);color:var(--ink);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.btn.glass:hover{background:var(--glass-2)}
+.btn.sm{padding:9px 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;padding:72px 0 40px;isolation:isolate;overflow-x:clip}
+.hero:before{content:"";position:absolute;inset:-140px -20% auto;height:720px;z-index:-2;background:radial-gradient(560px 360px at 50% 62%,rgba(253,121,77,.30),transparent 70%),radial-gradient(900px 520px at 50% 40%,rgba(0,151,222,.38),transparent 70%)}
+.wave{position:absolute;left:50%;top:auto;bottom:120px;transform:translateX(-50%);width:1400px;max-width:none;height:260px;z-index:-1;opacity:.95;pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--ink);padding:6px 14px 6px 8px;border-radius:999px;background:var(--glass);border:1px solid var(--edge)}
+.eyebrow b{background:var(--blue);color:#02070A;border-radius:999px;padding:2px 8px;font-size:12px}
+h1{font-size:clamp(40px,7.4vw,84px);line-height:1;letter-spacing:-.035em;font-weight:800;margin:22px auto 0;max-width:14ch;text-wrap:balance}
+h1 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--accent)}
+.center{text-align:center}
+.lede{color:var(--muted);font-size:clamp(17px,2.1vw,19px);max-width:56ch;margin:22px auto 0}
+.ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+
+/* floating preview cards */
+.float{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:84px}
+@media (max-width:860px){.float{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto}}
+.pc{border-radius:20px;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid var(--edge);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.pc:nth-child(2){transform:translateY(-18px)}
+@media (max-width:860px){.pc:nth-child(2){transform:none}}
+.pc .h{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);font-weight:700;letter-spacing:.02em}
+.pc .h span{font-size:11px;border:1px solid var(--edge);border-radius:999px;padding:2px 8px}
+.pc .big{font-size:34px;font-weight:800;letter-spacing:-.03em;margin:8px 0 2px}
+.pc .big small{font-size:15px;color:var(--muted);font-weight:600}
+.pc .sub{font-size:13.5px;color:var(--muted)}
+.meter{height:8px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--blue),#5cd0ff)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:56px;margin-top:12px}
+.bars i{flex:1;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,rgba(0,151,222,.95),rgba(0,151,222,.25))}
+.bars i.hot{background:linear-gradient(180deg,var(--accent),rgba(253,121,77,.3))}
+.line{display:flex;gap:8px;align-items:center;font-size:13px;margin-top:10px;color:var(--ink)}
+.line .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex:none}
+.line .dot.o{background:var(--accent)}
+
+/* tools */
+.sec{padding:84px 0 30px}
+.sec h2{font-size:clamp(30px,4.6vw,48px);line-height:1.05;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.sec h2 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;color:var(--blue)}
+.sec .lede{margin:14px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+@media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+a.card{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:22px;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--edge);overflow:hidden;transition:border-color .2s ease,transform .2s ease}
+a.card:before{content:"";position:absolute;inset:auto -30% -60% -30%;height:70%;background:radial-gradient(closest-side,rgba(0,151,222,.35),transparent);opacity:0;transition:opacity .25s ease;z-index:-1}
+a.card{isolation:isolate}
+a.card:hover{border-color:rgba(0,151,222,.6);transform:translateY(-2px)}
+a.card:hover:before{opacity:1}
+.ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(0,151,222,.14);border:1px solid rgba(0,151,222,.35)}
+.ic svg{width:22px;height:22px;stroke:#7fd3ff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid var(--edge);color:var(--muted)}
+.tag.free{border-color:rgba(0,151,222,.5);color:#7fd3ff}
+a.card b{font-size:20px;letter-spacing:-.02em;line-height:1.2}
+a.card p{margin:0;color:var(--muted);font-size:15px}
+a.card .go{margin-top:auto;padding-top:6px;font-weight:700;font-size:14.5px;color:var(--ink)}
+a.card .go:after{content:" \2192";color:var(--blue)}
+
+/* band */
+.band{margin:70px 0 0;border-radius:28px;padding:40px 24px;text-align:center;position:relative;overflow:hidden;border:1px solid var(--edge);background:radial-gradient(500px 260px at 50% 120%,rgba(253,121,77,.28),transparent 70%),radial-gradient(700px 300px at 50% -40%,rgba(0,151,222,.35),transparent 70%),rgba(255,255,255,.03)}
+.band h2{font-size:clamp(28px,4.2vw,44px);letter-spacing:-.03em;line-height:1.08;margin:0 auto;max-width:20ch}
+.band h2 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;color:var(--accent)}
+.band p{color:var(--muted);margin:14px auto 24px;max-width:52ch}
+footer{padding:46px 0 60px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--muted)}
+
+@media (prefers-reduced-motion:no-preference){
+ .wave path{stroke-dasharray:10 0;animation:drift 9s ease-in-out infinite alternate}
+ .wave path:nth-child(2){animation-duration:12s}.wave path:nth-child(3){animation-duration:15s}
+ @keyframes drift{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
+ .rise{opacity:0;transform:translateY(14px);animation:rise .7s ease forwards}
+ .rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.26s}.rise.d4{animation-delay:.4s}
+ @keyframes rise{to{opacity:1;transform:none}}
+}
+</style></head><body>
+
+<div class="wrap nav"><div class="bar">
+ <a class="logo" href="./">DGX <i>Media</i></a>
+ <nav class="links" aria-label="Main"><a href="ads-report/">Ads report</a><a href="ad-packs/">Ad packs</a><a href="scripts/">Scripts</a><a href="inbox-check/">Inbox Check</a></nav>
+ <a class="btn cta sm" href="#tools">Free tools</a>
+</div></div>
+
+<header class="hero">
+ <svg class="wave" viewBox="0 0 1400 260" aria-hidden="true" preserveAspectRatio="none">
+  <defs><linearGradient id="wg" x1="0" x2="1"><stop offset="0" stop-color="#0097DE" stop-opacity="0"/><stop offset=".5" stop-color="#5cd0ff"/><stop offset="1" stop-color="#0097DE" stop-opacity="0"/></linearGradient></defs>
+  <path d="M0 130 C 200 40, 380 220, 560 130 S 900 30, 1080 130 S 1300 200, 1400 120" stroke="url(#wg)" stroke-width="2.4" fill="none"/>
+  <path d="M0 150 C 220 70, 420 230, 640 140 S 980 60, 1160 150 S 1340 190, 1400 150" stroke="url(#wg)" stroke-width="1.4" fill="none" opacity=".6"/>
+  <path d="M0 110 C 180 170, 360 40, 600 120 S 940 200, 1120 110 S 1320 60, 1400 100" stroke="url(#wg)" stroke-width="1" fill="none" opacity=".45"/>
+ </svg>
+ <div class="wrap center">
+  <span class="eyebrow rise"><b>Free</b> Tools for brands, agencies and creators</span>
+  <h1 class="rise d1">Ads, emails and scripts that <em>get results.</em></h1>
+  <p class="lede rise d2">Check your Meta ad copy, build client reports in seconds, see why your emails land in spam, and find where viewers leave your video. Free. When you want the work done for you, prices start at $5.</p>
+  <div class="ctas rise d3"><a class="btn cta" href="#tools">Try a free tool</a><a class="btn glass" href="#services">See services</a></div>
+
+  <div class="float rise d4" aria-hidden="true">
+   <div class="pc"><div class="h">Ad copy check <span>sample</span></div><div class="big">86<small>/100</small></div><div class="sub">Hook fits before "See more"</div><div class="meter"><i style="width:86%"></i></div></div>
+   <div class="pc"><div class="h">Client report <span>sample</span></div><div class="big">3.4x <small>ROAS</small></div><div class="bars"><i style="height:40%"></i><i style="height:58%"></i><i style="height:46%"></i><i class="hot" style="height:92%"></i><i style="height:64%"></i><i style="height:72%"></i></div></div>
+   <div class="pc"><div class="h">Script check <span>sample</span></div><div class="line"><span class="dot"></span>Hook lands at 0:11</div><div class="line"><span class="dot"></span>No slow stretch over 90 s</div><div class="line"><span class="dot o"></span>2 long sentences to cut</div></div>
+  </div>
+ </div>
+</header>
+
+<main class="wrap">
+ <section class="sec" id="tools">
+  <h2>Free tools. <em>No sign-up.</em></h2>
+  <p class="lede">Each one runs in your browser. Open it, paste or upload, get the answer.</p>
+  <div class="grid">
+   <a class="card" href="ads-report/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="tagrow"><span class="tag free">Free</span><span class="tag">Agencies</span></span><b>Meta Ads Report Builder</b><p>Drop your Ads Manager export and get a client-ready PDF with CPA, ROAS, winners and wasted spend.</p><span class="go">Build a report</span></a>
+   <a class="card" href="ad-packs/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></span><span class="tagrow"><span class="tag free">Free</span><span class="tag">Ecommerce</span></span><b>Meta Ad Copy Checker</b><p>See what the feed shows before "See more", plus flags for weak hooks, missing CTAs and lines Meta rejects.</p><span class="go">Check your ad</span></a>
+   <a class="card" href="script-check/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M10 9l5 3-5 3z"/></svg></span><span class="tagrow"><span class="tag free">Free</span><span class="tag">YouTube</span></span><b>Script Retention Check</b><p>Paste a script. See when the hook lands, where viewers will leave and which lines drag.</p><span class="go">Check a script</span></a>
+   <a class="card" href="inbox-check/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg></span><span class="tagrow"><span class="tag free">Free</span><span class="tag">Any business</span></span><b>Inbox Check</b><p>Find out why your emails land in spam and get the exact SPF, DKIM and DMARC records to fix it.</p><span class="go">Check your domain</span></a>
+  </div>
+ </section>
+
+ <section class="sec" id="services">
+  <h2>Want it done <em>for you?</em></h2>
+  <p class="lede">Real work, priced so small teams can say yes.</p>
+  <div class="grid">
+   <a class="card" href="ad-packs/#pricing"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></span><span class="tagrow"><span class="tag">From $19</span><span class="tag">3 concepts free</span></span><b>DGX Ads creative packs</b><p>Fresh Meta ad concepts every week: hooks, primary text, headlines and UGC scripts. White-label for agencies.</p><span class="go">See packs</span></a>
+   <a class="card" href="scripts/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h4"/></svg></span><span class="tagrow"><span class="tag">From $5</span><span class="tag">First one free</span></span><b>DGX Scripts</b><p>YouTube scripts for faceless and education channels, written for retention. Monthly packs from $29.</p><span class="go">See prices</span></a>
+   <a class="card" href="pahadi-direct/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 20l6-10 4 6 3-4 5 8z"/></svg></span><span class="tagrow"><span class="tag">₹2,999</span><span class="tag">Homestays</span></span><b>Pahadi Direct</b><p>Direct-booking websites for Uttarakhand homestays. Keep the commission the booking apps take.</p><span class="go">See the service</span></a>
+  </div>
+
+  <div class="band">
+   <h2>Start with a free tool. <em>Pay only when it's worth it.</em></h2>
+   <p>Every service starts with a free sample, so you see the work before you spend anything.</p>
+   <a class="btn cta" href="#tools">Try a free tool</a>
+  </div>
+ </section>
+
+ <footer><span>© 2026 DGX Media</span><span><a href="mailto:editorvideo252@gmail.com">editorvideo252@gmail.com</a></span></footer>
+</main>
+<script data-goatcounter="https://dgxmedia.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body></html>
