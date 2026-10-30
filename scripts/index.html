@@ -8,12 +8,12 @@
 <meta property="og:url" content="https://rohitdgx.github.io/scripts/">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-:root{--bg:#0b0806;--panel:#16110d;--panel-2:#1f1812;--ink:#f6f1ea;--muted:#a69a8e;--line:#2e241c;--accent:#f26a1b;--accent-soft:#3a1c0b;--good:#5fd38d;--btn-bg:#fff;--btn-ink:#0b0806;
-  --display:"Bricolage Grotesque","Public Sans",system-ui,sans-serif;--body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+:root{--bg:#02070A;--panel:#07131C;--panel-2:#0C1D2A;--ink:#EAF3F9;--muted:#8CA3B5;--line:#17324A;--accent:#FD794D;--accent-soft:#331A10;--good:#5fd38d;--btn-bg:#FD794D;--btn-ink:#02070A;
+  --display:"Manrope",system-ui,sans-serif;--body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);background-image:radial-gradient(900px 600px at -10% -15%,rgba(242,106,27,.5),rgba(232,89,12,.15) 45%,transparent 70%);background-repeat:no-repeat}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);background-image:radial-gradient(900px 600px at -10% -15%,rgba(0,151,222,.42),rgba(0,151,222,.1) 45%,transparent 70%),radial-gradient(520px 380px at 108% 4%,rgba(253,121,77,.2),transparent 70%);background-repeat:no-repeat}
 .wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 nav.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:18px;flex-wrap:wrap}
 .brand{font:800 20px var(--display);letter-spacing:-.02em;color:var(--ink);text-decoration:none}.brand span{color:var(--accent)}
@@ -33,18 +33,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding-block:6px 10px}
 @media (max-width:760px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.proof div{background:rgba(22,17,13,.85);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:2px}
+.proof div{background:rgba(7,19,28,.85);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:2px}
 .proof b{font:800 26px var(--display)}.proof span{font-size:13px;color:var(--muted)}
 section.block{padding-block:48px 8px;display:grid;gap:20px}
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 @media (max-width:760px){.steps{grid-template-columns:1fr}}
-.card{background:rgba(22,17,13,.9);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:8px;align-content:start;min-width:0}
+.card{background:rgba(7,19,28,.9);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:8px;align-content:start;min-width:0}
 .card .n{font:800 15px var(--display);color:var(--accent)}
 .card p{color:var(--muted);font-size:15px}
 .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
 @media (max-width:900px){.plans{grid-template-columns:1fr}}
 .plan{position:relative}
-.plan.best{border-color:var(--accent);background:linear-gradient(170deg,rgba(242,106,27,.2),rgba(22,17,13,.95) 55%)}
+.plan.best{border-color:var(--accent);background:linear-gradient(170deg,rgba(253,121,77,.2),rgba(7,19,28,.95) 55%)}
 .plan .tag{position:absolute;top:-12px;left:20px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px}
 .price{font:800 44px var(--display);line-height:1}.price small{font:600 16px var(--body);color:var(--muted)}
 .per{font-size:14px;color:var(--good);font-weight:600}
@@ -57,7 +57,7 @@ table.cmp{width:100%;border-collapse:collapse;font-size:15px}
 table.cmp th,table.cmp td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
 table.cmp th{color:var(--muted);font-weight:600}
 table.cmp td.us{color:var(--accent);font-weight:700}
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:rgba(22,17,13,.85)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:rgba(7,19,28,.85)}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}
 .tab{font:inherit;font-size:14px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -75,6 +75,7 @@ textarea{min-height:110px;resize:vertical}
 footer{border-top:1px solid var(--line);margin-top:56px;padding-block:22px 44px;font-size:13px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between}
 footer a{color:var(--muted)}
 [hidden]{display:none!important}
+h1 .hl,h1 em,h2 em{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;color:var(--accent);letter-spacing:-.005em}
 </style></head><body>
 
 <nav class="top wrap"><a class="brand" href="./">DGX<span>.</span>Scripts</a><div class="links"><a href="#pricing">Pricing</a><a href="#samples">Samples</a><a href="#order">Order</a><a href="../script-check/">Free script checker</a></div></nav>
