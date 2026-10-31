@@ -58,12 +58,21 @@ button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible
 footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;color:var(--muted)}
 .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;padding-block:0 30px}
 .how>div{display:grid;gap:4px}
+.modes{display:flex;gap:6px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--bg);width:max-content;max-width:100%}
+.mode{font:inherit;font-size:14px;font-weight:700;border:0;border-radius:999px;padding:8px 14px;background:transparent;color:var(--muted);cursor:pointer}
+.mode.on{background:var(--panel-2);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(0,151,222,.45)}
+#ytBox{display:grid;gap:10px}#ytBox[hidden]{display:none}
+.ytrow{display:flex;gap:8px;flex-wrap:wrap}.ytrow input{flex:1 1 240px;min-width:0;padding:10px 12px;border-radius:999px}
+.ytframe{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.ytframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytsteps{margin:0;padding-left:20px;display:grid;gap:4px}.ytsteps a{color:#7fd3ff}
+.tsnote{font-size:13px;border-radius:10px;padding:8px 12px;background:rgba(0,151,222,.12);border:1px solid rgba(0,151,222,.35);color:var(--ink)}.tsnote[hidden]{display:none}
 </style></head><body>
 
 <header class="wrap">
   <span class="badge">Free · works in your browser · nothing is uploaded</span>
   <h1>Find where viewers will <span class="hl">leave</span> your video, before you film it.</h1>
-  <p class="sub">Paste your YouTube script. You get speaking time, how long your hook really takes, and the exact lines that slow the video down.</p>
+  <p class="sub">Paste your script, or check a published video from its YouTube link. You get speaking time, how long your hook really takes, and the exact lines that slow the video down.</p>
 </header>
 
 <main class="wrap">
@@ -78,8 +87,26 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;c
           <button class="btn ghost" id="sampleBtn" type="button">Load example</button>
         </div>
       </div>
+      <div class="modes" role="tablist" aria-label="What to check">
+        <button class="mode on" id="mPaste" type="button" role="tab" aria-selected="true">Paste a script</button>
+        <button class="mode" id="mYt" type="button" role="tab" aria-selected="false">Check a YouTube video</button>
+      </div>
+      <div id="ytBox" hidden>
+        <div class="ytrow"><input id="ytUrl" type="url" inputmode="url" placeholder="Paste a YouTube link (video or Short)" aria-label="YouTube link"><button class="btn" id="ytLoad" type="button">Load video</button></div>
+        <p class="small" id="ytErr" role="status"></p>
+        <div id="ytWrap" hidden style="display:grid;gap:10px">
+          <div class="ytframe"><iframe id="ytFrame" title="YouTube video" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>
+          <p class="small" id="ytTitle"></p>
+        </div>
+        <ol class="small ytsteps">
+          <li>Open the video on YouTube on a computer<span id="ytOpenWrap" hidden> (<a id="ytOpen" target="_blank" rel="noopener">open it here</a>)</span>.</li>
+          <li>Under the video, click <b>...more</b>, then <b>Show transcript</b>.</li>
+          <li>Select the whole transcript from the first line to the last, copy it, and paste it in the box below. Keep the timestamps: they give you real timings.</li>
+        </ol>
+      </div>
+      <p class="tsnote" id="tsNote" hidden></p>
       <textarea id="script" spellcheck="true" placeholder="Paste your script here. Leave a blank line between sections."></textarea>
-      <p class="small">Tip: a blank line between sections lets the checker see each part of the video separately.</p>
+      <p class="small" id="tip">Tip: a blank line between sections lets the checker see each part of the video separately.</p>
     </section>
 
     <section class="panel" aria-live="polite" aria-label="Report">
@@ -145,55 +172,96 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;c
   function fmt(sec){sec=Math.round(sec);return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0");}
   function esc(s){return String(s);}
   var last={};
+  var YTSAMPLE="0:00\nThis man paid two million dollars for a house he had never seen.\n0:04\nThree days later, he found out why it was so cheap.\n0:08\nBut to understand what went wrong, you have to go back to 1987,\n0:13\nwhen the street was still farmland and the owner was a man called Walter.\n0:18\nSo basically Walter actually really liked his land and he did not want to sell it to anyone\n0:24\nfor a very long time, no matter how much money the developers in town put in front of him.\n0:31\nHe turned down nine offers in four years.\n0:35\nThen in 1991, something changed.\n0:39\nThe county announced a new road that would run straight through his back field.\n0:45\nWalter sold within a month, to a company nobody in town had heard of.\n0:51\nThat company split the land into twelve plots and built twelve houses,\n0:57\nall with the same floor plan, the same brick and the same blue front door.\n1:03\nThe road never came, and for thirty years nobody asked why.\n1:09\nThen the new owner opened the cellar and found a door that wasn't on any plan.\n1:16\nBehind it was a tunnel that ran under all twelve houses.\n1:21\nSo who built it, and what was it for?\n1:25\nThe county records had one answer, and the old company records had another.\n1:31\nIf you want the full story of Walter and the tunnel, watch the next video.";
+  function parseTS(raw){
+    var lines=raw.split(/\r?\n/).map(function(x){return x.trim();}).filter(Boolean);
+    var ts=/^(?:(\d{1,2}):)?(\d{1,2}):(\d{2})$/, inl=/^(?:(\d{1,2}):)?(\d{1,2}):(\d{2})\s+(.+)$/, lab=/^\d+\s+(hours?|minutes?|seconds?)(,?\s*\d+\s+(hours?|minutes?|seconds?))*$/i;
+    var segs=[],cur=null,m;
+    function sec(m){return (Number(m[1]||0)*3600)+Number(m[2])*60+Number(m[3]);}
+    lines.forEach(function(l){
+      if(lab.test(l))return;
+      if((m=l.match(ts))){cur={t:sec(m),text:""};segs.push(cur);return;}
+      if((m=l.match(inl))){cur={t:sec(m),text:m[4]};segs.push(cur);return;}
+      if(cur)cur.text+=(cur.text?" ":"")+l;
+    });
+    return segs.filter(function(s){return s.text;});
+  }
   function analyse(){
-    var t=$("script").value, wpm=Number($("wpm").value)||150, wps=wpm/60;
-    var W=words(t), S=sentences(t);
+    var raw=$("script").value, wpm=Number($("wpm").value)||150, wps=wpm/60;
+    var segs=parseTS(raw), TS=segs.length>=3;
+    var t=TS?segs.map(function(s){return s.text;}).join("\n"):raw;
+    var note=$("tsNote");
+    if(TS){note.hidden=false;note.textContent="Transcript with timestamps found. Timings below are real, taken from the video.";}
+    else if(MODE==="yt"&&raw.trim()){note.hidden=false;note.textContent="No timestamps found, so timings are estimated from your talking speed. Paste the transcript with its timestamps for real timings.";}
+    else note.hidden=true;
+    var W=words(t), S=sentences(t.replace(/\n/g," "));
     var flags=[], score=100;
-    $("sWords").textContent=W; $("sTime").textContent=fmt(W/wps);
-    if(!W){$("sHook").textContent="–";$("sLong").textContent="0";$("sFill").textContent="0";$("sRead").textContent="–";$("scoreTxt").textContent="–";$("arc").setAttribute("stroke-dasharray","0 999");$("verdict").textContent="Paste a script to start.";renderFlags([{k:"",t:"Your fixes will show here."}]);last={};return;}
-    // hook: words until first sentence that carries a hook signal
-    var hookWords=0, found=false;
-    for(var i=0;i<S.length&&i<8;i++){hookWords+=words(S[i]);if(HOOKSIG.test(S[i])){found=true;break;}}
-    var hookSec=hookWords/wps;
+    var dur=TS?segs[segs.length-1].t+words(segs[segs.length-1].text)/2.5:W/wps;
+    $("sWords").textContent=W; $("sTime").textContent=fmt(dur);
+    if(!W){$("sHook").textContent="–";$("sLong").textContent="0";$("sFill").textContent="0";$("sRead").textContent="–";$("scoreTxt").textContent="–";$("arc").setAttribute("stroke-dasharray","0 999");$("verdict").textContent=MODE==="yt"?"Load a video, then paste its transcript.":"Paste a script to start.";renderFlags([{k:"",t:"Your fixes will show here."}]);last={};return;}
+    // hook
+    var found=false, hookSec=0, hookQ="";
+    if(TS){
+      for(var k=0;k<segs.length&&segs[k].t<=60;k++){hookQ+=(hookQ?" ":"")+segs[k].text;if(HOOKSIG.test(segs[k].text)){found=true;hookSec=segs[k+1]?segs[k+1].t:segs[k].t+words(segs[k].text)/2.5;break;}}
+    }else{
+      var hookWords=0;
+      for(var i=0;i<S.length&&i<8;i++){hookWords+=words(S[i]);hookQ=S[i];if(HOOKSIG.test(S[i])){found=true;break;}}
+      hookSec=hookWords/wps;
+    }
     $("sHook").textContent=found?Math.round(hookSec)+"s":"none";
-    if(!found){score-=25;flags.push({k:"bad",t:"No clear hook in the first lines. Open with a promise, a question or what's at stake for the viewer."});}
-    else if(hookSec>15){score-=15;flags.push({k:"warn",t:"Your hook lands at "+Math.round(hookSec)+" seconds. Aim for under 15. Cut the warm-up before:",q:S[Math.min(i,S.length-1)]});}
+    if(!found){score-=25;flags.push({k:"bad",t:"No clear hook in the opening. Start with a promise, a question or what's at stake for the viewer."});}
+    else if(hookSec>15){score-=15;flags.push({k:"warn",t:"Your hook lands at "+Math.round(hookSec)+" seconds. Aim for under 15. Cut the warm-up before:",q:hookQ.length>160?hookQ.slice(0,160)+"…":hookQ});}
     else flags.push({k:"good",t:"Hook lands in "+Math.round(hookSec)+" seconds. Good."});
     if(/^(hi|hey|hello|what'?s up|welcome)\b/i.test(t.trim())){score-=8;flags.push({k:"warn",t:"You open with a greeting. Start with the hook and say hello later, or not at all."});}
-    // long sentences
-    var longS=S.filter(function(s){return words(s)>25;});
-    $("sLong").textContent=longS.length;
-    longS.slice(0,4).forEach(function(s){flags.push({k:"warn",t:"Long sentence ("+words(s)+" words). Split it in two:",q:s.length>160?s.slice(0,160)+"…":s});});
-    score-=Math.min(20,longS.length*4);
+    // real pace
+    if(TS&&dur>20){var rw=Math.round(W/(dur/60));
+      if(rw>195){score-=5;flags.push({k:"warn",t:"Speaking pace is "+rw+" words a minute. That's fast; key points may fly past. Slow down on the payoff lines."});}
+      else if(rw<105){score-=5;flags.push({k:"warn",t:"Speaking pace is "+rw+" words a minute. Long pauses or slow delivery can lose viewers. Tighten the cuts."});}
+      else flags.push({k:"good",t:"Speaking pace is "+rw+" words a minute. Comfortable."});}
+    // sentences
+    var noPunct=TS&&S.length<Math.max(2,W/40);
+    if(noPunct){$("sLong").textContent="–";$("sRead").textContent="–";flags.push({k:"",t:"These look like auto captions without punctuation, so sentence length and reading ease are skipped."});}
+    else{
+      var longS=S.filter(function(s){return words(s)>25;});
+      $("sLong").textContent=longS.length;
+      longS.slice(0,4).forEach(function(s){flags.push({k:"warn",t:"Long sentence ("+words(s)+" words). Split it in two:",q:s.length>160?s.slice(0,160)+"…":s});});
+      score-=Math.min(20,longS.length*4);
+    }
     // fillers
     var low=" "+t.toLowerCase().replace(/[^a-z\u0900-\u097F' ]+/g," ")+" ", fc=0, hits={};
     FILLERS.forEach(function(f){var re=new RegExp("\\b"+f.replace(/ /g,"\\s+")+"\\b","g");var n=(low.match(re)||[]).length;if(n){fc+=n;hits[f]=n;}});
     $("sFill").textContent=fc;
     var per100=fc/W*100;
     if(per100>2){score-=Math.min(15,Math.round(per100*3));flags.push({k:"warn",t:"Filler words: "+Object.keys(hits).map(function(k){return "\""+k+"\" ×"+hits[k];}).join(", ")+". Cutting them saves about "+Math.round(fc*0.5/wps*2)+" seconds."});}
-    // sections pacing
-    var secs=t.split(/\n\s*\n/).map(function(x){return x.trim();}).filter(Boolean);
+    // pacing
     var slow=0;
-    secs.forEach(function(sec,idx){var sw=words(sec),st=sw/wps;if(st>90&&!TURN.test(sec)){slow++;flags.push({k:"bad",t:"Section "+(idx+1)+" runs "+fmt(st)+" with no question or turn. Add a question, a 'but', or a reveal to hold attention.",q:sec.slice(0,120)+(sec.length>120?"…":"")});}});
+    if(TS){
+      var lastTurn=segs[0].t;
+      segs.forEach(function(s){if(TURN.test(s.text)){if(s.t-lastTurn>90){slow++;flags.push({k:"bad",t:"No question or turn from "+fmt(lastTurn)+" to "+fmt(s.t)+" ("+fmt(s.t-lastTurn)+"). Viewers often drift here. Add a question, a 'but', or a reveal."});}lastTurn=s.t;}});
+      if(dur-lastTurn>90){slow++;flags.push({k:"bad",t:"No question or turn from "+fmt(lastTurn)+" to the end ("+fmt(dur-lastTurn)+"). Add a reason to keep watching."});}
+    }else{
+      var secs=t.split(/\n\s*\n/).map(function(x){return x.trim();}).filter(Boolean);
+      secs.forEach(function(sec,idx){var sw=words(sec),st=sw/wps;if(st>90&&!TURN.test(sec)){slow++;flags.push({k:"bad",t:"Section "+(idx+1)+" runs "+fmt(st)+" with no question or turn. Add a question, a 'but', or a reveal to hold attention.",q:sec.slice(0,120)+(sec.length>120?"…":"")});}});
+      if(secs.length<2&&W>250)flags.push({k:"warn",t:"No section breaks found. Add a blank line between parts so you can check pacing per section."});
+    }
     score-=Math.min(25,slow*10);
-    if(secs.length<2&&W>250)flags.push({k:"warn",t:"No section breaks found. Add a blank line between parts so you can check pacing per section."});
-    // reading ease (Flesch)
-    var syl=0;(t.match(/[A-Za-z']+/g)||[]).forEach(function(w){syl+=syllables(w);});
-    var fre=S.length?Math.round(206.835-1.015*(W/S.length)-84.6*(syl/Math.max(1,W))):0;
-    $("sRead").textContent=isFinite(fre)?Math.max(0,Math.min(100,fre)):"–";
-    if(fre<55){score-=8;flags.push({k:"warn",t:"Reading ease is "+fre+". Spoken scripts work best above 60. Use shorter words and sentences."});}
-    // length
-    var mins=W/wps/60;
+    // reading ease
+    if(!noPunct){
+      var syl=0;(t.match(/[A-Za-z']+/g)||[]).forEach(function(w){syl+=syllables(w);});
+      var fre=S.length?Math.round(206.835-1.015*(W/S.length)-84.6*(syl/Math.max(1,W))):0;
+      $("sRead").textContent=isFinite(fre)?Math.max(0,Math.min(100,fre)):"–";
+      if(fre<55){score-=8;flags.push({k:"warn",t:"Reading ease is "+fre+". Spoken scripts work best above 60. Use shorter words and sentences."});}
+    }
+    var mins=dur/60;
     if(mins>20)flags.push({k:"warn",t:"This runs about "+Math.round(mins)+" minutes. Check that every section earns its place."});
-    // cta
-    if(!/\bsubscribe\b|\blink\b|\bcomment\b|\bnext video\b/i.test(t)&&W>200)flags.push({k:"",t:"No call to action found. One clear ask near the end is enough."});
+    if(!/\bsubscribe\b|\blink\b|\bcomment\b|\bnext video\b|\bwatch this\b/i.test(t)&&W>200)flags.push({k:"",t:"No call to action found. One clear ask near the end is enough."});
     score=Math.max(5,Math.min(100,Math.round(score)));
     var c=2*Math.PI*36;$("arc").setAttribute("stroke-dasharray",(c*score/100).toFixed(1)+" "+c.toFixed(1));
     $("scoreTxt").textContent=score;
     $("verdict").textContent=score>=85?"Tight script. Small fixes only.":score>=65?"Good base. Fix the flagged lines before filming.":"Viewers are likely to drop early. Start with the red items.";
-    if(flags.length===1&&flags[0].k==="good")flags.push({k:"good",t:"No long sentences, slow sections or heavy fillers found."});
+    if(flags.filter(function(f){return f.k!=="good"&&f.k!=="";}).length===0)flags.push({k:"good",t:"No slow stretches or heavy fillers found."});
     renderFlags(flags);
-    last={score:score,W:W,time:fmt(W/wps),hook:$("sHook").textContent,flags:flags};
+    last={score:score,W:W,time:fmt(dur),hook:$("sHook").textContent,flags:flags,video:TS&&YTID?"https://www.youtube.com/watch?v="+YTID:""};
   }
   function renderFlags(arr){
     var ul=$("flags");while(ul.firstChild)ul.removeChild(ul.firstChild);
@@ -202,17 +270,29 @@ footer{border-top:1px solid var(--line);padding-block:20px 40px;font-size:13px;c
   var timer=null;
   $("script").addEventListener("input",function(){clearTimeout(timer);timer=setTimeout(analyse,250);});
   $("wpm").addEventListener("change",analyse);
-  $("sampleBtn").addEventListener("click",function(){$("script").value=SAMPLE;analyse();});
+  var MODE="paste", YTID="";
+  function setMode(m){MODE=m;var y=m==="yt";$("mPaste").classList.toggle("on",!y);$("mYt").classList.toggle("on",y);$("mPaste").setAttribute("aria-selected",String(!y));$("mYt").setAttribute("aria-selected",String(y));$("ytBox").hidden=!y;$("script").placeholder=y?"Paste the video's transcript here, with the timestamps.":"Paste your script here. Leave a blank line between sections.";$("tip").textContent=y?"Tip: the timestamps let the checker measure the real hook time, pace and slow stretches.":"Tip: a blank line between sections lets the checker see each part of the video separately.";$("sampleBtn").textContent=y?"Load example transcript":"Load example";analyse();}
+  $("mPaste").addEventListener("click",function(){setMode("paste");});
+  $("mYt").addEventListener("click",function(){setMode("yt");});
+  function ytId(u){u=(u||"").trim();var m=u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);if(m)return m[1];if(/^[A-Za-z0-9_-]{11}$/.test(u))return u;return "";}
+  function loadYt(){var id=ytId($("ytUrl").value);if(!id){$("ytErr").textContent="That doesn't look like a YouTube link. Try one like youtube.com/watch?v=... or youtu.be/...";$("ytWrap").hidden=true;return;}
+    YTID=id;$("ytErr").textContent="";$("ytFrame").src="https://www.youtube-nocookie.com/embed/"+id;$("ytWrap").hidden=false;$("ytOpen").href="https://www.youtube.com/watch?v="+id;$("ytOpenWrap").hidden=false;$("ytTitle").textContent="";
+    try{fetch("https://www.youtube.com/oembed?format=json&url="+encodeURIComponent("https://www.youtube.com/watch?v="+id)).then(function(r){return r.ok?r.json():null;}).then(function(j){if(j&&j.title)$("ytTitle").textContent=j.title+(j.author_name?" · "+j.author_name:"");}).catch(function(){});}catch(e){}
+    $("script").focus();}
+  $("ytLoad").addEventListener("click",loadYt);
+  $("ytUrl").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();loadYt();}});
+  $("ytUrl").addEventListener("paste",function(){setTimeout(loadYt,50);});
+  $("sampleBtn").addEventListener("click",function(){$("script").value=MODE==="yt"?YTSAMPLE:SAMPLE;analyse();});
   function copy(text,note){try{navigator.clipboard.writeText(text).then(function(){note.textContent="Copied.";},function(){note.textContent="Select the text and copy it.";});}catch(e){note.textContent="Select the text and copy it.";}}
   $("copyReport").addEventListener("click",function(){
     if(!last.W){$("copyNote").textContent="Paste a script first.";return;}
-    var r="Script Retention Check\nScore: "+last.score+"/100\nWords: "+last.W+" · Speaking time: "+last.time+" · Hook: "+last.hook+"\n\n"+last.flags.map(function(f){return "- "+f.t+(f.q?" \""+f.q+"\"":"");}).join("\n");
+    var r="Script Retention Check\n"+(last.video?"Video: "+last.video+"\n":"")+"Score: "+last.score+"/100\nWords: "+last.W+" · Speaking time: "+last.time+" · Hook: "+last.hook+"\n\n"+last.flags.map(function(f){return "- "+f.t+(f.q?" \""+f.q+"\"":"");}).join("\n");
     copy(r,$("copyNote"));
   });
   $("mail").textContent=CONFIG.email||"(email coming soon)";
   $("hireForm").addEventListener("submit",function(e){
     e.preventDefault();
-    var w=$("h-what").value;var m="Hi, I'd like: "+w+"\nChannel: "+$("h-ch").value.trim()+"\nNext video: "+$("h-topic").value.trim()+(last.score?"\nMy current script scored "+last.score+"/100 on Script Retention Check.":"")+(/Fix/.test(w)?"\n\nI'll paste my script below this line:\n":"");
+    var w=$("h-what").value;var m="Hi, I'd like: "+w+"\nChannel: "+$("h-ch").value.trim()+"\nNext video: "+$("h-topic").value.trim()+(last.score?"\nMy current script scored "+last.score+"/100 on Script Retention Check.":"")+(last.video?"\nVideo checked: "+last.video:"")+(/Fix/.test(w)?"\n\nI'll paste my script below this line:\n":"");
     $("hireMsg").textContent=m;$("hireOut").hidden=false;
   });
   $("hireCopy").addEventListener("click",function(){copy($("hireMsg").textContent,$("hireNote"));});
