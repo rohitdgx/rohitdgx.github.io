@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DGX Studio</title>
+<meta name="description" content="DGX Studio is a video editing studio for founders, creators, brands and agencies. Edits built to stop the scroll and hold attention.">
+<link rel="icon" type="image/png" href="media/dgx-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a dark screening room. One ember light source glows behind the work; expanded grotesk shouts, a high-contrast serif whispers, hairline grid lines frame everything like a film gate. */
+:root{
+  --void:#08080A;
+  --panel:#111114;
+  --hair:rgba(244,239,232,.10);
+  --cream:#F4EFE8;
+  --muted:#8E8A85;
+  --ember:#FF5B1F;
+  --ember-2:#FFA05A;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --wrap:1280px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--void);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ember-2);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(18px,4vw,44px)}
+.label{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.label b{color:var(--ember-2);font-weight:500}
+.x{font-family:var(--sans);font-stretch:125%;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.9}
+.s{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;text-transform:none}
+.ember-text{background:linear-gradient(100deg,var(--ember) 10%,var(--ember-2) 60%,#FFD7B0 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(32px,4.2vw,60px);text-wrap:balance}
+.lede{color:var(--muted);max-width:56ch;font-size:clamp(16px,1.3vw,18.5px)}
+section{position:relative;padding:clamp(80px,11vw,150px) 0}
+.head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:36px;align-items:end;margin-bottom:clamp(40px,6vw,76px)}
+.head .label{display:block;margin-bottom:22px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-weight:700;font-size:15px;text-decoration:none;padding:8px 8px 8px 22px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,background .25s ease}
+.btn i{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;font-style:normal;transition:transform .25s ease}
+.btn:hover i{transform:rotate(-45deg)}
+.btn-ember{background:var(--ember);color:#160700;box-shadow:0 10px 40px -10px rgba(255,91,31,.7)}
+.btn-ember i{background:#160700;color:var(--ember-2)}
+.btn-ember:hover{transform:translateY(-2px);box-shadow:0 18px 50px -12px rgba(255,91,31,.85)}
+.btn-glass{background:rgba(244,239,232,.06);border-color:var(--hair);color:var(--cream);padding:8px 22px 8px 8px}
+.btn-glass i{background:var(--cream);color:var(--void)}
+.btn-glass:hover{background:rgba(244,239,232,.12)}
+
+/* nav */
+.nav{position:fixed;top:16px;left:0;right:0;z-index:50;pointer-events:none}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center}
+.pill{pointer-events:auto;display:flex;align-items:center;gap:6px;padding:6px;border-radius:999px;background:rgba(17,17,20,.62);border:1px solid var(--hair);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;padding:6px 14px 6px 6px}
+.brand .mark{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,var(--ember-2),var(--ember) 55%,#7A1E00);font-family:var(--sans);font-stretch:125%;font-weight:900;font-size:11px;color:#160700}
+.brand b{font-family:var(--sans);font-stretch:125%;font-weight:800;font-size:15px;letter-spacing:.02em}
+.brand span{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:15px}
+.links{display:flex;gap:2px;list-style:none}
+.links a{display:block;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--muted);padding:9px 14px;border-radius:999px}
+.links a:hover{color:var(--cream);background:rgba(244,239,232,.07)}
+.nav .btn{padding:6px 6px 6px 18px;font-size:13.5px}
+.nav .btn i{width:32px;height:32px}
+
+/* hero */
+.hero{min-height:min(100svh,980px);padding:150px 0 80px;overflow:hidden;isolation:isolate}
+.gridlines{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(90deg,var(--hair) 1px,transparent 1px);background-size:calc(100%/6) 100%;mask-image:linear-gradient(180deg,transparent,#000 18%,#000 75%,transparent)}
+.glow{position:absolute;z-index:-2;width:min(1100px,130vw);aspect-ratio:1;right:-22%;top:-8%;border-radius:50%;background:radial-gradient(circle,rgba(255,91,31,.34),rgba(255,91,31,.08) 40%,transparent 65%);filter:blur(10px)}
+#embers{position:absolute;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(28px,5vw,80px);align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;padding:7px 14px 7px 8px;border-radius:999px;border:1px solid var(--hair);background:rgba(244,239,232,.04);margin-bottom:30px}
+.eyebrow .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:rgba(255,91,31,.15)}
+.eyebrow .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 12px var(--ember);animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{font-size:clamp(34px,4vw,60px)}
+.hero-h{font-family:var(--sans);font-weight:700;font-stretch:100%;letter-spacing:-.025em;line-height:1.08;text-wrap:balance;max-width:15ch}
+.hero h1 .s{display:block;font-size:1.08em;line-height:.95;margin:.04em 0 .02em;padding-right:.05em}
+.hero .lede{margin:30px 0 38px;color:#B5B0AA}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.trust{display:flex;align-items:center;gap:16px;margin-top:44px}
+.trust .faces{display:flex}
+.trust .faces span{width:34px;height:34px;border-radius:50%;border:2px solid var(--void);margin-left:-10px;display:grid;place-items:center;font-family:var(--mono);font-size:10px;background:#2A2422;color:var(--ember-2)}
+.trust .faces span:first-child{margin-left:0}
+.trust p{font-size:13.5px;color:var(--muted);line-height:1.4}
+.trust p b{color:var(--cream)}
+
+.stage{position:relative;justify-self:center;width:min(100%,360px)}
+.ring{position:absolute;inset:-14% -32%;border-radius:50%;z-index:-1}
+.ring::before{content:"";position:absolute;inset:0;border-radius:50%;padding:2px;background:conic-gradient(from var(--a,0deg),transparent 0 55%,var(--ember) 70%,#FFD7B0 76%,var(--ember) 82%,transparent 95%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 18px rgba(255,91,31,.9));animation:spin 9s linear infinite}
+.ring::after{content:"";position:absolute;inset:12%;border-radius:50%;border:1px solid var(--hair)}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+.screen{position:relative;aspect-ratio:9/16;border-radius:28px;overflow:hidden;background:#000;border:1px solid rgba(244,239,232,.16);box-shadow:0 50px 120px -30px rgba(255,91,31,.45),0 30px 60px -20px rgba(0,0,0,.9)}
+.screen video{width:100%;height:100%;object-fit:cover}
+.screen .top{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center}
+.chip-s{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px)}
+button.chip-s{cursor:pointer}
+button.chip-s:hover{background:rgba(0,0,0,.7)}
+.screen .bottom{position:absolute;left:14px;right:14px;bottom:14px;display:grid;gap:8px}
+.scrub{height:3px;background:rgba(255,255,255,.22);border-radius:3px;overflow:hidden}
+.scrub b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ember),var(--ember-2))}
+.float{position:absolute;padding:12px 16px;border-radius:16px;background:rgba(17,17,20,.72);border:1px solid var(--hair);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 50px -20px rgba(0,0,0,.9)}
+.float strong{display:block;font-family:var(--sans);font-stretch:125%;font-weight:900;font-size:26px;line-height:1}
+.float span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.f1{left:-30%;top:14%}
+.f2{right:-24%;bottom:20%}
+.side-index{position:absolute;right:clamp(18px,2.5vw,36px);top:50%;transform:translateY(-50%);display:grid;gap:10px;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right}
+.side-index b{color:var(--cream);font-weight:500}
+
+/* stats band */
+.band{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);background:linear-gradient(180deg,rgba(255,91,31,.05),transparent)}
+.band .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr) minmax(0,1fr) minmax(0,1fr)}
+.stat{padding:38px 26px;border-left:1px solid var(--hair)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat strong{display:block;font-family:var(--sans);font-stretch:112%;font-weight:900;font-size:clamp(26px,2.6vw,40px);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap}
+.stat strong em{font-style:normal}
+.stat p{color:var(--muted);font-size:14px;margin-top:12px;max-width:26ch}
+
+/* marquee */
+.marquee{overflow:hidden;padding:28px 0;border-bottom:1px solid var(--hair);white-space:nowrap}
+.marquee .track{display:inline-flex;align-items:center;gap:36px;animation:slide 40s linear infinite;padding-left:36px}
+.marquee .x{font-size:clamp(20px,2.2vw,30px)}
+.marquee .s{font-size:clamp(22px,2.4vw,34px);color:var(--ember-2)}
+.marquee .star{color:var(--ember);font-size:22px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* results */
+.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.result{position:relative;padding:30px;border-radius:26px;background:var(--panel);border:1px solid var(--hair);overflow:hidden;display:flex;flex-direction:column;gap:18px;min-height:420px}
+.result::before{content:"";position:absolute;width:340px;height:340px;right:-140px;top:-140px;border-radius:50%;background:radial-gradient(circle,rgba(255,91,31,.28),transparent 65%)}
+.result .label{position:relative}
+.result .num{position:relative;font-family:var(--sans);font-stretch:125%;font-weight:900;font-size:clamp(42px,4.2vw,64px);line-height:.9;letter-spacing:-.03em}
+.result h3{position:relative;font-family:var(--serif);font-style:italic;font-weight:400;font-size:24px;line-height:1.1}
+.result p{position:relative;color:var(--muted);font-size:15px;margin-top:auto}
+.chart{position:relative;padding:14px 14px 6px;border-radius:16px;background:rgba(8,8,10,.55);border:1px solid var(--hair)}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+
+/* work */
+.work-row{display:grid;gap:14px;margin-bottom:14px}
+.verticals{grid-template-columns:repeat(5,minmax(0,1fr))}
+.bento .card:nth-child(n+6){grid-column:span 2}
+.bento{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,auto)}
+.bento .feat{grid-column:span 2;grid-row:span 2}
+.card{position:relative;display:block;width:100%;border-radius:22px;overflow:hidden;background:#000;border:1px solid var(--hair);cursor:pointer;padding:0;color:inherit;font:inherit;text-align:left}
+.verticals .card{aspect-ratio:9/16}
+.bento .card{aspect-ratio:16/9}
+.bento .feat{aspect-ratio:auto;min-height:100%}
+.card video,.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .4s ease}
+.card video{opacity:0;transition:opacity .4s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.card.live video{opacity:1}
+.card:hover video,.card:hover img{transform:scale(1.04)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.88));pointer-events:none}
+.card .meta{position:absolute;z-index:2;left:16px;right:16px;bottom:14px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.card .meta b{display:block;font-family:var(--sans);font-stretch:112%;font-weight:800;font-size:clamp(15px,1.3vw,20px);text-transform:uppercase;line-height:1.05}
+.card .meta span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#C9C4BE}
+.card .n{position:absolute;z-index:2;top:12px;left:12px}
+.card .go{position:absolute;z-index:2;top:12px;right:12px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(244,239,232,.92);color:var(--void);font-size:14px;transform:scale(.85);opacity:.0;transition:all .3s ease}
+.card:hover .go,.card:focus-visible .go{opacity:1;transform:scale(1)}
+.feat .meta b{font-size:clamp(22px,2.4vw,34px)}
+
+
+/* clients */
+.clients{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.client{grid-column:span 2;position:relative;display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:24px;background:var(--panel);border:1px solid var(--hair);text-decoration:none;overflow:hidden;transition:border-color .3s ease,transform .3s ease}
+.client.wide{grid-column:span 3}
+.client:hover{border-color:rgba(255,160,90,.45);transform:translateY(-3px)}
+.client::before{content:"";position:absolute;width:260px;height:260px;right:-120px;bottom:-120px;border-radius:50%;background:radial-gradient(circle,rgba(255,91,31,.22),transparent 65%);opacity:.0;transition:opacity .3s ease}
+.client:hover::before{opacity:1}
+.client .top{display:flex;align-items:center;gap:14px}
+.client .av{width:60px;height:60px;flex:none;overflow:hidden;padding:2px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:22px;background:radial-gradient(circle at 30% 25%,rgba(255,160,90,.45),rgba(255,91,31,.1) 60%,#141416);border:1px solid rgba(255,160,90,.35)}
+.client h3{font-family:var(--sans);font-stretch:112%;font-weight:800;text-transform:uppercase;font-size:19px;line-height:1.05}
+.client .h{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.client .f{margin-left:auto;font-family:var(--sans);font-stretch:112%;font-weight:900;font-size:22px;line-height:1;text-align:right}
+.client .f small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.client p{position:relative;color:var(--muted);font-size:14.5px}
+.client .tags{position:relative;display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.client .tags span{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:999px;border:1px solid var(--hair);color:#C9C4BE}
+.client .tags span.hot{border-color:rgba(255,160,90,.45);color:var(--ember-2)}
+.reach{margin-top:14px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;padding:20px 24px;border-radius:22px;border:1px solid var(--hair)}
+.reach strong{font-family:var(--sans);font-stretch:125%;font-weight:900;font-size:clamp(26px,2.6vw,38px)}
+.reach span{color:var(--muted);font-size:14.5px}
+@media (max-width:1040px){.client,.client.wide{grid-column:span 3}}
+@media (max-width:600px){.client,.client.wide{grid-column:1/-1}}
+
+.client .av img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+
+
+/* more work */
+.more{margin-top:8px;display:grid;grid-template-columns:minmax(0,1.4fr) auto;gap:28px;align-items:center;padding:clamp(24px,3vw,36px);border-radius:26px;border:1px dashed rgba(255,160,90,.35);background:radial-gradient(90% 140% at 100% 50%,rgba(255,91,31,.12),transparent 60%),var(--panel)}
+.more .label{display:block;margin-bottom:12px}
+.more-h{font-family:var(--body);font-weight:700;font-size:clamp(20px,1.8vw,26px);line-height:1.25}
+.more-h .s{text-transform:none;font-weight:400;font-size:1.08em}
+.more-p{color:var(--muted);font-size:15px;margin-top:10px;max-width:62ch}
+.more-cta{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+@media (max-width:1040px){.more{grid-template-columns:1fr}.more-cta{flex-direction:row;flex-wrap:wrap}}
+
+
+
+/* moving reel rows */
+#work{padding-bottom:clamp(60px,8vw,110px)}
+.reel-rows{display:grid;gap:14px;margin-top:6px}
+.row-m{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.row-track{display:flex;gap:14px;width:max-content;animation:rowL 70s linear infinite}
+.row-m.rev .row-track{animation:rowR 60s linear infinite}
+.row-m:hover .row-track,.row-m:focus-within .row-track{animation-play-state:paused}
+@keyframes rowL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes rowR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.row-track .card{flex:none;width:auto}
+#trackV .card{height:clamp(240px,24vw,330px);aspect-ratio:9/16}
+#trackH .card{height:clamp(170px,16vw,220px);aspect-ratio:16/9}
+.row-track .card .go{opacity:1;transform:none;width:30px;height:30px;font-size:10px;background:rgba(244,239,232,.9)}
+.row-track .card .meta b{font-size:15px!important}
+.wfoot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px 24px;margin-top:26px}
+.wfoot p{color:var(--muted);font-size:14.5px;max-width:60ch}
+@media (prefers-reduced-motion:reduce){.row-m{overflow-x:auto}.row-track{animation:none}}
+@media (max-width:600px){#trackV .card{height:250px}#trackH .card{height:160px}.wfoot .btn{width:100%;justify-content:space-between}}
+
+/* system */
+.system{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.sys-big{position:sticky;top:110px;padding:34px;border-radius:28px;background:radial-gradient(120% 90% at 100% 0%,rgba(255,91,31,.35),transparent 55%),var(--panel);border:1px solid var(--hair);overflow:hidden}
+.sys-big .x{font-size:clamp(44px,5vw,76px);display:block}
+.sys-big .s{font-size:clamp(24px,2.4vw,34px);display:block;margin:6px 0 22px}
+.sys-big p{color:var(--muted);max-width:40ch}
+.sys-big .eq{margin-top:28px;display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream)}
+.sys-big .eq i{flex:1;height:1px;background:linear-gradient(90deg,var(--ember),transparent)}
+.steps{list-style:none;border-top:1px solid var(--hair)}
+.steps li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:20px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--hair);transition:background .3s ease,padding .3s ease}
+.steps li:hover{background:linear-gradient(90deg,rgba(255,91,31,.08),transparent);padding-left:14px}
+.steps .k{font-family:var(--mono);font-size:12px;color:var(--ember-2)}
+.steps h3{font-family:var(--sans);font-stretch:112%;font-weight:800;font-size:clamp(18px,1.7vw,24px);text-transform:uppercase;line-height:1.05}
+.steps p{color:var(--muted);font-size:15px;margin-top:8px;max-width:52ch}
+.steps .when{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+/* start / offer */
+.offer{position:relative;border-radius:32px;overflow:hidden;padding:clamp(34px,5vw,64px);border:1px solid var(--hair);background:var(--panel);isolation:isolate}
+.planet{position:absolute;z-index:-1;width:900px;height:900px;border-radius:50%;left:50%;top:62%;transform:translateX(-50%);background:radial-gradient(circle at 50% 0%,#24120A,#0B0B0D 60%);box-shadow:0 -2px 0 rgba(255,160,90,.9),0 -20px 80px -10px rgba(255,91,31,.75),inset 0 30px 60px -20px rgba(255,91,31,.4)}
+.offer .head{margin-bottom:46px}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.how .c{padding:26px;border-radius:22px;background:rgba(8,8,10,.6);border:1px solid var(--hair);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.how .c .s{font-size:36px;line-height:1;color:var(--ember-2)}
+.how .c h3{font-family:var(--sans);font-stretch:112%;font-weight:800;text-transform:uppercase;font-size:22px;margin:16px 0 8px}
+.how .c p{color:var(--muted);font-size:15px}
+.offer .close-line{margin-top:40px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+.offer .close-line p{font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.9vw,26px);max-width:30ch;line-height:1.2}
+
+/* founders */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.statement{grid-column:1/-1;font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.6vw,40px);line-height:1.15;letter-spacing:-.01em;max-width:26ch;margin-bottom:40px;text-wrap:balance}
+.statement em{font-style:italic}
+.founder{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center;padding:24px;border-radius:24px;background:var(--panel);border:1px solid var(--hair)}
+.monogram{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:38px;background:radial-gradient(circle at 30% 25%,rgba(255,160,90,.45),rgba(255,91,31,.12) 55%,#141416);border:1px solid rgba(255,160,90,.35);color:var(--cream)}
+.founder h3{font-family:var(--sans);font-stretch:112%;font-weight:800;text-transform:uppercase;font-size:24px;line-height:1.05}
+.founder .label{display:block;margin:8px 0 10px}
+.founder p{color:var(--muted);font-size:15px}
+.counts{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:4px}
+.counts div{padding:24px;border-radius:24px;border:1px solid var(--hair)}
+.counts strong{display:block;font-family:var(--sans);font-stretch:125%;font-weight:900;font-size:clamp(30px,3vw,44px);line-height:1}
+.counts span{color:var(--muted);font-size:14px}
+
+/* faq */
+.faq-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,72px);align-items:start}
+.faq{display:grid;gap:10px}
+details{border:1px solid var(--hair);border-radius:20px;background:var(--panel)}
+summary{list-style:none;cursor:pointer;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-weight:700;font-size:17px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--hair);color:var(--ember-2);font-family:var(--mono);transition:transform .25s ease}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 24px 22px;color:var(--muted);max-width:62ch}
+
+/* final */
+.final{text-align:center;overflow:hidden;padding-bottom:0;isolation:isolate}
+.final .label{display:block;margin-bottom:26px}
+.final h2{font-size:clamp(38px,5.6vw,88px);line-height:.95}
+.final h2 .s{display:block}
+.final .lede{margin:28px auto 40px;text-align:center}
+.final .cta-row{justify-content:center}
+.horizon{position:relative;height:clamp(200px,26vw,340px);margin-top:clamp(60px,8vw,100px);overflow:hidden}
+.horizon::before{content:"";position:absolute;left:50%;top:40%;width:max(1600px,140vw);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 50% 0%,#1D0D06,#08080A 45%);box-shadow:0 -1px 0 rgba(255,190,140,.95),0 -30px 120px -10px rgba(255,91,31,.8)}
+.horizon .big{position:absolute;left:0;right:0;bottom:-.18em;text-align:center;font-family:var(--sans);font-stretch:125%;font-weight:900;font-size:clamp(90px,22vw,340px);line-height:1;letter-spacing:-.04em;color:rgba(244,239,232,.05)}
+footer{border-top:1px solid var(--hair);padding:26px 0 36px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
+footer nav{display:flex;flex-wrap:wrap;gap:22px}
+footer a{color:var(--muted);text-decoration:none;font-size:14px}
+footer a:hover{color:var(--cream)}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:min(94vw,1100px);margin:auto;overflow:visible;color:var(--cream)}
+dialog::backdrop{background:rgba(4,4,5,.9);backdrop-filter:blur(8px)}
+dialog video{max-height:80vh;width:auto;margin:0 auto;border-radius:20px;background:#000;box-shadow:0 40px 120px -30px rgba(255,91,31,.5)}
+dialog .bar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:14px}
+dialog .close{background:rgba(244,239,232,.08);border:1px solid var(--hair);color:var(--cream);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;border-radius:999px;cursor:pointer}
+
+/* responsive */
+@media (max-width:1040px){
+  .band .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .links{display:none}
+  .hero .wrap{grid-template-columns:1fr}
+  .stage{margin-top:30px;width:min(78%,330px)}
+  .f1{left:-22%}.f2{right:-18%}
+  .side-index{display:none}
+  .head{grid-template-columns:1fr}
+  .band .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(3){border-left:0;padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--hair)}
+  .results{grid-template-columns:1fr}
+  .result{min-height:0}
+  .verticals{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bento .feat{grid-row:auto;aspect-ratio:16/9}
+  .system{grid-template-columns:1fr}
+  .sys-big{position:relative;top:0}
+  .how{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr}
+  .faq-wrap{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .hero{padding-top:120px}
+  .nav .btn span.t{display:none}
+  .nav .btn{padding:6px}
+  .stage{width:76%}
+  .f1{left:-18%;top:8%}.f2{right:-14%;bottom:12%}
+  .float strong{font-size:20px}
+  .stat{padding:26px 14px}
+  .verticals{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bento{grid-template-columns:1fr}
+  .bento .feat{grid-column:auto}
+  .steps li{grid-template-columns:44px minmax(0,1fr)}
+  .steps .when{display:none}
+  .counts{grid-template-columns:1fr}
+  .founder{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* clean type pass: simple sentence-case headings everywhere */
+.x{font-stretch:100%!important;font-weight:700!important;text-transform:none!important;letter-spacing:-.025em!important;line-height:1.1!important}
+h2{font-size:clamp(28px,3vw,44px)!important}
+h2 .s,.sys-big .s,.final h2 .s{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;letter-spacing:inherit!important;font-size:1em!important;display:inline!important;margin:0!important}
+.final h2{font-size:clamp(30px,3.6vw,52px)!important}
+.sys-big .x{font-size:clamp(30px,3.2vw,46px)!important;margin-top:18px}
+.sys-big .s{display:block!important;margin:4px 0 20px!important;font-size:clamp(22px,2vw,30px)!important}
+.result .num{font-stretch:100%!important;font-weight:700!important;font-size:clamp(34px,3.2vw,48px)!important;letter-spacing:-.02em!important}
+.result h3{font-family:var(--body)!important;font-style:normal!important;font-weight:600!important;font-size:18px!important}
+.stat strong{font-stretch:100%!important;font-weight:700!important;font-size:clamp(24px,2.3vw,34px)!important}
+.counts strong{font-stretch:100%!important;font-weight:700!important;font-size:clamp(24px,2.2vw,32px)!important}
+.statement{font-family:var(--body)!important;font-weight:600!important;font-size:clamp(20px,2vw,28px)!important;line-height:1.35!important;max-width:34ch!important}
+.statement em{font-style:normal}
+.steps h3,.card .meta b,.client h3,.founder h3,.how .c h3{font-stretch:100%!important;font-weight:700!important;text-transform:none!important;letter-spacing:-.01em}
+.steps h3{font-size:clamp(17px,1.5vw,21px)!important}
+.card .meta b{font-size:clamp(14px,1.1vw,17px)!important}
+.feat .meta b{font-size:clamp(18px,1.6vw,24px)!important}
+.client h3{font-size:17px!important}
+.founder h3{font-size:21px!important}
+.how .c h3{font-size:19px!important}
+.how .c .s{font-size:28px!important}
+.client .f,.reach strong{font-stretch:100%!important;font-weight:700!important}
+.float strong{font-stretch:100%!important;font-weight:700!important;font-size:20px!important}
+.marquee .x{font-size:clamp(17px,1.6vw,22px)!important;font-weight:600!important}
+.marquee .s{font-size:clamp(18px,1.7vw,24px)!important}
+.horizon .big{font-stretch:100%;font-weight:800;font-size:clamp(70px,16vw,240px)}
+
+@media (max-width:1040px){
+  .verticals{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+  .verticals .card{flex:0 0 min(42vw,240px);scroll-snap-align:start}
+  .bento .card:nth-child(n+6){grid-column:span 1}
+}
+@media (max-width:600px){.verticals .card{flex-basis:58vw}.bento .card:nth-child(n+6){grid-column:auto}}
+
+.brand .logo{height:20px;width:auto;display:block}
+.brand{padding:8px 14px 8px 12px}
+footer .brand{padding:0}
+footer .brand .logo{height:18px}
+.horizon .big-logo{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);width:clamp(220px,34vw,520px);height:auto;opacity:.12;filter:drop-shadow(0 0 30px rgba(255,91,31,.35))}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <div class="pill">
+      <a class="brand" href="#top" aria-label="DGX Studio home"><img class="logo" src="media/dgx-logo.png" alt="DGX" width="498" height="179"><span>Studio</span></a>
+      <ul class="links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#clients">Clients</a></li>
+        <li><a href="#system">System</a></li>
+        <li><a href="#studio">Studio</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="pill">
+      <a class="btn btn-ember" href="https://wa.me/919762743910?text=Hi%20DGX%20Studio%2C%20I%27d%20like%20a%20test%20edit" target="_blank" rel="noopener"><span class="t">Get a test edit</span><i>↗</i></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="gridlines" aria-hidden="true"></div>
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow label"><span class="dot"></span>Video editing studio · For everyone who posts</div>
+      <h1 class="hero-h">We make your content <span class="ember-text">impossible to scroll past.</span></h1>
+      <p class="lede">For creators, YouTubers, founders, business owners and agencies. You record. We turn it into videos people actually watch till the end.</p>
+      <div class="cta-row">
+        <a class="btn btn-ember" href="https://wa.me/919762743910?text=Hi%20DGX%20Studio%2C%20I%27d%20like%20a%20test%20edit" target="_blank" rel="noopener">Get a test edit<i>↗</i></a>
+        <a class="btn btn-glass" href="#work"><i>▶</i>Watch the work</a>
+      </div>
+      <div class="trust">
+        <div class="faces" aria-hidden="true"><span>01</span><span>02</span><span>03</span></div>
+        <p><b>4 years</b> of editing for creators, YouTubers,<br>businesses and agencies worldwide.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="screen">
+        <video id="reel" src="media/showreel.mp4" poster="media/showreel.jpg" autoplay muted loop playsinline preload="auto" aria-label="DGX Studio showreel"></video>
+        <div class="top"><span class="chip-s">● Showreel '26</span><button class="chip-s" id="sound" type="button">Sound on</button></div>
+        <div class="bottom"><div class="scrub"><b id="bar"></b></div></div>
+      </div>
+      <div class="float f1"><strong class="ember-text">50+</strong><span>editors</span></div>
+      <div class="float f2"><strong>Test edit</strong><span>before you commit</span></div>
+    </div>
+  </div>
+  <div class="side-index" aria-hidden="true"><b>01</b><span>02</span><span>03</span><span>04</span><span>05</span></div>
+</section>
+
+<div class="band">
+  <div class="wrap">
+    <div class="stat"><strong><span class="ember-text">4 yrs</span></strong><p>editing for creators, brands and agencies</p></div>
+    <div class="stat"><strong>50+</strong><p>editors, motion designers and strategists</p></div>
+    <div class="stat"><strong>1M+</strong><p>combined followers of the people we edit for</p></div>
+    <div class="stat"><strong>Every format</strong><p>short-form, long-form, ads, podcasts and motion</p></div>
+  </div>
+</div>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span class="x">Founder reels</span><span class="star">✦</span><span class="s">hooks that land</span><span class="star">✦</span><span class="x">SaaS launches</span><span class="star">✦</span><span class="s">motion graphics</span><span class="star">✦</span><span class="x">UGC ads</span><span class="star">✦</span><span class="s">faceless docs</span><span class="star">✦</span><span class="x">YouTube long-form</span><span class="star">✦</span><span class="s">podcasts &amp; brand films</span><span class="star">✦</span>
+    <span class="x">Founder reels</span><span class="star">✦</span><span class="s">hooks that land</span><span class="star">✦</span><span class="x">SaaS launches</span><span class="star">✦</span><span class="s">motion graphics</span><span class="star">✦</span><span class="x">UGC ads</span><span class="star">✦</span><span class="s">faceless docs</span><span class="star">✦</span><span class="x">YouTube long-form</span><span class="star">✦</span><span class="s">podcasts &amp; brand films</span><span class="star">✦</span>
+  </div>
+</div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="label"><b>01</b> — Selected work</span><h2 class="x">Cut for the <span class="s ember-text">first second.</span></h2></div>
+      <p class="lede">Every edit has one job: stop the scroll, then keep them to the end. Tap any piece to watch it with sound.</p>
+    </div>
+  </div>
+  <div class="reel-rows" aria-label="Our edits">
+    <div class="row-m" id="rowV"><div class="row-track" id="trackV"></div></div>
+    <div class="row-m rev" id="rowH"><div class="row-track" id="trackH"></div></div>
+  </div>
+  <div class="wrap">
+    <div class="wfoot">
+      <p>Hover to pause, click any edit to watch it with sound. These are just a few of our edits. We edit every style.</p>
+      <a class="btn btn-ember" href="https://wa.me/919762743910?text=Hi%20DGX%20Studio%2C%20I%27d%20like%20a%20test%20edit" target="_blank" rel="noopener">Get a test edit<i>↗</i></a>
+    </div>
+  </div>
+</section>
+
+<section id="clients">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="label"><b>02</b> — Clients</span><h2 class="x">Trusted by people <span class="s ember-text">who build in public.</span></h2></div>
+      <p class="lede">Some of the creators, founders and businesses whose content we edit. Tap any card to see their page.</p>
+    </div>
+    <div class="clients">
+      <a class="client" href="https://www.instagram.com/daviefogarty/" target="_blank" rel="noopener">
+        <div class="top"><div class="av"><img src="media/client-davie.jpg" alt="Davie Fogarty" loading="lazy"></div><div><h3>Davie Fogarty</h3><span class="h">@daviefogarty</span></div><div class="f">515K<small>followers</small></div></div>
+        <p>Shark Tank Australia judge and founder of The Oodie, with $1B+ in ecom sales.</p>
+        <div class="tags"><span>Clip pages</span><span>Short-form</span><span>Ecom</span></div>
+      </a>
+      <a class="client" href="https://www.instagram.com/manavpod/" target="_blank" rel="noopener">
+        <div class="top"><div class="av"><img src="media/client-manav.jpg" alt="Manav Golecha" loading="lazy"></div><div><h3>Manav Golecha</h3><span class="h">@manavpod</span></div><div class="f">204K<small>followers</small></div></div>
+        <p>Host of The Manav Podcast, breaking down AI, tech, robotics and funding news.</p>
+        <div class="tags"><span>Talking head reels</span><span>Founder stories</span></div>
+      </a>
+      <a class="client" href="https://www.instagram.com/jasonfladlien/" target="_blank" rel="noopener">
+        <div class="top"><div class="av"><img src="media/client-jason.jpg" alt="Jason Fladlien" loading="lazy"></div><div><h3>Jason Fladlien</h3><span class="h">@jasonfladlien</span></div><div class="f">136K<small>followers</small></div></div>
+        <p>Entrepreneur behind $1B+ in sales and author of One To Many.</p>
+        <div class="tags"><span>Founder reels</span><span>Talking head</span></div>
+      </a>
+      <a class="client" href="https://x.com/AnthonyEclipse" target="_blank" rel="noopener">
+        <div class="top"><div class="av"><img src="media/client-eclipse.jpg" alt="Eclipse" loading="lazy"></div><div><h3>Eclipse</h3><span class="h">@AnthonyEclipse</span></div><div class="f">69.4K<small>on X</small></div></div>
+        <p>Ex-firefighter who built an 8-figure ecom business.</p>
+        <div class="tags"><span>Ecom</span><span>Founder content</span></div>
+      </a>
+      <a class="client" href="https://www.instagram.com/imzispoms/" target="_blank" rel="noopener">
+        <div class="top"><div class="av"><img src="media/client-zispoms.jpg" alt="Zispoms" loading="lazy"></div><div><h3>Zispoms</h3><span class="h">@imzispoms</span></div><div class="f">200K+<small>across socials</small></div></div>
+        <p>New York football creator with 200K+ followers across platforms.</p>
+        <div class="tags"><span>Creator edits</span><span>Sports</span></div>
+      </a>
+      <a class="client" href="https://www.instagram.com/vaidant.jain/" target="_blank" rel="noopener">
+        <div class="top"><div class="av"><img src="media/client-vaidant.jpg" alt="Vaidant Jain" loading="lazy"></div><div><h3>Vaidant Jain</h3><span class="h">@vaidant.jain</span></div><div class="f">24.9K<small>followers</small></div></div>
+        <p>Entrepreneur and founder of Fries Media, based in Delhi.</p>
+        <div class="tags"><span>Founder content</span><span>Personal brand</span></div>
+      </a>
+    </div>
+    <div class="reach"><strong class="ember-text">1M+</strong><span>combined followers across the founders and creators we edit for.</span></div>
+  </div>
+</section>
+
+<section id="system">
+  <div class="wrap">
+    <div class="system">
+      <div class="sys-big">
+        <span class="label"><b>03</b> — The DGX System</span>
+        <span class="x" style="margin-top:22px">1 shoot</span>
+        <span class="s ember-text">becomes 20 videos.</span>
+        <p>The same seven steps sit behind every account we run. You give us one focused recording session. We run the rest of the timeline, every week.</p>
+        <div class="eq"><span>Record once</span><i></i><span>Post daily</span></div>
+      </div>
+      <ol class="steps">
+        <li><span class="k">01</span><div><h3>Research</h3><p>We pull the best-performing videos in your niche and find the angles your audience already watches.</p></div><span class="when">Week 1</span></li>
+        <li><span class="k">02</span><div><h3>Hook bank</h3><p>A bank of opening lines and topics, so you never sit in front of a camera wondering what to say.</p></div><span class="when">Week 1</span></li>
+        <li><span class="k">03</span><div><h3>Record once</h3><p>One focused session, scripted so every answer becomes its own short.</p></div><span class="when">1 session</span></li>
+        <li><span class="k">04</span><div><h3>Edit for retention</h3><p>Captions, pacing, zooms, motion and sound design built to keep people watching past second three.</p></div><span class="when">Ongoing</span></li>
+        <li><span class="k">05</span><div><h3>Post daily</h3><p>A steady cadence across Instagram, TikTok, YouTube Shorts, X and LinkedIn.</p></div><span class="when">Daily</span></li>
+        <li><span class="k">06</span><div><h3>Track everything</h3><p>Views, watch time and follows on every post, so the next batch runs on data.</p></div><span class="when">Weekly</span></li>
+        <li><span class="k">07</span><div><h3>Double down</h3><p>Formats that hit get more volume. Formats that miss get cut. Every month gets sharper.</p></div><span class="when">Monthly</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="offer">
+      <div class="planet" aria-hidden="true"></div>
+      <div class="head">
+        <div><span class="label"><b>04</b> — How we start</span><h2 class="x">Judge us on <span class="s ember-text">one edit.</span></h2></div>
+        <p class="lede">No long proposals. We earn the work by showing you what your content looks like in our hands.</p>
+      </div>
+      <div class="how">
+        <div class="c"><span class="s">i.</span><h3>Send one clip</h3><p>A raw recording, a podcast, a talk, or an old video you liked. Send it on WhatsApp, Instagram or X.</p></div>
+        <div class="c"><span class="s">ii.</span><h3>Get a test edit</h3><p>We cut it in our style so you can see the difference before you spend anything.</p></div>
+        <div class="c"><span class="s">iii.</span><h3>Plan your month</h3><p>Like it? We map your content calendar, set the volume and start posting.</p></div>
+      </div>
+      <div class="close-line">
+        <p>See your content in our hands before you commit to anything.</p>
+        <a class="btn btn-ember" href="https://wa.me/919762743910?text=Hi%20DGX%20Studio%2C%20I%27d%20like%20a%20test%20edit" target="_blank" rel="noopener">Get a test edit<i>↗</i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="studio">
+  <div class="wrap">
+    <span class="label" style="display:block;margin-bottom:22px"><b>05</b> — The studio</span>
+    <div class="about">
+      <p class="statement">We're a studio of editors who believe attention is <em class="ember-text">earned, frame by frame.</em></p>
+      <article class="founder">
+        <div class="monogram" aria-hidden="true">R</div>
+        <div><h3>Rohit</h3><span class="label">Co-founder</span><p>Works with founders on strategy, hooks and content direction, so every account has a clear plan to grow.</p></div>
+      </article>
+      <article class="founder">
+        <div class="monogram" aria-hidden="true">J</div>
+        <div><h3>Jashan</h3><span class="label">Co-founder</span><p>Runs production and the editing team, keeping quality high and delivery on time as volume grows.</p></div>
+      </article>
+      <div class="counts">
+        <div><strong class="ember-text">4 yrs</strong><span>of editing videos that hold attention</span></div>
+        <div><strong>50+</strong><span>editors, motion designers and strategists</span></div>
+        <div><strong>White-label</strong><span>overflow editing for agencies, under your brand</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq-wrap">
+    <div><span class="label" style="display:block;margin-bottom:22px"><b>06</b> — FAQ</span><h2 class="x">Before you <span class="s ember-text">DM us.</span></h2></div>
+    <div class="faq">
+      <details><summary>Who do you work with?</summary><p>Everyone who posts video: content creators, YouTubers, founders, business owners, coaches, SaaS and ecom brands, real estate, and agencies that need extra editing hands under their own name.</p></details>
+      <details><summary>What do I need to send?</summary><p>Raw footage. A phone recording works. If you don't know what to say, we give you hooks and topics before you record.</p></details>
+      <details><summary>Which platforms do you edit for?</summary><p>Instagram Reels, TikTok, YouTube Shorts, X and LinkedIn, plus long-form YouTube and ads for Meta and TikTok.</p></details>
+      <details><summary>Do you work with agencies?</summary><p>Yes. We work white-label as your overflow team, in your style and under your brand, so you can take on more clients.</p></details>
+      <details><summary>How do I reach you?</summary><p>WhatsApp us on +91 97627 43910, or DM us on Instagram @rohit_motions or X @EditzByAndrew. We reply fast.</p></details>
+      <details><summary>How much does it cost?</summary><p>It depends on volume and style. We quote after a short call, once we know how many videos you need each month. We start with a test edit so you can judge the quality first.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="contact">
+  <div class="wrap">
+    <span class="label"><b>07</b> — Your move</span>
+    <h2 class="x">Your next video <span class="s ember-text">could be the one.</span></h2>
+    <p class="lede">Send us one clip. We'll show you what it looks like when it's built to be watched.</p>
+    <div class="cta-row">
+      <a class="btn btn-ember" href="https://wa.me/919762743910?text=Hi%20DGX%20Studio%2C%20I%27d%20like%20a%20test%20edit" target="_blank" rel="noopener">WhatsApp us<i>↗</i></a>
+      <a class="btn btn-glass" href="https://ig.me/m/rohit_motions" target="_blank" rel="noopener"><i>◎</i>DM on Instagram</a>
+      <a class="btn btn-glass" href="https://x.com/EditzByAndrew" target="_blank" rel="noopener"><i>𝕏</i>Message on X</a>
+    </div>
+    <p class="label" style="margin-top:22px">WhatsApp · +91 97627 43910</p>
+  </div>
+  <div class="horizon" aria-hidden="true"><img class="big-logo" src="media/dgx-logo.png" alt=""></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img class="logo" src="media/dgx-logo.png" alt="DGX" width="498" height="179"><span>Studio</span></a>
+    <nav aria-label="Social">
+      <a href="https://wa.me/919762743910?text=Hi%20DGX%20Studio%2C%20I%27d%20like%20a%20test%20edit" target="_blank" rel="noopener">WhatsApp · +91 97627 43910</a>
+      <a href="https://www.instagram.com/rohit_motions/" target="_blank" rel="noopener">Instagram · @rohit_motions</a>
+      <a href="https://x.com/EditzByAndrew" target="_blank" rel="noopener">X · @EditzByAndrew</a>
+    </nav>
+    <span class="label">© 2026 DGX Studio</span>
+  </div>
+</footer>
+
+<dialog id="lb" aria-label="Video player">
+  <video id="lbVideo" controls playsinline></video>
+  <div class="bar"><span class="label" id="lbCap"></span><button class="close" id="lbClose" type="button">Close ✕</button></div>
+</dialog>
+
+<script>
+(function(){
+  var works=[
+    {id:"saas-launch",t:"SaaS product launch",c:"Launch film · Motion",d:"0:29",o:"h",k:"saas"},
+    {id:"creator-explainer",t:"Creator explainer",c:"Talking head · Graphics",d:"0:12",o:"v",k:"talk"},
+    {id:"maps-diomede",t:"Maps explainer",c:"Map animation · Story",d:"0:39",o:"v",k:"docs"},
+    {id:"founder-talk",t:"Founder story",c:"Talking head · Captions",d:"0:33",o:"h",k:"talk"},
+    {id:"app-promo",t:"App promo",c:"UI animation",d:"0:20",o:"v",k:"saas"},
+    {id:"faceless-doc",t:"Faceless doc",c:"Documentary · Sound",d:"0:35",o:"v",k:"docs"},
+    {id:"payments-launch",t:"Payments product film",c:"Fintech · Motion",d:"0:14",o:"h",k:"saas"},
+    {id:"creator-tips",t:"Creator tips reel",c:"Talking head · 3D motion",d:"0:09",o:"v",k:"talk"},
+    {id:"realestate-talk",t:"Real estate, Dubai",c:"Agent content",d:"0:10",o:"v",k:"talk"},
+    {id:"ai-tools",t:"AI tools explainer",c:"Motion graphics",d:"0:21",o:"h",k:"saas"},
+    {id:"brand-ad",t:"Brand ad",c:"Ecom · Product",d:"0:11",o:"v",k:"ads"},
+    {id:"maps-nato",t:"Geopolitics explainer",c:"Maps · News edit",d:"0:58",o:"v",k:"docs"},
+    {id:"ui-motion",t:"UI motion promo",c:"SaaS · Motion",d:"0:33",o:"h",k:"saas"},
+    {id:"app-promo-2",t:"App launch",c:"UI motion · Vertical",d:"0:10",o:"v",k:"saas"},
+    {id:"ai-short",t:"2D animation short",c:"2D animation · Story",d:"0:08",o:"v",k:"ads"},
+    {id:"ai-launch",t:"AI brand launch",c:"Brand motion",d:"0:13",o:"h",k:"saas"},
+    {id:"ui-pinterest",t:"App UI walkthrough",c:"UI animation",d:"0:10",o:"h",k:"saas"}
+  ];
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function mk(w){
+    var b=document.createElement("button");
+    b.type="button";b.className="card "+w.o;
+    b.setAttribute("aria-label","Watch "+w.t+" with sound");
+    b.innerHTML='<img src="media/'+w.id+'.jpg" alt="" loading="lazy"><span class="chip-s n">'+w.d+'</span><span class="go" aria-hidden="true">▶</span><div class="meta"><div><b>'+w.t+'</b><span>'+w.c+'</span></div></div>';
+    var v=null;
+    b.addEventListener("pointerenter",function(e){
+      if(e.pointerType!=="mouse"||reduce)return;
+      if(!v){v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.src="media/"+w.id+".mp4";v.setAttribute("aria-hidden","true");
+        v.addEventListener("loadedmetadata",function(){try{v.currentTime=v.duration*0.3;}catch(err){}});
+        v.addEventListener("playing",function(){b.classList.add("live");});
+        b.insertBefore(v,b.children[1]);}
+      var pp=v.play();if(pp&&pp.catch)pp.catch(function(){});
+    });
+    b.addEventListener("pointerleave",function(){if(v){v.pause();b.classList.remove("live");}});
+    b.addEventListener("click",function(){openLb(w);});
+    return b;
+  }
+  function fill(track,list){
+    list.forEach(function(w){track.appendChild(mk(w));});
+    if(!reduce){list.forEach(function(w){var c=mk(w);c.setAttribute("aria-hidden","true");c.tabIndex=-1;track.appendChild(c);});}
+  }
+  fill(document.getElementById("trackV"),works.filter(function(w){return w.o==="v";}));
+  fill(document.getElementById("trackH"),works.filter(function(w){return w.o==="h";}));
+
+  var lb=document.getElementById("lb"),lv=document.getElementById("lbVideo"),lc=document.getElementById("lbCap");
+  function openLb(w){
+    lv.src="media/"+w.id+".mp4";lc.textContent=w.t+" · "+w.c;
+    try{lb.showModal();}catch(e){lb.setAttribute("open","");}
+    var p=lv.play();if(p&&p.catch)p.catch(function(){});
+  }
+  function closeLb(){lv.pause();lv.removeAttribute("src");lv.load();if(lb.open)lb.close();}
+  document.getElementById("lbClose").addEventListener("click",closeLb);
+  lb.addEventListener("click",function(e){if(e.target===lb)closeLb();});
+  lb.addEventListener("cancel",function(){lv.pause();});
+
+  var reel=document.getElementById("reel"),bar=document.getElementById("bar"),snd=document.getElementById("sound");
+  reel.addEventListener("timeupdate",function(){if(reel.duration)bar.style.width=(reel.currentTime/reel.duration*100)+"%";});
+  snd.addEventListener("click",function(){reel.muted=!reel.muted;snd.textContent=reel.muted?"Sound on":"Sound off";var p=reel.play();if(p&&p.catch)p.catch(function(){});});
+
+  // ember particles behind the hero
+  var cv=document.getElementById("embers");
+  if(cv&&cv.getContext&&!reduce){
+    var ctx=cv.getContext("2d"),W,H,dpr=Math.min(window.devicePixelRatio||1,2),ps=[];
+    function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+    size();window.addEventListener("resize",size);
+    for(var i=0;i<46;i++)ps.push({x:Math.random(),y:Math.random(),r:Math.random()*1.8+.4,s:Math.random()*.0009+.0003,d:Math.random()*Math.PI*2,a:Math.random()*.6+.2});
+    (function loop(){
+      ctx.clearRect(0,0,W,H);
+      ps.forEach(function(p){
+        p.y-=p.s;p.d+=.01;var x=(p.x+Math.sin(p.d)*.01)*W,y=p.y*H;
+        if(p.y<-.02){p.y=1.02;p.x=Math.random()*.6+.4;}
+        var g=ctx.createRadialGradient(x,y,0,x,y,p.r*4);
+        g.addColorStop(0,"rgba(255,170,100,"+p.a+")");g.addColorStop(1,"rgba(255,91,31,0)");
+        ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,p.r*4,0,Math.PI*2);ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    })();
+  }
+})();
+</script>
+</body>
+</html>
